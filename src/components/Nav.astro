@@ -1,7 +1,7 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { useTranslations } from '../i18n/utils';
+import { useTranslations, localizePath, BASE } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
 
 interface Props {
@@ -10,53 +10,36 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang as Lang);
 
+const home = localizePath(`/${lang}/`);
 const navLinks = [
-  { key: 'nav.home',     href: `/${lang}/` },
-  { key: 'nav.about',    href: `/${lang}/about` },
-  { key: 'nav.projects', href: `/${lang}/projects` },
-  { key: 'nav.blog',     href: `/${lang}/blog` },
-  { key: 'nav.contact',  href: `/${lang}/contact` },
+  { key: 'nav.about',    href: `${home}#about` },
+  { key: 'nav.services', href: `${home}#services` },
+  { key: 'nav.projects', href: `${home}#projects` },
+  { key: 'nav.contact',  href: `${home}#contact` },
+  { key: 'nav.faq',      href: `${home}#faq` },
 ] as const;
-
-// Active-link detection (server-side). Normalise trailing slashes.
-const current = Astro.url.pathname.replace(/\/$/, '') || '/';
-function isActive(href: string) {
-  const h = href.replace(/\/$/, '') || '/';
-  if (h === `/${lang}`) return current === `/${lang}` || current === `/${lang}/`;
-  return current === h || current.startsWith(h + '/');
-}
 ---
 
 <nav id="main-nav" transition:persist>
   <div class="nav-inner container">
 
-    <!-- Logo -->
-    <a href={`/${lang}/`} class="logo" aria-label="Julius Bruch — Home">
+    <a href={localizePath(`/${lang}/`)} class="logo" aria-label="Julius Bruch — Home">
       <span class="logo-bracket">&lt;</span><span class="logo-mark">JB</span><span class="logo-bracket">/&gt;</span>
     </a>
 
-    <!-- Desktop: centered links (hidden on mobile) -->
     <ul class="nav-links" role="list">
       {navLinks.map(({ key, href }) => (
         <li>
-          <a
-            href={href}
-            class="nav-link"
-            aria-current={isActive(href) ? 'page' : undefined}
-          >{t(key)}</a>
+          <a href={href} class="nav-link">{t(key)}</a>
         </li>
       ))}
+      <span class="nav-indicator" id="nav-indicator" aria-hidden="true"></span>
     </ul>
 
-    <!-- Right cluster: theme + lang always visible in nav bar -->
     <div class="nav-right">
-      <span class="theme-wrap">
-        <ThemeToggle lang={lang} />
-      </span>
+      <span class="theme-wrap"><ThemeToggle lang={lang} /></span>
       <span class="divider" aria-hidden="true"></span>
       <LanguageSwitcher lang={lang} />
-
-      <!-- Hamburger: mobile only -->
       <button
         id="hamburger"
         class="hamburger"
@@ -75,41 +58,70 @@ function isActive(href: string) {
   </div>
 </nav>
 
-<!-- Mobile drawer — kept OUTSIDE <nav> so its position:fixed resolves against
-     the viewport, not the backdrop-filtered nav (filters create a containing
-     block for fixed descendants). -->
 <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
   <ul class="mobile-links" role="list">
     {navLinks.map(({ key, href }) => (
       <li>
-        <a
-          href={href}
-          class="mobile-link"
-          aria-current={isActive(href) ? 'page' : undefined}
-        >{t(key)}</a>
+        <a href={href} class="mobile-link">{t(key)}</a>
       </li>
     ))}
   </ul>
 </div>
 
 <script>
-  // Persisted nav: re-mark the active link on every navigation, since the
-  // server-rendered aria-current is frozen when the node persists.
-  function syncActive() {
-    const here = location.pathname.replace(/\/$/, '') || '/';
-    document.querySelectorAll('#main-nav .nav-link, #mobile-menu .mobile-link').forEach((a) => {
-      const link = a as HTMLAnchorElement;
-      const target = link.pathname.replace(/\/$/, '') || '/';
-      // The home link (lang root, e.g. /de) must match exactly — otherwise every
-      // subpage starts with "/de/" and would mark Home active.
-      const isLangRoot = target.split('/').filter(Boolean).length <= 1;
-      const isActive = isLangRoot
-        ? here === target
-        : here === target || here.startsWith(target + '/');
-      if (isActive) link.setAttribute('aria-current', 'page');
-      else link.removeAttribute('aria-current');
-    });
+  function moveIndicator(activeLink) {
+    const indicator = document.getElementById('nav-indicator');
+    const list = document.querySelector('#main-nav .nav-links');
+    if (!indicator || !list || !activeLink) { if (indicator) indicator.style.opacity = '0'; return; }
+    const listRect = list.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
+    indicator.style.opacity = '1';
+    indicator.style.width  = linkRect.width + 'px';
+    indicator.style.transform = `translateY(-50%) translateX(${linkRect.left - listRect.left}px)`;
   }
+
+  function syncActive(id) {
+    let active = null;
+    document.querySelectorAll('#main-nav .nav-link, #mobile-menu .mobile-link').forEach((a) => {
+      const hash = new URL(a.href, location.href).hash.slice(1);
+      const matches = id === '' ? hash === '' : hash === id;
+      if (matches) { a.setAttribute('aria-current', 'page'); if (a.classList.contains('nav-link')) active = a; }
+      else a.removeAttribute('aria-current');
+    });
+    moveIndicator(active);
+  }
+
+  function initScrollSpy() {
+    const sectionIds = ['about', 'services', 'projects', 'contact', 'faq'];
+    const visible = new Map();
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        visible.set(e.target.id, e.isIntersecting ? e.intersectionRatio : 0);
+      });
+      // pick the section with the highest visible ratio; on ties prefer
+      // the one that appears first in page order (top of list)
+      let best = '';
+      let bestRatio = 0;
+      sectionIds.forEach((id) => {
+        const r = visible.get(id) ?? 0;
+        if (r > bestRatio) { bestRatio = r; best = id; }
+      });
+      if (bestRatio > 0) syncActive(best);
+    }, {
+      rootMargin: '-8% 0px -50% 0px',
+      threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+    });
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+
+    return () => io.disconnect();
+  }
+
+  let cleanup = null;
 
   function initNav() {
     const hamburger = document.getElementById('hamburger');
@@ -143,21 +155,29 @@ function isActive(href: string) {
     document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   }
 
+  syncActive('');
+  if (cleanup) cleanup();
+  cleanup = initScrollSpy();
   initNav();
-  syncActive();
+  window.addEventListener('resize', () => {
+    const active = document.querySelector('#main-nav .nav-link[aria-current="page"]');
+    moveIndicator(active);
+  });
+
   document.addEventListener('astro:after-swap', () => {
     const menu = document.getElementById('mobile-menu');
     const btn  = document.getElementById('hamburger');
     if (menu) { menu.classList.remove('is-open'); menu.setAttribute('aria-hidden', 'true'); }
     if (btn)  { btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-label', 'Menü öffnen'); }
     document.body.style.overflow = '';
+    syncActive('');
+    if (cleanup) cleanup();
+    cleanup = initScrollSpy();
     initNav();
-    syncActive();
   });
 </script>
 
 <style>
-  /* ── Shell ────────────────────────────────────────── */
   nav {
     position: sticky;
     top: 0;
@@ -168,25 +188,22 @@ function isActive(href: string) {
     border-bottom: 1px solid var(--color-border);
   }
 
-  /* ── Desktop bar: flex row ────────────────────────── */
   .nav-inner {
     display: flex;
     align-items: center;
     gap: var(--space-md);
-    padding-block: 12px;
+    padding-block: 18px;
   }
 
-  /* ── Logo ─────────────────────────────────────────── */
   .logo {
     font-family: var(--font-mono);
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--color-text);
     letter-spacing: 0;
     text-decoration: none;
     flex-shrink: 0;
     transition: opacity var(--transition-base);
-    /* Stop JetBrains Mono from merging "/>" into a single ligature glyph */
     font-variant-ligatures: none;
     font-feature-settings: "liga" 0, "calt" 0;
   }
@@ -194,7 +211,6 @@ function isActive(href: string) {
   .logo-bracket  { color: var(--color-muted); }
   .logo-mark     { color: var(--color-accent); }
 
-  /* ── Centered nav links (grows to fill space) ─────── */
   .nav-links {
     display: flex;
     list-style: none;
@@ -207,36 +223,39 @@ function isActive(href: string) {
   .nav-link {
     position: relative;
     display: block;
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     font-weight: 500;
     color: var(--color-muted);
     text-decoration: none;
-    padding: 8px 14px;
+    padding: 9px 16px;
     border-radius: 8px;
     white-space: nowrap;
-    transition: color var(--transition-base), background-color var(--transition-base);
+    transition: color 200ms ease;
+    z-index: 1;
   }
-  .nav-link:hover {
-    color: var(--color-text);
-    background-color: var(--color-surface);
-    text-decoration: none;
+  .nav-link:hover { color: var(--color-text); text-decoration: none; }
+  .nav-link[aria-current="page"] { color: var(--color-accent); }
+
+  /* Sliding pill indicator */
+  .nav-links {
+    position: relative;
   }
-  /* Active page */
-  .nav-link[aria-current="page"] {
-    color: var(--color-accent);
-  }
-  .nav-link[aria-current="page"]::after {
-    content: '';
+  .nav-indicator {
     position: absolute;
-    left: 14px;
-    right: 14px;
-    bottom: 2px;
-    height: 2px;
-    border-radius: 2px;
-    background-color: var(--color-accent);
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: calc(100% - 8px);
+    border-radius: 8px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 350ms cubic-bezier(0.34, 1.2, 0.64, 1),
+                width   350ms cubic-bezier(0.34, 1.2, 0.64, 1),
+                opacity 180ms ease;
   }
 
-  /* ── Right cluster — always on the far right ─────── */
   .nav-right {
     display: flex;
     align-items: center;
@@ -245,18 +264,9 @@ function isActive(href: string) {
     flex-shrink: 0;
   }
 
-  .theme-wrap {
-    display: flex;
-    align-items: center;
-  }
+  .theme-wrap { display: flex; align-items: center; }
+  .divider { width: 1px; height: 20px; background-color: var(--color-border); }
 
-  .divider {
-    width: 1px;
-    height: 20px;
-    background-color: var(--color-border);
-  }
-
-  /* ── Hamburger — bare icon, no border/bg ─────────── */
   .hamburger {
     appearance: none;
     -webkit-appearance: none;
@@ -273,7 +283,6 @@ function isActive(href: string) {
     transition: color var(--transition-base);
   }
   .hamburger:hover { color: var(--color-text); }
-
   .hamburger svg rect {
     transition: transform 280ms ease, opacity 180ms ease;
     transform-box: fill-box;
@@ -283,7 +292,6 @@ function isActive(href: string) {
   .hamburger[aria-expanded="true"] .b2 { opacity: 0; }
   .hamburger[aria-expanded="true"] .b3 { transform: translateY(-6px) rotate(-45deg); }
 
-  /* ── Mobile drawer ────────────────────────────────── */
   .mobile-menu {
     display: none;
     flex-direction: column;
@@ -301,12 +309,7 @@ function isActive(href: string) {
     pointer-events: none;
     transition: opacity 220ms ease, transform 220ms ease;
   }
-  .mobile-menu.is-open {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
+  .mobile-menu.is-open { opacity: 1; transform: translateY(0); pointer-events: auto; }
   .mobile-links { list-style: none; }
 
   .mobile-link {
@@ -322,20 +325,16 @@ function isActive(href: string) {
     transition: color var(--transition-base);
   }
   .mobile-link:hover { color: var(--color-accent); text-decoration: none; }
-  .mobile-link[aria-current="page"] {
-    color: var(--color-accent);
-  }
+  .mobile-link[aria-current="page"] { color: var(--color-accent); }
   .mobile-link[aria-current="page"]::before {
     content: '';
-    width: 6px;
-    height: 6px;
+    width: 6px; height: 6px;
     border-radius: 50%;
     background-color: var(--color-accent);
     flex-shrink: 0;
   }
 
-  /* ── Mobile breakpoint ────────────────────────────── */
-  @media (max-width: 680px) {
+  @media (max-width: 720px) {
     .nav-links   { display: none; }
     .hamburger   { display: flex; }
     .mobile-menu { display: flex; }

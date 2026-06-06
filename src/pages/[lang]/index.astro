@@ -1,9 +1,11 @@
 ---
 import { languages, type Lang } from '../../i18n/ui';
-import { useTranslations } from '../../i18n/utils';
+import { useTranslations, localizePath } from '../../i18n/utils';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
-import Skills from '../../components/Skills.astro';
+import ProfileLinks from '../../components/ProfileLinks.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
 
 export function getStaticPaths() {
   return Object.keys(languages).map((lang) => ({ params: { lang } }));
@@ -11,9 +13,395 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: Lang };
 const t = useTranslations(lang);
+const isDE = lang === 'de';
+
+const allProjects = await getCollection('projects');
+const projects = allProjects.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+
+const services = [
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17.5h7M17.5 14v7"/></svg>`,
+    name: t('services.powerapps'),
+    desc: t('services.powerapps.desc'),
+    features: isDE
+      ? ['Canvas Apps (Tablet & Mobil)', 'Modellgetriebene Apps', 'SharePoint & SQL Anbindung', 'Power Automate Integration']
+      : ['Canvas Apps (Tablet & Mobile)', 'Model-driven Apps', 'SharePoint & SQL integration', 'Power Automate integration'],
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l7-9 4 5 3-3 7 7"/><path d="M3 20h18"/></svg>`,
+    name: t('services.automate'),
+    desc: t('services.automate.desc'),
+    features: isDE
+      ? ['Genehmigungsworkflows', 'Automatisierte E-Mails', 'PDF-Generierung', 'Systemübergreifende Flows']
+      : ['Approval workflows', 'Automated emails', 'PDF generation', 'Cross-system flows'],
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
+    name: t('services.web'),
+    desc: t('services.web.desc'),
+    features: isDE
+      ? ['Statische Websites (Astro)', 'Responsive Design', 'SEO-Optimierung', 'DSGVO-konform']
+      : ['Static websites (Astro)', 'Responsive design', 'SEO optimization', 'GDPR-compliant'],
+  },
+];
+
+const experience = isDE
+  ? [
+      { year: '2025 – heute', role: 'Werkstudent IT', place: 'VNG Gasspeicher GmbH, Leipzig', detail: 'MS Power Platform & Low-Code Development' },
+      { year: '2023 – 2024', role: 'Werkstudent', place: 'Abbott Rapid Diagnostics GmbH, Jena', detail: 'Power Apps, Power Automate' },
+    ]
+  : [
+      { year: '2025 – present', role: 'Working Student IT', place: 'VNG Gasspeicher GmbH, Leipzig', detail: 'MS Power Platform & Low-Code Development' },
+      { year: '2023 – 2024', role: 'Working Student', place: 'Abbott Rapid Diagnostics GmbH, Jena', detail: 'Power Apps, Power Automate' },
+    ];
+
+const education = isDE
+  ? [
+      { year: '2025 – heute', role: 'Master Wirtschaftsinformatik', place: 'Universität Leipzig' },
+      { year: '2020 – 2025', role: 'Bachelor Wirtschaftswissenschaften', place: 'Friedrich-Schiller-Universität Jena' },
+    ]
+  : [
+      { year: '2025 – present', role: 'M.Sc. Business Informatics', place: 'University of Leipzig' },
+      { year: '2020 – 2025', role: 'Bachelor Business Economics', place: 'Friedrich Schiller University Jena' },
+    ];
+
+const faq = isDE
+  ? [
+      { q: 'Wie lange dauert ein typisches Projekt?', a: 'Je nach Komplexität kann ein typisches Projekt von wenigen Tagen für einfache automatisierte Workflows bis hin zu mehreren Wochen für umfassende Geschäftsanwendungen dauern.' },
+      { q: 'Benötige ich spezielle Lizenzen?', a: 'Wenn Sie Standard-Konnektoren von Microsoft 365 (wie SharePoint und Outlook) verwenden, ist die Nutzung normalerweise in Ihrem bestehenden Plan enthalten. Premium-Konnektoren erfordern eigenständige Power Apps-Lizenzen.' },
+      { q: 'Bieten Sie Unterstützung nach Projektabschluss an?', a: 'Ja! Ich biete fortlaufende Wartung, Fehlerbehebung und das Hinzufügen von Funktionen an, um sicherzustellen, dass Ihre Lösung weiterhin reibungslos läuft.' },
+      { q: 'Was wird benötigt, um zu starten?', a: 'In der Regel benötige ich einen Gastzugang oder ein dediziertes Entwicklerkonto in Ihrem Microsoft 365 Tenant sowie entsprechende Lizenzen und Berechtigungen.' },
+      { q: 'Wird ein Dienstkonto (Service Account) benötigt?', a: 'Ja, ein dediziertes Dienstkonto wird dringend empfohlen. Es fungiert als neutrales Konto für automatisierte Workflows und System-E-Mails.' },
+    ]
+  : [
+      { q: 'How long does a typical project take?', a: 'Depending on complexity, a project can take from a few days for simple automated workflows to several weeks for comprehensive business applications.' },
+      { q: 'Do I need special licenses?', a: 'Standard Microsoft 365 connectors (like SharePoint and Outlook) are typically included in your existing plan. Premium connectors require standalone Power Apps licenses.' },
+      { q: 'Do you offer post-project support?', a: 'Yes! I provide ongoing maintenance, troubleshooting, and feature additions to ensure your solution continues to run smoothly.' },
+      { q: 'What is needed to start a project?', a: 'I typically need a guest account or dedicated developer account in your Microsoft 365 tenant, along with appropriate licenses and permissions.' },
+      { q: 'Do I need a service account?', a: 'Yes, a dedicated service account is highly recommended for running automated workflows and sending system emails independently of individual users.' },
+    ];
 ---
 
 <BaseLayout title={t('hero.headline')} {lang} description={t('hero.subtitle')}>
+
+  <!-- Hero -->
   <Hero {lang} />
-  <Skills {lang} />
+
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title">{t('about.title')}</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="about-role">{t('about.role')} · {t('about.location')}</p>
+          <p class="about-intro">{t('about.intro')}</p>
+          <p class="about-body">{t('about.body')}</p>
+          <div class="about-profiles section-divider">
+            <ProfileLinks label={t('about.profiles')} links={[
+              { label: 'LinkedIn',     href: 'https://www.linkedin.com/in/julius-bruch' },
+              { label: 'freelance.de', href: 'https://www.freelance.de' },
+            ]} />
+          </div>
+        </div>
+        <div class="about-timeline">
+          <div class="tl-group">
+            <h3 class="tl-group-label">{t('about.exp')}</h3>
+            <ol class="timeline" role="list">
+              {experience.map(({ year, role, place, detail }) => (
+                <li class="timeline-item">
+                  <span class="tl-year">{year}</span>
+                  <div class="tl-body">
+                    <strong class="tl-role">{role}</strong>
+                    <span class="tl-place">{place}</span>
+                    {detail && <span class="tl-detail">{detail}</span>}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div class="tl-group section-divider">
+            <h3 class="tl-group-label">{isDE ? 'Bildungsweg' : 'Education'}</h3>
+            <ol class="timeline" role="list">
+              {education.map(({ year, role, place }) => (
+                <li class="timeline-item">
+                  <span class="tl-year">{year}</span>
+                  <div class="tl-body">
+                    <strong class="tl-role">{role}</strong>
+                    <span class="tl-place">{place}</span>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="section">
+    <div class="container">
+      <h2 class="section-title">{t('services.title')}</h2>
+      <p class="section-sub">{t('services.subtitle')}</p>
+      <div class="service-grid">
+        {services.map(({ icon, name, desc, features }) => (
+          <a href={localizePath(`/${lang}/services`)} class="service-card">
+            <div class="svc-card-top">
+              <div class="service-icon" set:html={icon}></div>
+              <svg class="svc-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </div>
+            <p class="service-name">{name}</p>
+            <p class="service-desc">{desc}</p>
+            <ul class="svc-features">
+              {features.map((f) => (
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h2 class="section-title">{t('projects.title')}</h2>
+      <p class="section-sub">{t('projects.subtitle')}</p>
+      <div class="project-grid">
+        {projects.map((project) => (
+          <ProjectCard
+            title={isDE ? (project.data.titleDe ?? project.data.title) : (project.data.titleEn ?? project.data.title)}
+            description={isDE ? (project.data.descDe ?? project.data.description) : (project.data.descEn ?? project.data.description)}
+            techs={project.data.techs}
+            slug={project.id}
+            icon={project.data.icon}
+            {lang}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="section-title">{t('contact.title')}</h2>
+      <div class="contact-layout">
+
+        <aside class="contact-info">
+        </aside>
+
+        <form class="contact-form" name="contact" method="POST" data-netlify="true" novalidate>
+          <div class="field">
+            <label for="name">{t('contact.form.name')}</label>
+            <input type="text" id="name" name="name" placeholder={t('contact.form.placeholder.name')} autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="email">{t('contact.form.email')}</label>
+            <input type="email" id="email" name="email" placeholder={t('contact.form.placeholder.email')} autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="message">{t('contact.form.message')}</label>
+            <textarea id="message" name="message" rows="6" placeholder={t('contact.form.placeholder.message')} required></textarea>
+          </div>
+          <div class="field privacy-field">
+            <label class="privacy-label">
+              <input type="checkbox" name="privacy" required />
+              <span>
+                {t('contact.form.privacy')}{' '}
+                <a href={`/${lang}/datenschutz`}>{t('contact.form.privacy.link')}</a>{' '}
+                {t('contact.form.privacy.suffix')}
+              </span>
+            </label>
+          </div>
+          <button type="submit" class="submit-btn">
+            {t('contact.form.send')}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </form>
+
+      </div>
+
+      <!-- FAQ — full width below contact -->
+      <div id="faq" class="faq-section section-divider">
+        <h3 class="faq-heading">{t('contact.faq.title')}</h3>
+        <ul class="faq-list">
+          {faq.map(({ q, a }, i) => (
+            <li class="faq-item" id={`faq-${i}`}>
+              <button class="faq-question" aria-expanded="false" aria-controls={`faq-ans-${i}`}>
+                {q}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+              <div class="faq-answer" id={`faq-ans-${i}`}>{a}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
 </BaseLayout>
+
+<script>
+  function initFaq() {
+    document.querySelectorAll('.faq-question').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        if (!item) return;
+        const isOpen = item.classList.contains('is-open');
+        item.classList.toggle('is-open', !isOpen);
+        btn.setAttribute('aria-expanded', String(!isOpen));
+      });
+    });
+  }
+  initFaq();
+  document.addEventListener('astro:after-swap', initFaq);
+</script>
+
+<style>
+  .section {
+    padding-block: var(--space-2xl);
+    border-top: 1px solid var(--color-border);
+    scroll-margin-top: 70px;
+  }
+
+  #faq {
+    scroll-margin-top: 70px;
+  }
+
+  .section-title {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-sm);
+  }
+
+  .section-sub {
+    font-size: var(--text-base);
+    color: var(--color-muted);
+    margin-bottom: var(--space-xl);
+  }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  @media (max-width: 760px) {
+    .about-grid { grid-template-columns: 1fr; }
+  }
+
+  .about-photo-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-md);
+  }
+
+  .about-photo-placeholder {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px dashed var(--color-border);
+    background-color: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-border);
+    flex-shrink: 0;
+  }
+
+  .about-role {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .about-intro {
+    font-size: var(--text-lg);
+    line-height: 1.65;
+    margin-bottom: var(--space-md);
+  }
+
+  .about-body {
+    color: var(--color-muted);
+    line-height: 1.65;
+    margin-bottom: var(--space-xl);
+  }
+
+  .tl-group { margin-bottom: var(--space-xl); }
+  .tl-group:last-child { margin-bottom: 0; }
+
+  .tl-group-label {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-md);
+  }
+
+  .tl-detail {
+    font-size: var(--text-sm);
+    color: var(--color-accent);
+  }
+
+  /* Services */
+  .svc-features {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin-top: var(--space-sm);
+  }
+
+  .svc-features li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+
+  .svc-features svg { color: var(--color-accent); flex-shrink: 0; }
+
+  /* Contact */
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  @media (max-width: 760px) {
+    .contact-layout { grid-template-columns: 1fr; }
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .contact-lead {
+    font-size: var(--text-lg);
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  .faq-heading {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-heading);
+    margin-bottom: var(--space-xl);
+  }
+</style>

@@ -1,5 +1,5 @@
 ---
-import { useTranslations } from '../i18n/utils';
+import { useTranslations, localizePath } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
 
 interface Props {
@@ -12,13 +12,12 @@ const year = new Date().getFullYear();
 
 <footer>
   <div class="container footer-inner">
-    <p class="tagline">{t('footer.tagline')}</p>
     <ul class="footer-links" role="list">
       <li>
-        <a href={`/${lang}/impressum`}>{t('footer.impressum')}</a>
+        <a href={localizePath(`/${lang}/impressum`)}>{t('footer.impressum')}</a>
       </li>
       <li>
-        <a href={`/${lang}/datenschutz`}>{t('footer.privacy')}</a>
+        <a href={localizePath(`/${lang}/datenschutz`)}>{t('footer.privacy')}</a>
       </li>
     </ul>
     <p class="copy">&copy; {year}</p>

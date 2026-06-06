@@ -1,6 +1,6 @@
 ---
-import { useTranslations } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
 
 interface Props {
   lang: string;
@@ -10,34 +10,20 @@ const t = useTranslations(lang as Lang);
 ---
 
 <section class="hero">
-  <div class="container hero-inner">
+  <div class="container">
+    <p class="hero-tagline">{t('hero.tagline')}</p>
+    <h1 class="headline">{t('hero.headline')}</h1>
+    <p class="subtitle">{t('hero.subtitle')}</p>
 
-    <div class="hero-text">
-      <p class="hero-label">Julius Bruch</p>
-      <h1 class="headline">{t('hero.headline')}</h1>
-      <p class="subtitle">{t('hero.subtitle')}</p>
-
-      <div class="cta-group">
-        <a href={`/${lang}/projects`} class="btn btn-primary">
-          {t('hero.cta.projects')}
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href={`/${lang}/contact`} class="btn btn-ghost">
-          {t('hero.cta.contact')}
-        </a>
-      </div>
+    <div class="cta-group">
+      <a href="#services" class="btn btn-primary">
+        {t('hero.cta.more')}
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#contact" class="btn btn-ghost">
+        {t('hero.cta.contact')}
+      </a>
     </div>
-
-    <div class="hero-avatar" aria-hidden="true">
-      <div class="avatar-ring">
-        <div class="avatar-placeholder">
-          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -46,39 +32,25 @@ const t = useTranslations(lang as Lang);
     padding-block: var(--space-2xl) calc(var(--space-2xl) * 1.5);
   }
 
-  .hero-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-2xl);
-  }
-
-  .hero-text {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .hero-label {
+  .hero-tagline {
     font-size: var(--text-sm);
     font-weight: 600;
     color: var(--color-accent);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--space-md);
   }
 
   .headline {
-    font-size: var(--text-5xl);
+    font-size: var(--text-4xl);
     color: var(--color-heading);
-    max-width: 16ch;
-    line-height: 1.1;
+    line-height: 1.15;
   }
 
   .subtitle {
-    font-size: var(--text-lg);
+    font-size: var(--text-base);
     color: var(--color-muted);
     margin-top: var(--space-md);
-    max-width: 48ch;
     line-height: 1.65;
   }
 
@@ -96,93 +68,26 @@ const t = useTranslations(lang as Lang);
     font-size: var(--text-base);
     font-weight: 600;
     border-radius: 8px;
-    padding: 10px var(--space-xl);
+    padding: 12px var(--space-xl);
     text-decoration: none;
-    transition: opacity var(--transition-base), transform var(--transition-base), background-color var(--transition-base);
+    transition: opacity var(--transition-base), transform var(--transition-base), border-color var(--transition-base), color var(--transition-base);
     white-space: nowrap;
   }
+  .btn:hover { text-decoration: none; transform: translateY(-1px); }
 
-  .btn:hover {
-    text-decoration: none;
-    transform: translateY(-1px);
-  }
-
-  .btn-primary {
-    color: #0a0a0a;
-    background-color: var(--color-accent);
-  }
-
-  .btn-primary:hover {
-    opacity: 0.88;
-  }
+  .btn-primary { color: #0a0a0a; background-color: var(--color-accent); }
+  .btn-primary:hover { opacity: 0.88; }
 
   .btn-ghost {
     color: var(--color-text);
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background-color: transparent;
+    border: 1px solid var(--color-muted);
   }
+  .btn-ghost:hover { border-color: var(--color-heading); color: var(--color-heading); }
 
-  .btn-ghost:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-  }
 
-  /* Avatar */
-  .hero-avatar {
-    flex-shrink: 0;
-  }
-
-  .avatar-ring {
-    width: clamp(120px, 18vw, 180px);
-    height: clamp(120px, 18vw, 180px);
-    border-radius: 50%;
-    border: 2px solid var(--color-border);
-    background-color: var(--color-surface);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .avatar-ring::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 50%;
-    background: conic-gradient(var(--color-accent) 0%, transparent 60%);
-    z-index: -1;
-  }
-
-  .avatar-placeholder {
-    color: var(--color-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Mobile: stack vertically, hide avatar */
   @media (max-width: 600px) {
-    .hero-inner {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .hero-avatar {
-      display: none;
-    }
-
-    .headline {
-      max-width: 100%;
-    }
-
-    .cta-group {
-      flex-direction: column;
-    }
-
-    .btn {
-      width: 100%;
-      justify-content: center;
-    }
+    .cta-group { flex-direction: column; }
+    .btn { width: 100%; justify-content: center; }
   }
 </style>
