@@ -1,0 +1,76 @@
+---
+import { languages, type Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={t('privacy.title')} {lang} description={t('privacy.title')}>
+  <div class="container page">
+    <h1 class="page-title">{t('privacy.title')}</h1>
+
+    <div class="prose">
+      <h2>1. Datenschutz auf einen Blick</h2>
+      <p>
+        Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit
+        deinen personenbezogenen Daten passiert, wenn du diese Website besuchst.
+        Personenbezogene Daten sind alle Daten, mit denen du persönlich
+        identifiziert werden kannst.
+      </p>
+
+      <h2>2. Hosting (Hetzner)</h2>
+      <p>
+        Diese Website wird bei der Hetzner Online GmbH, Industriestr. 25, 91710
+        Gunzenhausen, Deutschland, gehostet. Beim Aufruf der Seite werden durch
+        den Server technisch notwendige Zugriffsdaten (z. B. IP-Adresse, Datum
+        und Uhrzeit der Anfrage, abgerufene Datei) in Server-Logfiles
+        verarbeitet. Dies ist zur sicheren und stabilen Bereitstellung der
+        Website erforderlich (Art. 6 Abs. 1 lit. f DSGVO). Mit Hetzner besteht
+        ein Auftragsverarbeitungsvertrag (AVV).
+      </p>
+
+      <h2>3. Kontaktformular (PHPMailer)</h2>
+      <p>
+        Wenn du mir über das Kontaktformular eine Nachricht sendest, werden die
+        von dir eingegebenen Daten (Name, E-Mail-Adresse, Nachricht) per E-Mail
+        über die Bibliothek PHPMailer an mich übermittelt. Die Daten werden
+        ausschließlich zur Bearbeitung deiner Anfrage verwendet und nicht an
+        Dritte weitergegeben (Art. 6 Abs. 1 lit. a und b DSGVO). Es werden keine
+        Eingaben in einer Datenbank gespeichert.
+      </p>
+
+      <h2>4. Keine Analyse-Tools, keine Cookies</h2>
+      <p>
+        Diese Website verwendet keine Analyse-, Tracking- oder Werbedienste und
+        setzt keine Cookies. Es werden keine Nutzungsprofile erstellt. Lediglich
+        deine gewählte Sprache und dein Farbschema (hell/dunkel) werden im
+        lokalen Speicher (localStorage) deines Browsers abgelegt; diese
+        Information verlässt dein Gerät nicht.
+      </p>
+
+      <h2>5. Schriftarten (lokal gehostet)</h2>
+      <p>
+        Die verwendeten Schriftarten werden lokal vom Server dieser Website
+        ausgeliefert. Es findet keine Verbindung zu externen Anbietern wie
+        Google Fonts statt; deine IP-Adresse wird dabei nicht an Dritte
+        übermittelt.
+      </p>
+
+      <h2>6. Deine Rechte</h2>
+      <p>
+        Du hast jederzeit das Recht auf Auskunft, Berichtigung, Löschung oder
+        Einschränkung der Verarbeitung deiner gespeicherten Daten, ein Recht auf
+        Widerspruch und Datenübertragbarkeit sowie ein Beschwerderecht bei der
+        zuständigen Aufsichtsbehörde.
+      </p>
+
+      <p><em>Platzhalter — bitte vor Veröffentlichung durch eine rechtssichere Datenschutzerklärung ersetzen.</em></p>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,57 @@
+---
+import { languages, type Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={t('impressum.title')} {lang} description={t('impressum.title')}>
+  <div class="container page">
+    <h1 class="page-title">{t('impressum.title')}</h1>
+
+    <div class="prose">
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>
+        Julius Bruch<br />
+        Musterstraße 1<br />
+        07743 Jena<br />
+        Deutschland
+      </p>
+
+      <h2>Kontakt</h2>
+      <p>
+        E-Mail: <a href="mailto:hello@example.com">hello@example.com</a>
+      </p>
+
+      <h2>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
+      <p>
+        Julius Bruch<br />
+        Musterstraße 1<br />
+        07743 Jena
+      </p>
+
+      <h2>Haftung für Inhalte</h2>
+      <p>
+        Als Diensteanbieter bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf
+        diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis
+        10 TMG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte
+        oder gespeicherte fremde Informationen zu überwachen.
+      </p>
+
+      <h2>Haftung für Links</h2>
+      <p>
+        Dieses Angebot enthält Links zu externen Websites Dritter, auf deren
+        Inhalte ich keinen Einfluss habe. Deshalb kann ich für diese fremden
+        Inhalte auch keine Gewähr übernehmen.
+      </p>
+
+      <p><em>Platzhalter — bitte vor Veröffentlichung durch echte Angaben ersetzen.</em></p>
+    </div>
+  </div>
+</BaseLayout>

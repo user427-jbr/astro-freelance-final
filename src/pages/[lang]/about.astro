@@ -1,0 +1,69 @@
+---
+import { languages, type Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProfileLinks from '../../components/ProfileLinks.astro';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+
+// Microsoft certifications — replace href with your Credly / Learn transcript links
+const certifications = [
+  { label: 'Azure Fundamentals (AZ-900)',          href: 'https://learn.microsoft.com/' },
+  { label: 'Azure Developer Associate (AZ-204)',   href: 'https://learn.microsoft.com/' },
+  { label: 'Azure AI Engineer Associate (AI-102)', href: 'https://learn.microsoft.com/' },
+];
+
+const experience = lang === 'de'
+  ? [
+      { year: '2024 – heute',  role: 'Freelance Web-Entwickler',     place: 'Selbstständig · Remote' },
+      { year: '2022 – 2024',   role: 'Junior Front-End-Entwickler',  place: 'Digitalagentur · Jena' },
+      { year: '2019 – 2022',   role: 'B.Sc. Informatik',             place: 'Universität Jena' },
+    ]
+  : [
+      { year: '2024 – present', role: 'Freelance Web Developer',     place: 'Self-employed · Remote' },
+      { year: '2022 – 2024',    role: 'Junior Front-End Developer',  place: 'Digital Agency · Jena' },
+      { year: '2019 – 2022',    role: 'B.Sc. Computer Science',      place: 'University of Jena' },
+    ];
+---
+
+<BaseLayout title={t('about.title')} {lang} description={t('about.intro')}>
+  <div class="container page">
+
+    <h1 class="page-title">{t('about.title')}</h1>
+
+    <div class="bio">
+      <p class="bio-intro">{t('about.intro')}</p>
+      <p>{t('about.body')}</p>
+      <p class="availability">
+        <span class="availability-dot" aria-hidden="true"></span>
+        {t('about.availability')}
+      </p>
+    </div>
+
+    <div class="timeline-section">
+      <h2 class="section-heading">{lang === 'de' ? 'Erfahrung' : 'Experience'}</h2>
+      <ol class="timeline" role="list">
+        {experience.map(({ year, role, place }) => (
+          <li class="timeline-item">
+            <span class="tl-year">{year}</span>
+            <div class="tl-body">
+              <strong class="tl-role">{role}</strong>
+              <span class="tl-place">{place}</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="certs-section">
+      <ProfileLinks label={t('about.certs')} links={certifications} />
+    </div>
+
+  </div>
+</BaseLayout>
+

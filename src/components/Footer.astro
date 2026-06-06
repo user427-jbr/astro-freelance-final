@@ -1,0 +1,73 @@
+---
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: string;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang as Lang);
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="container footer-inner">
+    <p class="tagline">{t('footer.tagline')}</p>
+    <ul class="footer-links" role="list">
+      <li>
+        <a href={`/${lang}/impressum`}>{t('footer.impressum')}</a>
+      </li>
+      <li>
+        <a href={`/${lang}/datenschutz`}>{t('footer.privacy')}</a>
+      </li>
+    </ul>
+    <p class="copy">&copy; {year}</p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--color-border);
+    margin-top: var(--space-2xl);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding-block: var(--space-xl);
+  }
+
+  @media (max-width: 480px) {
+    .footer-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-sm);
+    }
+  }
+
+  .tagline,
+  .copy {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+
+  .footer-links {
+    display: flex;
+    list-style: none;
+    gap: var(--space-md);
+  }
+
+  .footer-links a {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    transition: color var(--transition-base);
+  }
+
+  .footer-links a:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+</style>

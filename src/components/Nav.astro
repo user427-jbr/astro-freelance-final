@@ -1,0 +1,343 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: string;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang as Lang);
+
+const navLinks = [
+  { key: 'nav.home',     href: `/${lang}/` },
+  { key: 'nav.about',    href: `/${lang}/about` },
+  { key: 'nav.projects', href: `/${lang}/projects` },
+  { key: 'nav.blog',     href: `/${lang}/blog` },
+  { key: 'nav.contact',  href: `/${lang}/contact` },
+] as const;
+
+// Active-link detection (server-side). Normalise trailing slashes.
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+function isActive(href: string) {
+  const h = href.replace(/\/$/, '') || '/';
+  if (h === `/${lang}`) return current === `/${lang}` || current === `/${lang}/`;
+  return current === h || current.startsWith(h + '/');
+}
+---
+
+<nav id="main-nav" transition:persist>
+  <div class="nav-inner container">
+
+    <!-- Logo -->
+    <a href={`/${lang}/`} class="logo" aria-label="Julius Bruch — Home">
+      <span class="logo-bracket">&lt;</span><span class="logo-mark">JB</span><span class="logo-bracket">/&gt;</span>
+    </a>
+
+    <!-- Desktop: centered links (hidden on mobile) -->
+    <ul class="nav-links" role="list">
+      {navLinks.map(({ key, href }) => (
+        <li>
+          <a
+            href={href}
+            class="nav-link"
+            aria-current={isActive(href) ? 'page' : undefined}
+          >{t(key)}</a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Right cluster: theme + lang always visible in nav bar -->
+    <div class="nav-right">
+      <span class="theme-wrap">
+        <ThemeToggle lang={lang} />
+      </span>
+      <span class="divider" aria-hidden="true"></span>
+      <LanguageSwitcher lang={lang} />
+
+      <!-- Hamburger: mobile only -->
+      <button
+        id="hamburger"
+        class="hamburger"
+        aria-label="Menü öffnen"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true">
+          <rect class="b1" y="0"  width="20" height="2" rx="1" fill="currentColor"/>
+          <rect class="b2" y="6"  width="20" height="2" rx="1" fill="currentColor"/>
+          <rect class="b3" y="12" width="20" height="2" rx="1" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</nav>
+
+<!-- Mobile drawer — kept OUTSIDE <nav> so its position:fixed resolves against
+     the viewport, not the backdrop-filtered nav (filters create a containing
+     block for fixed descendants). -->
+<div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+  <ul class="mobile-links" role="list">
+    {navLinks.map(({ key, href }) => (
+      <li>
+        <a
+          href={href}
+          class="mobile-link"
+          aria-current={isActive(href) ? 'page' : undefined}
+        >{t(key)}</a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  // Persisted nav: re-mark the active link on every navigation, since the
+  // server-rendered aria-current is frozen when the node persists.
+  function syncActive() {
+    const here = location.pathname.replace(/\/$/, '') || '/';
+    document.querySelectorAll('#main-nav .nav-link, #mobile-menu .mobile-link').forEach((a) => {
+      const link = a as HTMLAnchorElement;
+      const target = link.pathname.replace(/\/$/, '') || '/';
+      // The home link (lang root, e.g. /de) must match exactly — otherwise every
+      // subpage starts with "/de/" and would mark Home active.
+      const isLangRoot = target.split('/').filter(Boolean).length <= 1;
+      const isActive = isLangRoot
+        ? here === target
+        : here === target || here.startsWith(target + '/');
+      if (isActive) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
+  function initNav() {
+    const hamburger = document.getElementById('hamburger');
+    const menu      = document.getElementById('mobile-menu');
+    const nav       = document.getElementById('main-nav');
+    if (!hamburger || !menu || !nav) return;
+
+    function syncTop() { menu.style.top = nav.offsetHeight + 'px'; }
+    syncTop();
+    new ResizeObserver(syncTop).observe(nav);
+
+    function open() {
+      hamburger.setAttribute('aria-expanded', 'true');
+      hamburger.setAttribute('aria-label', 'Menü schließen');
+      menu.setAttribute('aria-hidden', 'false');
+      menu.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Menü öffnen');
+      menu.setAttribute('aria-hidden', 'true');
+      menu.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () =>
+      menu.classList.contains('is-open') ? close() : open()
+    );
+    menu.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', close));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  }
+
+  initNav();
+  syncActive();
+  document.addEventListener('astro:after-swap', () => {
+    const menu = document.getElementById('mobile-menu');
+    const btn  = document.getElementById('hamburger');
+    if (menu) { menu.classList.remove('is-open'); menu.setAttribute('aria-hidden', 'true'); }
+    if (btn)  { btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-label', 'Menü öffnen'); }
+    document.body.style.overflow = '';
+    initNav();
+    syncActive();
+  });
+</script>
+
+<style>
+  /* ── Shell ────────────────────────────────────────── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background-color: color-mix(in srgb, var(--color-bg) 80%, transparent);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);
+    backdrop-filter: saturate(160%) blur(12px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* ── Desktop bar: flex row ────────────────────────── */
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding-block: 12px;
+  }
+
+  /* ── Logo ─────────────────────────────────────────── */
+  .logo {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: 0;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: opacity var(--transition-base);
+    /* Stop JetBrains Mono from merging "/>" into a single ligature glyph */
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "calt" 0;
+  }
+  .logo:hover    { opacity: 0.7; text-decoration: none; }
+  .logo-bracket  { color: var(--color-muted); }
+  .logo-mark     { color: var(--color-accent); }
+
+  /* ── Centered nav links (grows to fill space) ─────── */
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2px;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nav-link {
+    position: relative;
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-muted);
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: color var(--transition-base), background-color var(--transition-base);
+  }
+  .nav-link:hover {
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    text-decoration: none;
+  }
+  /* Active page */
+  .nav-link[aria-current="page"] {
+    color: var(--color-accent);
+  }
+  .nav-link[aria-current="page"]::after {
+    content: '';
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 2px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: var(--color-accent);
+  }
+
+  /* ── Right cluster — always on the far right ─────── */
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .theme-wrap {
+    display: flex;
+    align-items: center;
+  }
+
+  .divider {
+    width: 1px;
+    height: 20px;
+    background-color: var(--color-border);
+  }
+
+  /* ── Hamburger — bare icon, no border/bg ─────────── */
+  .hamburger {
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: var(--color-muted);
+    line-height: 0;
+    flex-shrink: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-base);
+  }
+  .hamburger:hover { color: var(--color-text); }
+
+  .hamburger svg rect {
+    transition: transform 280ms ease, opacity 180ms ease;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .hamburger[aria-expanded="true"] .b1 { transform: translateY(6px) rotate(45deg); }
+  .hamburger[aria-expanded="true"] .b2 { opacity: 0; }
+  .hamburger[aria-expanded="true"] .b3 { transform: translateY(-6px) rotate(-45deg); }
+
+  /* ── Mobile drawer ────────────────────────────────── */
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-lg);
+    padding: var(--space-lg) clamp(1rem, 5vw, 2.5rem) var(--space-2xl);
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+    position: fixed;
+    inset: 0;
+    top: 57px;
+    z-index: 190;
+    overflow-y: auto;
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity 220ms ease, transform 220ms ease;
+  }
+  .mobile-menu.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .mobile-links { list-style: none; }
+
+  .mobile-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--color-border);
+    transition: color var(--transition-base);
+  }
+  .mobile-link:hover { color: var(--color-accent); text-decoration: none; }
+  .mobile-link[aria-current="page"] {
+    color: var(--color-accent);
+  }
+  .mobile-link[aria-current="page"]::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  /* ── Mobile breakpoint ────────────────────────────── */
+  @media (max-width: 680px) {
+    .nav-links   { display: none; }
+    .hamburger   { display: flex; }
+    .mobile-menu { display: flex; }
+  }
+</style>

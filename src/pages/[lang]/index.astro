@@ -1,0 +1,19 @@
+---
+import { languages, type Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Skills from '../../components/Skills.astro';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={t('hero.headline')} {lang} description={t('hero.subtitle')}>
+  <Hero {lang} />
+  <Skills {lang} />
+</BaseLayout>

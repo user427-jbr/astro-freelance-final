@@ -1,0 +1,83 @@
+---
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: string;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang as Lang);
+---
+
+<button class="theme-toggle-btn" aria-label={t('theme.toggle')} title={t('theme.toggle')}>
+  <!-- Sun icon (shown in dark mode → click to go light) -->
+  <svg class="icon icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"/>
+    <line x1="12" y1="2"  x2="12" y2="6"/>
+    <line x1="12" y1="18" x2="12" y2="22"/>
+    <line x1="4.93" y1="4.93"  x2="7.76" y2="7.76"/>
+    <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/>
+    <line x1="2"  y1="12" x2="6"  y2="12"/>
+    <line x1="18" y1="12" x2="22" y2="12"/>
+    <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/>
+    <line x1="16.24" y1="7.76"  x2="19.07" y2="4.93"/>
+  </svg>
+  <!-- Moon icon (shown in light mode → click to go dark) -->
+  <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+  </svg>
+</button>
+
+<script>
+  function initToggles() {
+    document.querySelectorAll('.theme-toggle-btn').forEach((el) => {
+      const btn = el as HTMLElement;
+      // The button lives in the persisted nav, so its listener survives
+      // navigation. Guard against binding it again on each swap (duplicate
+      // listeners would toggle the theme multiple times per click).
+      if (btn.dataset.bound) return;
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') ?? 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (_) {}
+      });
+    });
+  }
+  initToggles();
+  document.addEventListener('astro:after-swap', initToggles);
+</script>
+
+<style>
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 2px;
+    cursor: pointer;
+    color: var(--color-muted);
+    line-height: 0;
+    transition: color var(--transition-base);
+    flex-shrink: 0;
+  }
+
+  button:hover {
+    color: var(--color-text);
+  }
+
+  .icon {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  /* dark mode: show sun, hide moon */
+  :global(:not([data-theme="light"])) .icon-sun  { display: block; }
+  :global(:not([data-theme="light"])) .icon-moon { display: none; }
+
+  /* light mode: show moon, hide sun */
+  :global([data-theme="light"]) .icon-sun  { display: none; }
+  :global([data-theme="light"]) .icon-moon { display: block; }
+</style>

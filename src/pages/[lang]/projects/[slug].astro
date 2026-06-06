@@ -1,0 +1,55 @@
+---
+import { languages, type Lang } from '../../../i18n/ui';
+import { useTranslations } from '../../../i18n/utils';
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../../layouts/PostLayout.astro';
+
+export async function getStaticPaths() {
+  const allProjects = await getCollection('projects');
+  return Object.keys(languages).flatMap((lang) =>
+    allProjects.map((project) => ({
+      params: { lang, slug: project.id },
+      props: { project },
+    }))
+  );
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const { project } = Astro.props;
+const t = useTranslations(lang);
+const { Content } = await render(project);
+---
+
+<PostLayout
+  title={project.data.title}
+  {lang}
+  description={project.data.description}
+>
+  <article>
+    <a href={`/${lang}/projects`} class="back-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      {t('back.projects')}
+    </a>
+
+    <header class="detail-header">
+      <h1>{project.data.title}</h1>
+      <p class="detail-lead">{project.data.description}</p>
+
+      <ul class="tag-list" role="list">
+        {project.data.techs.map((tech: string) => <li class="tag">{tech}</li>)}
+      </ul>
+
+      {project.data.url && (
+        <a href={project.data.url} target="_blank" rel="noopener noreferrer" class="ext-link">
+          {project.data.url}
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+        </a>
+      )}
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</PostLayout>
+

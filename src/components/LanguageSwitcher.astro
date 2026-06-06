@@ -1,0 +1,59 @@
+---
+import { languages, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: string;
+}
+const { lang } = Astro.props;
+
+const langCodes  = Object.keys(languages);
+const otherCode  = langCodes.find((code) => code !== lang) as Lang;
+const rawPath    = Astro.url.pathname;
+const otherHref  = rawPath.replace(/^\/[^/]+/, '/' + otherCode);
+const otherLabel = 'Switch to ' + languages[otherCode];
+---
+
+<a
+  id="lang-switch"
+  href={otherHref}
+  class="lang-btn"
+  hreflang={otherCode}
+  aria-label={otherLabel}
+>
+  {otherCode.toUpperCase()}
+</a>
+
+<script define:vars={{ langCodes, labels: languages }}>
+  // The nav is persisted across navigations, so the build-time href goes stale.
+  // Recompute the language link from the CURRENT path on every navigation.
+  function syncLang() {
+    const a = document.getElementById('lang-switch');
+    if (!a) return;
+    const current = location.pathname.split('/')[1];
+    const other = langCodes.find((code) => code !== current) || current;
+    a.setAttribute('href', location.pathname.replace(/^\/[^/]+/, '/' + other));
+    a.setAttribute('hreflang', other);
+    a.setAttribute('aria-label', 'Switch to ' + labels[other]);
+    a.textContent = other.toUpperCase();
+  }
+
+  syncLang();
+  document.addEventListener('astro:after-swap', syncLang);
+</script>
+
+<style>
+  .lang-btn {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color var(--transition-base);
+    line-height: 1;
+  }
+
+  .lang-btn:hover {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+</style>

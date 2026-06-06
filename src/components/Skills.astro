@@ -1,0 +1,93 @@
+---
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: string;
+}
+const { lang } = Astro.props;
+const t = useTranslations(lang as Lang);
+
+const groups = [
+  {
+    label: t('skills.frontend'),
+    skills: ['HTML', 'CSS', 'TypeScript', 'React', 'Astro', 'Tailwind CSS', 'Framer Motion'],
+  },
+  {
+    label: t('skills.backend'),
+    skills: ['Node.js', 'Python', 'PostgreSQL', 'SQLite', 'REST APIs', 'GraphQL'],
+  },
+  {
+    label: t('skills.tools'),
+    skills: ['Git', 'GitHub Actions', 'Docker', 'Vercel', 'Figma', 'VS Code'],
+  },
+];
+---
+
+<section class="skills">
+  <div class="container">
+    <h2>{t('skills.title')}</h2>
+
+    <div class="groups">
+      {groups.map(({ label, skills }) => (
+        <div class="group">
+          <h3 class="group-label">{label}</h3>
+          <ul class="pill-list" role="list">
+            {skills.map((skill) => (
+              <li class="pill">{skill}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills {
+    padding-block: var(--space-2xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  h2 {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-xl);
+  }
+
+  .groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: var(--space-xl);
+  }
+
+  .group-label {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-md);
+  }
+
+  .pill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    list-style: none;
+  }
+
+  .pill {
+    font-size: var(--text-sm);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    padding: 4px var(--space-md);
+    border-radius: 999px;
+    transition: border-color var(--transition-base), color var(--transition-base);
+  }
+
+  .pill:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+</style>

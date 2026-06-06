@@ -1,0 +1,33 @@
+---
+import { languages, type Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+const allProjects = await getCollection('projects');
+---
+
+<BaseLayout title={t('projects.title')} {lang} description={t('projects.title')}>
+  <div class="container page">
+    <h1 class="page-title">{t('projects.title')}</h1>
+    <div class="project-grid">
+      {allProjects.map((project) => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          techs={project.data.techs}
+          url={project.data.url}
+          slug={project.id}
+          {lang}
+        />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

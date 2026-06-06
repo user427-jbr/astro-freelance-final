@@ -1,0 +1,57 @@
+---
+import { languages, type Lang } from '../../../i18n/ui';
+import { useTranslations } from '../../../i18n/utils';
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../../layouts/PostLayout.astro';
+import { readingTime } from '../../../utils/readingTime';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  return Object.keys(languages).flatMap((lang) =>
+    allPosts.map((post) => ({
+      params: { lang, slug: post.id },
+      props: { post },
+    }))
+  );
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const { post } = Astro.props;
+const t = useTranslations(lang);
+const { Content } = await render(post);
+const minutes = readingTime(post.body);
+---
+
+<PostLayout
+  title={post.data.title}
+  {lang}
+  description={post.data.description}
+>
+  <article>
+    <a href={`/${lang}/blog`} class="back-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      {t('back.blog')}
+    </a>
+
+    <header class="detail-header">
+      <h1>{post.data.title}</h1>
+      <p class="detail-meta">
+        <time datetime={post.data.date.toISOString()}>
+          {post.data.date.toLocaleDateString(lang, { year: 'numeric', month: 'long', day: 'numeric' })}
+        </time>
+        <span>·</span>
+        <span>{minutes} {t('reading.time')}</span>
+      </p>
+      {post.data.tags.length > 0 && (
+        <ul class="tag-list" role="list">
+          {post.data.tags.map((tag: string) => <li class="tag">{tag}</li>)}
+        </ul>
+      )}
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</PostLayout>
+
