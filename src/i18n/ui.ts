@@ -99,8 +99,8 @@ export const ui = {
     'hero.label':      'Julius Bruch',
     'hero.tagline':    'Power Apps Maker · Web Developer · Vibe Coder',
     'hero.headline':   "Hi, I'm Julius.",
-    'hero.subtitle':   'Freelance developer from Leipzig.',
-    'hero.cta.more':   'Learn More',
+    'hero.subtitle':   'Freelance IT consultant from Leipzig.',
+    'hero.cta.more':   'Learn more',
     'hero.cta.contact': 'Get in touch',
 
     'services.title':         'My Services',
@@ -122,7 +122,7 @@ export const ui = {
     'about.title':     'About Me',
     'about.role':      'Digital Transformation Consultant',
     'about.location':  'Leipzig, DE',
-    'about.intro':     "Master's student in Business Informatics at University of Leipzig. Freelance Power Apps developer. I build scalable, enterprise grade solutions that streamline operations, automate workflows, and unlock the full potential of Microsoft 365.",
+    'about.intro':     "Master's student in Business Informatics at the University of Leipzig. Freelance IT consultant. I build scalable, enterprise-ready solutions that streamline operations, automate workflows, and unlock the full potential of Microsoft 365.",
     'about.body':      '',
     'about.availability': 'Semester break: Jun 13, 2026 – Sep 30, 2026 · Available 20 hrs/week',
     'about.profiles':  'Profiles & Links',
@@ -137,7 +137,7 @@ export const ui = {
     'newsletter.note':    'No spam. Unsubscribe anytime.',
 
     'contact.title':   'Contact',
-    'contact.intro':   "Let's talk about your project. I typically respond within 24 hours.",
+    'contact.intro':   "Let's talk about your project. I usually respond within 24 hours.",
     'contact.connect': 'More ways to connect',
     'contact.linkedin':    'LinkedIn',
     'contact.freelance':   'freelance.de',
@@ -166,6 +166,6 @@ export const ui = {
     'contact.form.privacy.link': 'Privacy Policy',
     'contact.form.privacy.suffix': 'and consent to the processing of my data.',
 
-    'cta.contact': 'Request a project',
+    'cta.contact': 'Request project',
   },
 } satisfies Record<Lang, Record<string, string>>;
