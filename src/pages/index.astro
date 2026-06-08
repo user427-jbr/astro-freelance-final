@@ -1,5 +1,14 @@
 ---
 import { defaultLang } from '../i18n/ui';
-import { localizePath } from '../i18n/utils';
-return Astro.redirect(localizePath(`/${defaultLang}/`));
+const target = `/${defaultLang}/`;
 ---
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <script is:inline define:vars={{ target }}>window.location.replace(target);</script>
+    <link rel="canonical" href={target} />
+  </head>
+  <body></body>
+</html>
