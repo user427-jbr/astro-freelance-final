@@ -1,6 +1,7 @@
 ---
 import { defaultLang } from '../i18n/ui';
-const target = `/${defaultLang}/`;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const target = `${base}/${defaultLang}/`;
 ---
 <!doctype html>
 <html>

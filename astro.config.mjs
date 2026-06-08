@@ -5,7 +5,8 @@ import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://julius-bruch.de',
+  site: 'https://user427-jbr.github.io',
+  base: '/astro-freelance-final',
   integrations: [sitemap(), icon()],
   markdown: {
     shikiConfig: {
