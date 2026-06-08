@@ -1,6 +1,7 @@
 ---
 import type { Lang } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
+import { Icon } from 'astro-icon/components';
 
 interface Props {
   lang: string;
@@ -10,19 +11,25 @@ const t = useTranslations(lang as Lang);
 ---
 
 <section class="hero">
-  <div class="container">
-    <p class="hero-tagline">{t('hero.tagline')}</p>
-    <h1 class="headline">{t('hero.headline')}</h1>
-    <p class="subtitle">{t('hero.subtitle')}</p>
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <p class="hero-tagline">{t('hero.tagline')}</p>
+      <h1 class="headline">{t('hero.headline')}</h1>
+      <p class="subtitle">{t('hero.subtitle')}</p>
 
-    <div class="cta-group">
-      <a href="#services" class="btn btn-primary">
-        {t('hero.cta.more')}
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      <a href="#contact" class="btn btn-ghost">
-        {t('hero.cta.contact')}
-      </a>
+      <div class="cta-group">
+        <a href="#services" class="btn btn-primary">
+          {t('hero.cta.more')}
+          <Icon name="lucide:arrow-right" width="14" height="14" aria-hidden="true" />
+        </a>
+        <a href="#contact" class="btn btn-ghost">
+          {t('hero.cta.contact')}
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <Icon name="mdi:laptop-account" width="180" height="180" />
     </div>
   </div>
 </section>
@@ -30,6 +37,23 @@ const t = useTranslations(lang as Lang);
 <style>
   .hero {
     padding-block: var(--space-2xl) calc(var(--space-2xl) * 1.5);
+  }
+
+  .hero-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xl);
+  }
+
+  .hero-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .hero-visual {
+    flex-shrink: 0;
+    color: var(--color-accent);
+    opacity: 0.18;
   }
 
   .hero-tagline {
@@ -78,6 +102,8 @@ const t = useTranslations(lang as Lang);
   .btn-primary { color: #0a0a0a; background-color: var(--color-accent); }
   .btn-primary:hover { opacity: 0.88; }
 
+  :global([data-theme="light"]) .btn-primary { color: #fff; }
+
   .btn-ghost {
     color: var(--color-text);
     background-color: transparent;
@@ -85,6 +111,9 @@ const t = useTranslations(lang as Lang);
   }
   .btn-ghost:hover { border-color: var(--color-heading); color: var(--color-heading); }
 
+  @media (max-width: 480px) {
+    .hero-visual { display: none; }
+  }
 
   @media (max-width: 600px) {
     .cta-group { flex-direction: column; }

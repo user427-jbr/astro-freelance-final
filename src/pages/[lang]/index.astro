@@ -6,6 +6,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
 import ProfileLinks from '../../components/ProfileLinks.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import { Icon } from 'astro-icon/components';
+import { services as allServices } from '../../data/services';
 
 export function getStaticPaths() {
   return Object.keys(languages).map((lang) => ({ params: { lang } }));
@@ -16,42 +20,27 @@ const t = useTranslations(lang);
 const isDE = lang === 'de';
 
 const allProjects = await getCollection('projects');
-const projects = allProjects.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const projects = allProjects.sort((a, b) => {
+  const da = a.data.date?.getTime() ?? 0;
+  const db = b.data.date?.getTime() ?? 0;
+  return db - da;
+});
 
-const services = [
-  {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17.5h7M17.5 14v7"/></svg>`,
-    name: t('services.powerapps'),
-    desc: t('services.powerapps.desc'),
-    features: isDE
-      ? ['Canvas Apps (Tablet & Mobil)', 'Modellgetriebene Apps', 'SharePoint & SQL Anbindung', 'Power Automate Integration']
-      : ['Canvas Apps (Tablet & Mobile)', 'Model-driven Apps', 'SharePoint & SQL integration', 'Power Automate integration'],
-  },
-  {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l7-9 4 5 3-3 7 7"/><path d="M3 20h18"/></svg>`,
-    name: t('services.automate'),
-    desc: t('services.automate.desc'),
-    features: isDE
-      ? ['Genehmigungsworkflows', 'Automatisierte E-Mails', 'PDF-Generierung', 'Systemübergreifende Flows']
-      : ['Approval workflows', 'Automated emails', 'PDF generation', 'Cross-system flows'],
-  },
-  {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
-    name: t('services.web'),
-    desc: t('services.web.desc'),
-    features: isDE
-      ? ['Statische Websites (Astro)', 'Responsive Design', 'SEO-Optimierung', 'DSGVO-konform']
-      : ['Static websites (Astro)', 'Responsive design', 'SEO optimization', 'GDPR-compliant'],
-  },
-];
+const services = allServices.map((s) => ({
+  slug: s.slug,
+  icon: s.icon,
+  name: isDE ? s.nameDE : s.nameEN,
+  desc: isDE ? s.descDE : s.descEN,
+  features: isDE ? s.cardFeaturesDE : s.cardFeaturesEN,
+}));
 
 const experience = isDE
   ? [
-      { year: '2025 – heute', role: 'Werkstudent IT', place: 'VNG Gasspeicher GmbH, Leipzig', detail: 'MS Power Platform & Low-Code Development' },
+      { year: '2025 – heute', role: 'Werkstudent IT', place: 'VNG Gasspeicher GmbH, Leipzig', detail: 'MS Power Platform & Low Code Development' },
       { year: '2023 – 2024', role: 'Werkstudent', place: 'Abbott Rapid Diagnostics GmbH, Jena', detail: 'Power Apps, Power Automate' },
     ]
   : [
-      { year: '2025 – present', role: 'Working Student IT', place: 'VNG Gasspeicher GmbH, Leipzig', detail: 'MS Power Platform & Low-Code Development' },
+      { year: '2025 – present', role: 'Working Student IT', place: 'VNG Gasspeicher GmbH, Leipzig', detail: 'MS Power Platform & Low Code Development' },
       { year: '2023 – 2024', role: 'Working Student', place: 'Abbott Rapid Diagnostics GmbH, Jena', detail: 'Power Apps, Power Automate' },
     ];
 
@@ -90,49 +79,15 @@ const faq = isDE
   <!-- About -->
   <section id="about" class="section">
     <div class="container">
-      <h2 class="section-title">{t('about.title')}</h2>
-      <div class="about-grid">
-        <div class="about-text">
-          <p class="about-role">{t('about.role')} · {t('about.location')}</p>
-          <p class="about-intro">{t('about.intro')}</p>
-          <p class="about-body">{t('about.body')}</p>
-          <div class="about-profiles section-divider">
-            <ProfileLinks label={t('about.profiles')} links={[
-              { label: 'LinkedIn',     href: 'https://www.linkedin.com/in/julius-bruch' },
-              { label: 'freelance.de', href: 'https://www.freelance.de' },
-            ]} />
-          </div>
-        </div>
-        <div class="about-timeline">
-          <div class="tl-group">
-            <h3 class="tl-group-label">{t('about.exp')}</h3>
-            <ol class="timeline" role="list">
-              {experience.map(({ year, role, place, detail }) => (
-                <li class="timeline-item">
-                  <span class="tl-year">{year}</span>
-                  <div class="tl-body">
-                    <strong class="tl-role">{role}</strong>
-                    <span class="tl-place">{place}</span>
-                    {detail && <span class="tl-detail">{detail}</span>}
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-          <div class="tl-group section-divider">
-            <h3 class="tl-group-label">{isDE ? 'Bildungsweg' : 'Education'}</h3>
-            <ol class="timeline" role="list">
-              {education.map(({ year, role, place }) => (
-                <li class="timeline-item">
-                  <span class="tl-year">{year}</span>
-                  <div class="tl-body">
-                    <strong class="tl-role">{role}</strong>
-                    <span class="tl-place">{place}</span>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
+      <SectionHeader icon="lucide:user-round" title={t('about.title')} subtitle={isDE ? 'Digital Transformation Consultant · Leipzig, DE' : 'Digital Transformation Consultant · Leipzig, DE'} />
+      <div class="about-text">
+        <p class="about-intro">{t('about.intro')}</p>
+        <p class="about-body">{t('about.body')}</p>
+        <div class="about-profiles">
+          <ProfileLinks label={t('about.profiles')} links={[
+            { label: 'LinkedIn',     href: 'https://www.linkedin.com/in/julius-bruch' },
+            { label: 'freelance.de', href: 'https://www.freelance.de' },
+          ]} />
         </div>
       </div>
     </div>
@@ -141,21 +96,19 @@ const faq = isDE
   <!-- Services -->
   <section id="services" class="section">
     <div class="container">
-      <h2 class="section-title">{t('services.title')}</h2>
-      <p class="section-sub">{t('services.subtitle')}</p>
+      <SectionHeader icon="lucide:briefcase" title={t('services.title')} subtitle={t('services.subtitle')} />
       <div class="service-grid">
-        {services.map(({ icon, name, desc, features }) => (
-          <a href={localizePath(`/${lang}/services`)} class="service-card">
+        {services.map(({ slug, icon, name, desc, features }) => (
+          <a href={localizePath(`/${lang}/services/${slug}`)} class="service-card">
             <div class="svc-card-top">
-              <div class="service-icon" set:html={icon}></div>
-              <svg class="svc-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              <div class="service-icon"><Icon name={icon} width="26" height="26" aria-hidden="true" /></div>
+              <Icon name="lucide:arrow-up-right" class="svc-arrow" width="16" height="16" aria-hidden="true" />
             </div>
             <p class="service-name">{name}</p>
-            <p class="service-desc">{desc}</p>
             <ul class="svc-features">
               {features.map((f) => (
                 <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <Icon name="lucide:check" width="12" height="12" aria-hidden="true" />
                   {f}
                 </li>
               ))}
@@ -169,16 +122,17 @@ const faq = isDE
   <!-- Projects -->
   <section id="projects" class="section">
     <div class="container">
-      <h2 class="section-title">{t('projects.title')}</h2>
-      <p class="section-sub">{t('projects.subtitle')}</p>
-      <div class="project-grid">
-        {projects.map((project) => (
+      <SectionHeader icon="lucide:folder-open" title={t('projects.title')} subtitle={t('projects.subtitle')} />
+      <div class="project-list">
+        {projects.map((project, i) => (
           <ProjectCard
             title={isDE ? (project.data.titleDe ?? project.data.title) : (project.data.titleEn ?? project.data.title)}
             description={isDE ? (project.data.descDe ?? project.data.description) : (project.data.descEn ?? project.data.description)}
             techs={project.data.techs}
             slug={project.id}
             icon={project.data.icon}
+            date={project.data.date}
+            isLatest={i === 0}
             {lang}
           />
         ))}
@@ -189,13 +143,10 @@ const faq = isDE
   <!-- Contact -->
   <section id="contact" class="section">
     <div class="container">
-      <h2 class="section-title">{t('contact.title')}</h2>
-      <div class="contact-layout">
+      <SectionHeader icon="lucide:mail" title={t('contact.title')} subtitle={t('contact.intro')} />
 
-        <aside class="contact-info">
-        </aside>
-
-        <form class="contact-form" name="contact" method="POST" data-netlify="true" novalidate>
+      <form class="contact-form" name="contact" method="POST" data-netlify="true" novalidate>
+        <div class="form-row">
           <div class="field">
             <label for="name">{t('contact.form.name')}</label>
             <input type="text" id="name" name="name" placeholder={t('contact.form.placeholder.name')} autocomplete="name" required />
@@ -204,85 +155,56 @@ const faq = isDE
             <label for="email">{t('contact.form.email')}</label>
             <input type="email" id="email" name="email" placeholder={t('contact.form.placeholder.email')} autocomplete="email" required />
           </div>
-          <div class="field">
-            <label for="message">{t('contact.form.message')}</label>
-            <textarea id="message" name="message" rows="6" placeholder={t('contact.form.placeholder.message')} required></textarea>
-          </div>
-          <div class="field privacy-field">
-            <label class="privacy-label">
-              <input type="checkbox" name="privacy" required />
-              <span>
-                {t('contact.form.privacy')}{' '}
-                <a href={`/${lang}/datenschutz`}>{t('contact.form.privacy.link')}</a>{' '}
-                {t('contact.form.privacy.suffix')}
-              </span>
-            </label>
-          </div>
+        </div>
+        <div class="field">
+          <label for="message">{t('contact.form.message')}</label>
+          <textarea id="message" name="message" rows="5" placeholder={t('contact.form.placeholder.message')} required></textarea>
+        </div>
+        <div class="form-footer">
+          <label class="privacy-label">
+            <input type="checkbox" name="privacy" required />
+            <span>
+              {t('contact.form.privacy')}{' '}
+              <a href={`/${lang}/datenschutz`}>{t('contact.form.privacy.link')}</a>{' '}
+              {t('contact.form.privacy.suffix')}
+            </span>
+          </label>
           <button type="submit" class="submit-btn">
             {t('contact.form.send')}
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <Icon name="lucide:send" width="16" height="16" aria-hidden="true" />
           </button>
-        </form>
+        </div>
+      </form>
 
-      </div>
-
-      <!-- FAQ — full width below contact -->
-      <div id="faq" class="faq-section section-divider">
-        <h3 class="faq-heading">{t('contact.faq.title')}</h3>
-        <ul class="faq-list">
-          {faq.map(({ q, a }, i) => (
-            <li class="faq-item" id={`faq-${i}`}>
-              <button class="faq-question" aria-expanded="false" aria-controls={`faq-ans-${i}`}>
-                {q}
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </button>
-              <div class="faq-answer" id={`faq-ans-${i}`}>{a}</div>
-            </li>
-          ))}
-        </ul>
-      </div>
-
+    </div>
+    <hr class="full-divider" />
+    <div class="container" id="faq">
+      <FaqSection title={t('contact.faq.title')} subtitle={t('contact.faq.subtitle')} items={faq} idPrefix="home-faq" />
     </div>
   </section>
 
-</BaseLayout>
 
-<script>
-  function initFaq() {
-    document.querySelectorAll('.faq-question').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const item = btn.closest('.faq-item');
-        if (!item) return;
-        const isOpen = item.classList.contains('is-open');
-        item.classList.toggle('is-open', !isOpen);
-        btn.setAttribute('aria-expanded', String(!isOpen));
-      });
-    });
-  }
-  initFaq();
-  document.addEventListener('astro:after-swap', initFaq);
-</script>
+</BaseLayout>
 
 <style>
   .section {
-    padding-block: var(--space-2xl);
-    border-top: 1px solid var(--color-border);
+    padding-block: var(--space-3xl);
     scroll-margin-top: 70px;
+    position: relative;
+  }
+
+  .section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-border);
   }
 
   #faq {
     scroll-margin-top: 70px;
-  }
-
-  .section-title {
-    font-size: var(--text-3xl);
-    margin-bottom: var(--space-sm);
-  }
-
-  .section-sub {
-    font-size: var(--text-base);
-    color: var(--color-muted);
-    margin-bottom: var(--space-xl);
   }
 
   /* About */
@@ -327,13 +249,13 @@ const faq = isDE
 
   .about-intro {
     font-size: var(--text-lg);
-    line-height: 1.65;
-    margin-bottom: var(--space-md);
+    line-height: 1.8;
+    margin-bottom: var(--space-lg);
   }
 
   .about-body {
     color: var(--color-muted);
-    line-height: 1.65;
+    line-height: 1.8;
     margin-bottom: var(--space-xl);
   }
 
@@ -374,6 +296,13 @@ const faq = isDE
 
   .svc-features svg { color: var(--color-accent); flex-shrink: 0; }
 
+  /* Full-width divider */
+  .full-divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: var(--space-2xl) 0;
+  }
+
   /* Contact */
   .contact-layout {
     display: grid;
@@ -398,10 +327,91 @@ const faq = isDE
     line-height: 1.65;
   }
 
-  .faq-heading {
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    color: var(--color-heading);
-    margin-bottom: var(--space-xl);
+  /* Newsletter */
+  .newsletter-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: var(--space-2xl);
+    position: relative;
+    overflow: hidden;
   }
+
+  .newsletter-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top left, var(--color-accent-dim) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  @media (max-width: 760px) {
+    .newsletter-card { grid-template-columns: 1fr; }
+  }
+
+  .newsletter-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-md);
+  }
+
+  .newsletter-title {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-sm);
+  }
+
+  .newsletter-sub {
+    font-size: var(--text-base);
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .newsletter-input-row {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .newsletter-input {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    border: 1.5px solid var(--color-border);
+    border-radius: 8px;
+    padding: var(--space-sm) var(--space-md);
+    outline: none;
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .newsletter-input::placeholder { color: var(--color-muted); }
+
+  .newsletter-input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-dim);
+  }
+
+  .newsletter-note {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+
 </style>

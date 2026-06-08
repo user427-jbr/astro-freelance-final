@@ -1,5 +1,14 @@
 import { defaultLang, ui, type Lang } from './ui';
 
+/** Trailing-slash-free deploy base, e.g. "" at root or "/astro-freelance-final". */
+export const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+/** Prefix an absolute site path with the deploy base so links work under a subpath. */
+export function localizePath(path: string): string {
+  const p = path.startsWith('/') ? path : '/' + path;
+  return BASE + p;
+}
+
 export function getLangFromUrl(url: URL): Lang {
   const [, lang] = url.pathname.split('/');
   if (lang in ui) return lang as Lang;

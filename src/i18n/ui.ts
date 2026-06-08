@@ -17,9 +17,9 @@ export const ui = {
     'nav.faq':         'FAQ',
 
     'hero.label':      'Julius Bruch',
-    'hero.tagline':    'Power Apps · Power Automate · SharePoint',
-    'hero.headline':   'Digitalisieren Sie Ihre Geschäftsprozesse',
-    'hero.subtitle':   'Ich digitalisiere Ihre Geschäftsprozesse mit Power Apps, Power Automate und SharePoint – schnell, skalierbar und direkt in Microsoft 365.',
+    'hero.tagline':    'Power Apps Maker · Web Developer · Vibe Coder',
+    'hero.headline':   'Hi, ich bin Julius.',
+    'hero.subtitle':   'Freiberuflicher IT-Berater aus Leipzig.',
     'hero.cta.more':   'Mehr erfahren',
     'hero.cta.contact': 'Kontakt aufnehmen',
 
@@ -30,8 +30,8 @@ export const ui = {
     'services.automate':      'Power Automate Workflows',
     'services.automate.desc': 'Routineaufgaben und Genehmigungsprozesse automatisieren.',
     'services.sharepoint':    'SharePoint Lösungen',
-    'services.sharepoint.desc': 'Portale, Dokumentenmanagement und Team-Sites.',
-    'services.web':           'Web-Entwicklung',
+    'services.sharepoint.desc': 'Portale, Dokumentenmanagement und Team Sites.',
+    'services.web':           'Web Entwicklung',
     'services.web.desc':      'Professionelle Websites für Unternehmen.',
     'services.cta':           'Alle Leistungen ansehen',
 
@@ -40,15 +40,21 @@ export const ui = {
     'projects.cta':    'Alle Projekte ansehen',
 
     'about.title':     'Über mich',
-    'about.role':      'Power Apps Entwickler',
+    'about.role':      'Digital Transformation Consultant',
     'about.location':  'Leipzig, DE',
-    'about.intro':     'Masterstudent der Wirtschaftsinformatik an der Universität Leipzig. Freiberuflicher Power Apps-Entwickler. Ich baue skalierbare, unternehmenstaugliche Lösungen, die Abläufe optimieren, Workflows automatisieren und das volle Potenzial von Microsoft 365 ausschöpfen.',
-    'about.body':      'Mein Schwerpunkt liegt auf der Microsoft Power Platform – insbesondere Power Apps und Power Automate. Zusätzlich entwickle ich professionelle Websites für Kunden, die ihre Online-Präsenz stärken möchten.',
+    'about.intro':     'Masterstudent der Wirtschaftsinformatik an der Universität Leipzig. Freiberuflicher Power Apps Entwickler. Ich baue skalierbare, unternehmenstaugliche Lösungen, die Abläufe optimieren, Workflows automatisieren und das volle Potenzial von Microsoft 365 ausschöpfen.',
+    'about.body':      '',
     'about.availability': 'Vorlesungsfreie Zeit: 13.06.2026 – 30.09.2026 · 20 Std./Woche verfügbar',
     'about.profiles':  'Profile & Links',
     'about.exp':       'Berufserfahrung',
     'about.edu':       'Bildungsweg',
     'about.cta':       'Meine Leistungen ansehen',
+
+    'newsletter.title':    'Auf dem Laufenden bleiben',
+    'newsletter.subtitle': 'Neue Projekte, Tipps und Updates aus der Welt der Microsoft Power Platform – direkt in Ihr Postfach.',
+    'newsletter.placeholder': 'ihre@email.de',
+    'newsletter.cta':     'Jetzt anmelden',
+    'newsletter.note':    'Kein Spam. Abmeldung jederzeit möglich.',
 
     'contact.title':   'Kontakt',
     'contact.intro':   'Lassen Sie uns über Ihr Projekt sprechen. Ich antworte in der Regel innerhalb von 24 Stunden.',
@@ -56,6 +62,7 @@ export const ui = {
     'contact.linkedin':    'LinkedIn',
     'contact.freelance':   'freelance.de',
     'contact.faq.title': 'Häufig gestellte Fragen',
+    'contact.faq.subtitle': 'Antworten auf die häufigsten Fragen rund um meine Arbeit.',
 
     'footer.tagline':  'Power Apps · Power Automate · SharePoint',
     'footer.privacy':    'Datenschutz',
@@ -90,9 +97,9 @@ export const ui = {
     'nav.faq':         'FAQ',
 
     'hero.label':      'Julius Bruch',
-    'hero.tagline':    'Power Apps · Power Automate · SharePoint',
-    'hero.headline':   'Digitalize Your Business Processes',
-    'hero.subtitle':   'I digitalize your business processes with Power Apps, Power Automate, and SharePoint — fast, scalable, and seamlessly integrated into Microsoft 365.',
+    'hero.tagline':    'Power Apps Maker · Web Developer · Vibe Coder',
+    'hero.headline':   "Hi, I'm Julius.",
+    'hero.subtitle':   'Freelance developer from Leipzig.',
     'hero.cta.more':   'Learn More',
     'hero.cta.contact': 'Get in touch',
 
@@ -113,15 +120,21 @@ export const ui = {
     'projects.cta':    'View all projects',
 
     'about.title':     'About Me',
-    'about.role':      'Power Apps Developer',
+    'about.role':      'Digital Transformation Consultant',
     'about.location':  'Leipzig, DE',
-    'about.intro':     "Master's student in Business Informatics at University of Leipzig. Freelance Power Apps developer. I build scalable, enterprise-grade solutions that streamline operations, automate workflows, and unlock the full potential of Microsoft 365.",
-    'about.body':      'My focus is on the Microsoft Power Platform – particularly Power Apps and Power Automate. I also develop professional websites for clients looking to strengthen their online presence.',
+    'about.intro':     "Master's student in Business Informatics at University of Leipzig. Freelance Power Apps developer. I build scalable, enterprise grade solutions that streamline operations, automate workflows, and unlock the full potential of Microsoft 365.",
+    'about.body':      '',
     'about.availability': 'Semester break: Jun 13, 2026 – Sep 30, 2026 · Available 20 hrs/week',
     'about.profiles':  'Profiles & Links',
     'about.exp':       'Experience',
     'about.edu':       'Education',
     'about.cta':       'View my services',
+
+    'newsletter.title':    'Stay in the loop',
+    'newsletter.subtitle': 'New projects, tips, and updates from the world of Microsoft Power Platform — straight to your inbox.',
+    'newsletter.placeholder': 'you@example.com',
+    'newsletter.cta':     'Subscribe',
+    'newsletter.note':    'No spam. Unsubscribe anytime.',
 
     'contact.title':   'Contact',
     'contact.intro':   "Let's talk about your project. I typically respond within 24 hours.",
@@ -129,6 +142,7 @@ export const ui = {
     'contact.linkedin':    'LinkedIn',
     'contact.freelance':   'freelance.de',
     'contact.faq.title': 'Frequently Asked Questions',
+    'contact.faq.subtitle': 'Answers to the most common questions about my work.',
 
     'footer.tagline':  'Power Apps · Power Automate · SharePoint',
     'footer.privacy':    'Privacy',

@@ -1,5 +1,6 @@
 ---
 import { languages, type Lang } from '../i18n/ui';
+import { BASE } from '../i18n/utils';
 
 interface Props {
   lang: string;
@@ -8,8 +9,11 @@ const { lang } = Astro.props;
 
 const langCodes  = Object.keys(languages);
 const otherCode  = langCodes.find((code) => code !== lang) as Lang;
+
+// Strip the deploy base, swap the language segment, re-add the base.
 const rawPath    = Astro.url.pathname;
-const otherHref  = rawPath.replace(/^\/[^/]+/, '/' + otherCode);
+const noBase     = BASE && rawPath.startsWith(BASE) ? rawPath.slice(BASE.length) : rawPath;
+const otherHref  = BASE + noBase.replace(/^\/[^/]+/, '/' + otherCode);
 const otherLabel = 'Switch to ' + languages[otherCode];
 ---
 
@@ -23,15 +27,18 @@ const otherLabel = 'Switch to ' + languages[otherCode];
   {otherCode.toUpperCase()}
 </a>
 
-<script define:vars={{ langCodes, labels: languages }}>
+<script define:vars={{ langCodes, labels: languages, base: BASE }}>
   // The nav is persisted across navigations, so the build-time href goes stale.
-  // Recompute the language link from the CURRENT path on every navigation.
+  // Recompute the language link from the CURRENT path on every navigation,
+  // accounting for the deploy base path.
   function syncLang() {
     const a = document.getElementById('lang-switch');
     if (!a) return;
-    const current = location.pathname.split('/')[1];
+    const raw = location.pathname;
+    const noBase = base && raw.startsWith(base) ? raw.slice(base.length) : raw;
+    const current = noBase.split('/')[1];
     const other = langCodes.find((code) => code !== current) || current;
-    a.setAttribute('href', location.pathname.replace(/^\/[^/]+/, '/' + other));
+    a.setAttribute('href', base + noBase.replace(/^\/[^/]+/, '/' + other));
     a.setAttribute('hreflang', other);
     a.setAttribute('aria-label', 'Switch to ' + labels[other]);
     a.textContent = other.toUpperCase();

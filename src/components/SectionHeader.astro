@@ -1,0 +1,19 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  icon: string;
+  title: string;
+  subtitle?: string;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { icon, title, subtitle, headingLevel = 'h2' } = Astro.props;
+const HeadingTag = headingLevel;
+---
+
+<div class="section-header">
+  <Icon name={icon} width="24" height="24" aria-hidden="true" />
+  <HeadingTag class="section-title">{title}</HeadingTag>
+</div>
+{subtitle && <p class="section-sub">{subtitle}</p>}

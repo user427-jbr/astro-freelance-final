@@ -1,8 +1,10 @@
 ---
 import { languages, type Lang } from '../../../i18n/ui';
-import { useTranslations } from '../../../i18n/utils';
+import { useTranslations, localizePath } from '../../../i18n/utils';
 import { getCollection, render } from 'astro:content';
 import PostLayout from '../../../layouts/PostLayout.astro';
+import PageCta from '../../../components/PageCta.astro';
+import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
   const allProjects = await getCollection('projects');
@@ -18,38 +20,76 @@ const { lang } = Astro.params as { lang: Lang };
 const { project } = Astro.props;
 const t = useTranslations(lang);
 const { Content } = await render(project);
+
+const title = lang === 'de' ? (project.data.titleDe ?? project.data.title) : (project.data.titleEn ?? project.data.title);
+const description = lang === 'de' ? (project.data.descDe ?? project.data.description) : (project.data.descEn ?? project.data.description);
 ---
 
-<PostLayout
-  title={project.data.title}
-  {lang}
-  description={project.data.description}
->
+<PostLayout title={title} {lang} description={description}>
   <article>
-    <a href={`/${lang}/projects`} class="back-link">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <a href={localizePath(`/${lang}/#projects`)} class="back-link">
+      <Icon name="lucide:arrow-left" width="14" height="14" aria-hidden="true" />
       {t('back.projects')}
     </a>
 
     <header class="detail-header">
-      <h1>{project.data.title}</h1>
-      <p class="detail-lead">{project.data.description}</p>
+      <div class="detail-header-top">
+        {project.data.icon && (
+          <div class="detail-icon" aria-hidden="true">
+            <Icon name={project.data.icon} width="28" height="28" />
+          </div>
+        )}
+        {project.data.date && (
+          <time class="detail-date">
+            {project.data.date.toLocaleDateString(lang === 'de' ? 'de-DE' : 'en-US', { month: 'long', year: 'numeric' })}
+          </time>
+        )}
+      </div>
+      <h1>{title}</h1>
+      <p class="detail-lead">{description}</p>
 
-      <ul class="tag-list" role="list">
-        {project.data.techs.map((tech: string) => <li class="tag">{tech}</li>)}
-      </ul>
-
-      {project.data.url && (
-        <a href={project.data.url} target="_blank" rel="noopener noreferrer" class="ext-link">
-          {project.data.url}
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
-        </a>
+      {project.data.techs.length > 0 && (
+        <ul class="tag-list" role="list">
+          {project.data.techs.map((tech: string) => <li class="tag">{tech}</li>)}
+        </ul>
       )}
     </header>
 
     <div class="prose">
       <Content />
     </div>
+
+    <PageCta
+      heading={lang === 'de' ? 'Interesse an einer ähnlichen Lösung?' : 'Interested in a similar solution?'}
+      body={lang === 'de' ? 'Lassen Sie uns über Ihr Projekt sprechen.' : "Let's talk about your project."}
+      ctaHref={localizePath(`/${lang}/#contact`)}
+      ctaText={lang === 'de' ? 'Kontakt aufnehmen' : 'Get in touch'}
+    />
   </article>
 </PostLayout>
 
+<style>
+  .detail-header-top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .detail-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background-color: var(--color-accent-dim);
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .detail-date {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+</style>

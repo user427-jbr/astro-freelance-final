@@ -1,0 +1,52 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface FaqItem {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  items: FaqItem[];
+  idPrefix?: string;
+}
+
+const { title, subtitle, items, idPrefix = 'faq' } = Astro.props;
+---
+
+<div class="faq-section">
+  <div class="section-header">
+    <Icon name="lucide:help-circle" width="24" height="24" aria-hidden="true" />
+    <h2 class="section-title">{title}</h2>
+  </div>
+  {subtitle && <p class="section-sub">{subtitle}</p>}
+  <ul class="faq-list">
+    {items.map(({ q, a }, i) => (
+      <li class="faq-item" id={`${idPrefix}-${i}`}>
+        <button class="faq-question" aria-expanded="false" aria-controls={`${idPrefix}-ans-${i}`}>
+          {q}
+          <Icon name="lucide:plus" width="18" height="18" aria-hidden="true" />
+        </button>
+        <div class="faq-answer" id={`${idPrefix}-ans-${i}`}>{a}</div>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  function initFaq() {
+    document.querySelectorAll('.faq-question').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        if (!item) return;
+        const isOpen = item.classList.contains('is-open');
+        item.classList.toggle('is-open', !isOpen);
+        btn.setAttribute('aria-expanded', String(!isOpen));
+      });
+    });
+  }
+  initFaq();
+  document.addEventListener('astro:after-swap', initFaq);
+</script>

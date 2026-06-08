@@ -6,93 +6,125 @@ interface Props {
   url?: string;
   slug: string;
   lang: string;
+  icon?: string;
+  date?: Date;
+  isLatest?: boolean;
 }
-const { title, description, techs, url, slug, lang } = Astro.props;
-const detailHref = `/${lang}/projects/${slug}`;
+import { localizePath } from '../i18n/utils';
+import { Icon } from 'astro-icon/components';
+const { title, description, url, slug, lang, date, isLatest } = Astro.props;
+const detailHref = localizePath(`/${lang}/projects/${slug}`);
+
+const dateLabel = date
+  ? date.toLocaleDateString(lang === 'de' ? 'de-DE' : 'en-US', { month: 'long', year: 'numeric' })
+  : null;
 ---
 
-<article class="card">
-  <a href={detailHref} class="card-link">
-    <h3 class="card-title">{title}</h3>
-    <p class="card-desc">{description}</p>
-    <ul class="card-techs" role="list">
-      {techs.map((tech) => <li class="tech-tag">{tech}</li>)}
-    </ul>
+<article class:list={['project-entry', { 'is-latest': isLatest }]}>
+  <a href={detailHref} class="entry-link">
+    <div class="entry-body">
+      <div class="entry-meta">
+        {isLatest && <span class="badge">{lang === 'de' ? 'Neu' : 'New'}</span>}
+        {dateLabel && <time class="entry-date">{dateLabel}</time>}
+      </div>
+      <h3 class="entry-title">{title}</h3>
+      <p class="entry-desc">{description}</p>
+    </div>
+
+    <div class="entry-arrow" aria-hidden="true">
+      <Icon name="lucide:arrow-right" width="16" height="16" />
+    </div>
   </a>
+
   {url && (
-    <a href={url} target="_blank" rel="noopener noreferrer" class="card-external" aria-label="Open project link">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+    <a href={url} target="_blank" rel="noopener noreferrer" class="entry-external" aria-label="Open live project">
+      <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" />
     </a>
   )}
 </article>
 
 <style>
-  .card {
+  .project-entry {
     position: relative;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: var(--space-lg);
-    transition: border-color var(--transition-base), transform var(--transition-base);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .project-entry:first-child {
+    border-top: 1px solid var(--color-border);
   }
 
-  .card:hover {
-    border-color: var(--color-accent);
-    transform: translateY(-2px);
-  }
-
-  .card-link {
-    display: block;
+  .entry-link {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    padding: var(--space-lg) 0;
     text-decoration: none;
     color: inherit;
   }
+  .entry-link:hover { text-decoration: none; }
 
-  .card-link:hover {
-    text-decoration: none;
+  .entry-body {
+    flex: 1;
+    min-width: 0;
   }
 
-  .card-title {
-    font-size: var(--text-xl);
-    color: var(--color-heading);
-    margin-bottom: var(--space-sm);
+  .entry-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
   }
 
-  .card-desc {
+  .badge {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--color-accent);
+    letter-spacing: 0.03em;
+  }
+
+  .entry-date {
     font-size: var(--text-sm);
     color: var(--color-muted);
-    margin-bottom: var(--space-md);
-    line-height: 1.5;
   }
 
-  .card-techs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-xs);
-    list-style: none;
+  .entry-title {
+    font-size: var(--text-lg);
+    color: var(--color-heading);
+    margin-bottom: var(--space-xs);
+    transition: color var(--transition-base);
   }
-
-  .tech-tag {
-    font-size: var(--text-sm);
-    background-color: var(--color-accent-dim);
+  .project-entry:hover .entry-title {
     color: var(--color-accent);
-    padding: 2px var(--space-sm);
-    border-radius: 999px;
   }
 
-  .card-external {
+  .entry-desc {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  .entry-arrow {
+    color: var(--color-muted);
+    flex-shrink: 0;
+    transition: color var(--transition-base), transform var(--transition-base);
+  }
+  .project-entry:hover .entry-arrow {
+    color: var(--color-accent);
+    transform: translateX(3px);
+  }
+
+  .entry-external {
     position: absolute;
-    top: var(--space-md);
-    right: var(--space-md);
+    top: var(--space-lg);
+    right: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     color: var(--color-muted);
     text-decoration: none;
-    line-height: 0;
     transition: color var(--transition-base);
   }
-
-  .card-external:hover {
+  .entry-external:hover {
     color: var(--color-accent);
     text-decoration: none;
   }
