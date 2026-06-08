@@ -228,33 +228,30 @@ const navLinks = [
     color: var(--color-muted);
     text-decoration: none;
     padding: 9px 16px;
-    border-radius: 8px;
     white-space: nowrap;
     transition: color 200ms ease;
-    z-index: 1;
   }
-  .nav-link:hover { color: var(--color-text); text-decoration: none; }
-  .nav-link[aria-current="page"] { color: var(--color-accent); }
 
-  /* Sliding pill indicator */
-  .nav-links {
-    position: relative;
-  }
-  .nav-indicator {
+  .nav-link::after {
+    content: '';
     position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    height: calc(100% - 8px);
-    border-radius: 8px;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    opacity: 0;
-    pointer-events: none;
-    transition: transform 350ms cubic-bezier(0.34, 1.2, 0.64, 1),
-                width   350ms cubic-bezier(0.34, 1.2, 0.64, 1),
-                opacity 180ms ease;
+    width: 0;
+    height: 2px;
+    bottom: 2px;
+    left: 16px;
+    right: 16px;
+    background-color: var(--color-accent);
+    transition: width 0.25s ease;
   }
+
+  .nav-link:hover { color: var(--color-text); text-decoration: none; }
+  .nav-link:hover::after { width: calc(100% - 32px); }
+
+  .nav-link[aria-current="page"] { color: var(--color-accent); }
+  .nav-link[aria-current="page"]::after { width: calc(100% - 32px); }
+
+  /* Pill indicator hidden — replaced by underline */
+  .nav-indicator { display: none; }
 
   .nav-right {
     display: flex;
