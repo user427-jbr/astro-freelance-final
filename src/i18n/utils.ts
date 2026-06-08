@@ -10,7 +10,10 @@ export function localizePath(path: string): string {
 }
 
 export function getLangFromUrl(url: URL): Lang {
-  const [, lang] = url.pathname.split('/');
+  const path = BASE && url.pathname.startsWith(BASE)
+    ? url.pathname.slice(BASE.length)
+    : url.pathname;
+  const [, lang] = path.split('/');
   if (lang in ui) return lang as Lang;
   return defaultLang;
 }
