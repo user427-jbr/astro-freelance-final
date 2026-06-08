@@ -27,17 +27,15 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        working-directory: my-portfolio
         run: npm ci
 
       - name: Build
-        working-directory: my-portfolio
         run: npm run build
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: my-portfolio/dist
+          path: dist
 
   deploy:
     needs: build
