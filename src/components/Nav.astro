@@ -107,7 +107,7 @@ const navLinks = [
         const r = visible.get(id) ?? 0;
         if (r > bestRatio) { bestRatio = r; best = id; }
       });
-      if (bestRatio > 0) syncActive(best);
+      syncActive(bestRatio > 0 ? best : '');
     }, {
       rootMargin: '-8% 0px -50% 0px',
       threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],

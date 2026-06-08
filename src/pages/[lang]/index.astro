@@ -28,10 +28,9 @@ const projects = allProjects.sort((a, b) => {
 
 const services = allServices.map((s) => ({
   slug: s.slug,
-  icon: s.icon,
   name: isDE ? s.nameDE : s.nameEN,
   desc: isDE ? s.descDE : s.descEN,
-  features: isDE ? s.cardFeaturesDE : s.cardFeaturesEN,
+  features: isDE ? s.featuresDE : s.featuresEN,
 }));
 
 const experience = isDE
@@ -71,7 +70,7 @@ const faq = isDE
     ];
 ---
 
-<BaseLayout title={t('hero.headline')} {lang} description={t('hero.subtitle')}>
+<BaseLayout title={isDE ? 'Power Apps Freelancer Leipzig' : 'Power Apps Freelancer Leipzig'} {lang} description={t('hero.subtitle')}>
 
   <!-- Hero -->
   <Hero {lang} />
@@ -83,11 +82,22 @@ const faq = isDE
       <div class="about-text">
         <p class="about-intro">{t('about.intro')}</p>
         <p class="about-body">{t('about.body')}</p>
-        <div class="about-profiles">
+        <div class="about-bottom">
           <ProfileLinks label={t('about.profiles')} links={[
             { label: 'LinkedIn',     href: 'https://www.linkedin.com/in/julius-bruch' },
             { label: 'freelance.de', href: 'https://www.freelance.de' },
           ]} />
+          <div class="profiles">
+            <span class="profiles-label">{isDE ? 'Zertifikate' : 'Certifications'}</span>
+            <a href="#" rel="noopener noreferrer" target="_blank" class="profile-link">
+              PL-100
+              <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" />
+            </a>
+            <a href="#" rel="noopener noreferrer" target="_blank" class="profile-link">
+              PL-200
+              <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -98,12 +108,9 @@ const faq = isDE
     <div class="container">
       <SectionHeader icon="lucide:briefcase" title={t('services.title')} subtitle={t('services.subtitle')} />
       <div class="service-grid">
-        {services.map(({ slug, icon, name, desc, features }) => (
+        {services.map(({ slug, name, desc, features }) => (
           <a href={localizePath(`/${lang}/services/${slug}`)} class="service-card">
-            <div class="svc-card-top">
-              <div class="service-icon"><Icon name={icon} width="26" height="26" aria-hidden="true" /></div>
-              <Icon name="lucide:arrow-up-right" class="svc-arrow" width="16" height="16" aria-hidden="true" />
-            </div>
+            <Icon name="lucide:arrow-up-right" class="svc-arrow" width="16" height="16" aria-hidden="true" />
             <p class="service-name">{name}</p>
             <ul class="svc-features">
               {features.map((f) => (
@@ -130,8 +137,6 @@ const faq = isDE
             description={isDE ? (project.data.descDe ?? project.data.description) : (project.data.descEn ?? project.data.description)}
             techs={project.data.techs}
             slug={project.id}
-            icon={project.data.icon}
-            date={project.data.date}
             isLatest={i === 0}
             {lang}
           />
@@ -188,7 +193,8 @@ const faq = isDE
 
 <style>
   .section {
-    padding-block: var(--space-3xl);
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-3xl);
     scroll-margin-top: 70px;
     position: relative;
   }
@@ -256,8 +262,43 @@ const faq = isDE
   .about-body {
     color: var(--color-muted);
     line-height: 1.8;
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
   }
+
+  .about-bottom {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .about-bottom :global(.profiles) {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .about-bottom :global(.profiles-label) {
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 600px) {
+    .about-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .about-bottom :global(.profiles) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-sm);
+    }
+    .about-bottom :global(.profiles-label) {
+      margin-bottom: var(--space-xs);
+    }
+  }
+
 
   .tl-group { margin-bottom: var(--space-xl); }
   .tl-group:last-child { margin-bottom: 0; }
@@ -295,6 +336,13 @@ const faq = isDE
   }
 
   .svc-features svg { color: var(--color-accent); flex-shrink: 0; }
+
+  @media (max-width: 640px) {
+    .svc-features {
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+  }
 
   /* Full-width divider */
   .full-divider {

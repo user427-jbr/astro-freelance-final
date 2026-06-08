@@ -2,8 +2,6 @@
 import { languages, type Lang } from '../../../i18n/ui';
 import { useTranslations, localizePath } from '../../../i18n/utils';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import SectionHeader from '../../../components/SectionHeader.astro';
-import FaqSection from '../../../components/FaqSection.astro';
 import PageCta from '../../../components/PageCta.astro';
 import { Icon } from 'astro-icon/components';
 import { services } from '../../../data/services';
@@ -25,25 +23,7 @@ const isDE = lang === 'de';
 const name = isDE ? service.nameDE : service.nameEN;
 const desc = isDE ? service.descDE : service.descEN;
 const detail = isDE ? service.detailDE : service.detailEN;
-const features = isDE ? service.featuresDE : service.featuresEN;
 
-const faqDE = [
-  { q: 'Wie lange dauert ein typisches Projekt?', a: 'Je nach Komplexität kann ein typisches Projekt von wenigen Tagen für einfache automatisierte Workflows bis hin zu mehreren Wochen für umfassende Geschäftsanwendungen mit mehreren Bildschirmen dauern.' },
-  { q: 'Benötige ich spezielle Lizenzen?', a: 'Wenn Sie Standard-Konnektoren von Microsoft 365 (wie SharePoint und Outlook) verwenden, ist die Nutzung normalerweise in Ihrem bestehenden Plan enthalten. Premium-Konnektoren (wie SQL Server oder Salesforce) erfordern eigenständige Power Apps Lizenzen.' },
-  { q: 'Bieten Sie Unterstützung nach Projektabschluss an?', a: 'Ja! Ich biete fortlaufende Wartung, Fehlerbehebung und das Hinzufügen von Funktionen an, um sicherzustellen, dass Ihre Lösung weiterhin reibungslos läuft und sich an Ihre sich entwickelnden Geschäftsanforderungen anpasst.' },
-  { q: 'Was wird benötigt, um zu starten?', a: 'In der Regel benötige ich einen Gastzugang oder ein dediziertes Entwicklerkonto in Ihrem Microsoft 365 Tenant sowie entsprechende Lizenzen und Berechtigungen für die benötigten Datenquellen.' },
-  { q: 'Wird ein Dienstkonto (Service Account) benötigt?', a: 'Ja, ein dediziertes Dienstkonto wird dringend empfohlen. Es fungiert als neutrales Konto für automatisierte Workflows und System-E-Mails, unabhängig von einzelnen Benutzerkonten.' },
-];
-
-const faqEN = [
-  { q: 'How long does a typical project take?', a: 'Depending on the complexity, a typical project can take anywhere from a few days for simple automated workflows to several weeks for comprehensive, multi-screen business applications.' },
-  { q: 'Do I need special licenses?', a: 'If you use standard Microsoft 365 connectors (like SharePoint and Outlook), usage is typically included in your existing plan. Premium connectors (like SQL Server or Salesforce) require standalone Power Apps licenses.' },
-  { q: 'Do you offer post-project support?', a: 'Yes! I provide ongoing maintenance, troubleshooting, and feature additions to ensure your solution continues to run smoothly and adapts to your evolving business needs.' },
-  { q: 'What is needed to start a project?', a: 'I typically need a guest account or a dedicated developer account in your Microsoft 365 tenant, along with appropriate licenses and permissions to access required data sources.' },
-  { q: 'Do I need a service account?', a: 'Yes, a dedicated service account is highly recommended. It acts as a neutral account for running automated workflows and sending system emails, independent of individual user accounts.' },
-];
-
-const faq = isDE ? faqDE : faqEN;
 ---
 
 <BaseLayout title={name} {lang} description={desc}>
@@ -68,29 +48,7 @@ const faq = isDE ? faqDE : faqEN;
       <div class="sdh-detail">
         <p>{detail}</p>
       </div>
-
-      <div class="sdh-features-block">
-        <SectionHeader
-          icon="lucide:check-circle"
-          title={isDE ? 'Was ich liefere' : 'What I deliver'}
-        />
-        <ul class="service-feature-list">
-          {features.map((f) => (
-            <li>
-              <Icon name="lucide:check" width="16" height="16" aria-hidden="true" />
-              {f}
-            </li>
-          ))}
-        </ul>
-      </div>
     </div>
-
-    <FaqSection
-      title={t('contact.faq.title')}
-      subtitle={t('contact.faq.subtitle')}
-      items={faq}
-      idPrefix={`faq-${service.slug}`}
-    />
 
     <PageCta
       heading={isDE ? 'Bereit für Ihr Projekt?' : 'Ready for your project?'}
@@ -133,52 +91,19 @@ const faq = isDE ? faqDE : faqEN;
   }
 
   .sdh-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-2xl);
     margin-bottom: var(--space-2xl);
-    align-items: start;
+    width: 100%;
   }
 
-  @media (max-width: 760px) {
-    .sdh-body { grid-template-columns: 1fr; }
+  .sdh-detail {
+    width: 100%;
   }
 
   .sdh-detail p {
     font-size: var(--text-base);
     color: var(--color-muted);
     line-height: 1.75;
+    max-width: none;
   }
 
-  .sdh-features-block {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: var(--space-xl);
-  }
-
-  .service-feature-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    margin-top: var(--space-md);
-  }
-
-  .service-feature-list li {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    font-size: var(--text-base);
-    color: var(--color-text);
-  }
-
-  .service-feature-list svg {
-    color: var(--color-accent);
-    flex-shrink: 0;
-  }
-
-  .faq-section {
-    margin-bottom: var(--space-2xl);
-  }
 </style>

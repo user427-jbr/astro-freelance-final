@@ -17,7 +17,7 @@ export const ui = {
     'nav.faq':         'FAQ',
 
     'hero.label':      'Julius Bruch',
-    'hero.tagline':    'Power Apps Maker · Web Developer · Vibe Coder',
+    'hero.tagline':    'Power Apps Maker · Web Developer · Vibe Coder',
     'hero.headline':   'Hi, ich bin Julius.',
     'hero.subtitle':   'Freiberuflicher IT-Berater aus Leipzig.',
     'hero.cta.more':   'Mehr erfahren',
@@ -45,7 +45,7 @@ export const ui = {
     'about.intro':     'Masterstudent der Wirtschaftsinformatik an der Universität Leipzig. Freiberuflicher Power Apps Entwickler. Ich baue skalierbare, unternehmenstaugliche Lösungen, die Abläufe optimieren, Workflows automatisieren und das volle Potenzial von Microsoft 365 ausschöpfen.',
     'about.body':      '',
     'about.availability': 'Vorlesungsfreie Zeit: 13.06.2026 – 30.09.2026 · 20 Std./Woche verfügbar',
-    'about.profiles':  'Profile & Links',
+    'about.profiles':  'Profile',
     'about.exp':       'Berufserfahrung',
     'about.edu':       'Bildungsweg',
     'about.cta':       'Meine Leistungen ansehen',

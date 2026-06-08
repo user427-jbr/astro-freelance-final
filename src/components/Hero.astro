@@ -60,7 +60,7 @@ const t = useTranslations(lang as Lang);
     font-size: var(--text-sm);
     font-weight: 600;
     color: var(--color-accent);
-    letter-spacing: 0.06em;
+    letter-spacing: clamp(0.02em, 0.4vw, 0.06em);
     text-transform: uppercase;
     margin-bottom: var(--space-md);
   }
@@ -111,11 +111,15 @@ const t = useTranslations(lang as Lang);
   }
   .btn-ghost:hover { border-color: var(--color-heading); color: var(--color-heading); }
 
-  @media (max-width: 480px) {
+  @media (max-width: 1024px) {
     .hero-visual { display: none; }
   }
 
   @media (max-width: 600px) {
+    .hero {
+      padding-block: var(--space-xl) var(--space-2xl);
+    }
+    .hero-tagline { letter-spacing: 0.02em; }
     .cta-group { flex-direction: column; }
     .btn { width: 100%; justify-content: center; }
   }

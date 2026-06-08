@@ -1,5 +1,5 @@
 ---
-import { ClientRouter, fade } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 // Self-hosted fonts (no external Google Fonts request — GDPR-friendly)
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
@@ -67,6 +67,19 @@ const ogImageURL = ogImage ? new URL(ogImage, Astro.site) : new URL('/og-default
         applyTheme();
         document.addEventListener('astro:after-swap', applyTheme);
 
+        // Flag detail-page navigations so CSS can override mobile slide → fade.
+        document.addEventListener('astro:before-preparation', function (e) {
+          var to = e.to && e.to.pathname || '';
+          if (to.includes('/projects/') || to.includes('/services/')) {
+            document.documentElement.setAttribute('data-transition', 'fade');
+          } else {
+            document.documentElement.removeAttribute('data-transition');
+          }
+        });
+        document.addEventListener('astro:after-swap', function () {
+          document.documentElement.removeAttribute('data-transition');
+        });
+
         // Before swap: kill smooth scrolling so the browser can't animate
         // the scroll-to-hash that happens during page load.
         document.addEventListener('astro:before-swap', function () {
@@ -89,7 +102,7 @@ const ogImageURL = ogImage ? new URL(ogImage, Astro.site) : new URL('/og-default
   </head>
   <body>
     <Nav lang={lang} />
-    <main transition:animate={fade({ duration: '0.35s' })}>
+    <main>
       <slot />
     </main>
     <Footer lang={lang} />

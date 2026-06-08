@@ -6,34 +6,26 @@ interface Props {
   url?: string;
   slug: string;
   lang: string;
-  icon?: string;
-  date?: Date;
   isLatest?: boolean;
 }
 import { localizePath } from '../i18n/utils';
 import { Icon } from 'astro-icon/components';
-const { title, description, url, slug, lang, date, isLatest } = Astro.props;
+const { title, description, url, slug, lang, isLatest } = Astro.props;
 const detailHref = localizePath(`/${lang}/projects/${slug}`);
-
-const dateLabel = date
-  ? date.toLocaleDateString(lang === 'de' ? 'de-DE' : 'en-US', { month: 'long', year: 'numeric' })
-  : null;
 ---
 
 <article class:list={['project-entry', { 'is-latest': isLatest }]}>
   <a href={detailHref} class="entry-link">
     <div class="entry-body">
-      <div class="entry-meta">
-        {isLatest && <span class="badge">{lang === 'de' ? 'Neu' : 'New'}</span>}
-        {dateLabel && <time class="entry-date">{dateLabel}</time>}
-      </div>
+      {isLatest && (
+        <div class="entry-meta">
+          <span class="badge">{lang === 'de' ? 'Neu' : 'New'}</span>
+        </div>
+      )}
       <h3 class="entry-title">{title}</h3>
       <p class="entry-desc">{description}</p>
     </div>
 
-    <div class="entry-arrow" aria-hidden="true">
-      <Icon name="lucide:arrow-right" width="16" height="16" />
-    </div>
   </a>
 
   {url && (

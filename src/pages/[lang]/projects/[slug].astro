@@ -33,18 +33,6 @@ const description = lang === 'de' ? (project.data.descDe ?? project.data.descrip
     </a>
 
     <header class="detail-header">
-      <div class="detail-header-top">
-        {project.data.icon && (
-          <div class="detail-icon" aria-hidden="true">
-            <Icon name={project.data.icon} width="28" height="28" />
-          </div>
-        )}
-        {project.data.date && (
-          <time class="detail-date">
-            {project.data.date.toLocaleDateString(lang === 'de' ? 'de-DE' : 'en-US', { month: 'long', year: 'numeric' })}
-          </time>
-        )}
-      </div>
       <h1>{title}</h1>
       <p class="detail-lead">{description}</p>
 
@@ -55,7 +43,7 @@ const description = lang === 'de' ? (project.data.descDe ?? project.data.descrip
       )}
     </header>
 
-    <div class="prose">
+    <div class="project-content">
       <Content />
     </div>
 
@@ -69,27 +57,79 @@ const description = lang === 'de' ? (project.data.descDe ?? project.data.descrip
 </PostLayout>
 
 <style>
-  .detail-header-top {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    margin-bottom: var(--space-lg);
+  /* Scale down the h1 on detail pages — text-5xl is too tall on mobile */
+  article :global(h1),
+  article h1 {
+    font-size: var(--text-4xl);
   }
 
-  .detail-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
-    background-color: var(--color-accent-dim);
-    color: var(--color-accent);
+  /* ── Sections stack vertically with dividers ── */
+  .project-content :global(h2) {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-heading);
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .project-content :global(p) {
+    color: var(--color-muted);
+    line-height: 1.75;
+    margin-bottom: var(--space-md);
+  }
+
+  /* ── Features gallery grid ── */
+  .project-content :global(.features-list) {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-md);
+    margin: 0;
+    padding: 0;
+  }
+
+  .project-content :global(.features-list li) {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    gap: var(--space-xs);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    line-height: 1.5;
+  }
+
+  .project-content :global(.features-list li::before) {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-accent-dim);
+    border-radius: 50%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2300c49a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
     flex-shrink: 0;
   }
 
-  .detail-date {
+  /* ── Tech tags ── */
+  .project-content :global(.tech-tags) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .project-content :global(.tech-tag) {
     font-size: var(--text-sm);
-    color: var(--color-muted);
+    font-weight: 600;
+    color: var(--color-accent);
+    background-color: var(--color-accent-dim);
+    border-radius: 6px;
+    padding: 4px var(--space-sm);
   }
 </style>
