@@ -1,7 +1,7 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { useTranslations, localizePath, BASE } from '../i18n/utils';
+import { useTranslations, localizePath } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
 
 interface Props {
@@ -20,7 +20,7 @@ const navLinks = [
 ] as const;
 ---
 
-<nav id="main-nav" transition:persist>
+<nav id="main-nav">
   <div class="nav-inner container">
 
     <a href={localizePath(`/${lang}/`)} class="logo" aria-label="Julius Bruch — Home">
@@ -43,9 +43,11 @@ const navLinks = [
       <button
         id="hamburger"
         class="hamburger"
-        aria-label="Menü öffnen"
+        aria-label={t('nav.menu.open')}
         aria-expanded="false"
         aria-controls="mobile-menu"
+        data-label-open={t('nav.menu.open')}
+        data-label-close={t('nav.menu.close')}
       >
         <svg width="24" height="17" viewBox="0 0 24 17" aria-hidden="true">
           <rect class="b1" y="0"  width="24" height="2.5" rx="1.25" fill="currentColor"/>
@@ -135,14 +137,14 @@ const navLinks = [
 
     function open() {
       hamburger.setAttribute('aria-expanded', 'true');
-      hamburger.setAttribute('aria-label', 'Menü schließen');
+      hamburger.setAttribute('aria-label', hamburger.dataset.labelClose || 'Close menu');
       menu.setAttribute('aria-hidden', 'false');
       menu.classList.add('is-open');
       document.body.style.overflow = 'hidden';
     }
     function close() {
       hamburger.setAttribute('aria-expanded', 'false');
-      hamburger.setAttribute('aria-label', 'Menü öffnen');
+      hamburger.setAttribute('aria-label', hamburger.dataset.labelOpen || 'Open menu');
       menu.setAttribute('aria-hidden', 'true');
       menu.classList.remove('is-open');
       document.body.style.overflow = '';
@@ -168,7 +170,7 @@ const navLinks = [
     const menu = document.getElementById('mobile-menu');
     const btn  = document.getElementById('hamburger');
     if (menu) { menu.classList.remove('is-open'); menu.setAttribute('aria-hidden', 'true'); }
-    if (btn)  { btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-label', 'Menü öffnen'); }
+    if (btn)  { btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-label', btn.dataset.labelOpen || 'Open menu'); }
     document.body.style.overflow = '';
     syncActive('');
     if (cleanup) cleanup();
@@ -304,9 +306,16 @@ const navLinks = [
     opacity: 0;
     transform: translateY(-6px);
     pointer-events: none;
-    transition: opacity 220ms ease, transform 220ms ease;
+    visibility: hidden;
+    transition: opacity 220ms ease, transform 220ms ease, visibility 0s 220ms;
   }
-  .mobile-menu.is-open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .mobile-menu.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    visibility: visible;
+    transition: opacity 220ms ease, transform 220ms ease, visibility 0s;
+  }
   .mobile-links { list-style: none; }
 
   .mobile-link {
