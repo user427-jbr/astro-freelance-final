@@ -74,7 +74,7 @@ const faq = isDE
     ];
 ---
 
-<BaseLayout title={isDE ? 'Power Apps Freelancer Leipzig' : 'Power Apps Freelancer Leipzig'} {lang} description={t('hero.subtitle')}>
+<BaseLayout title="Julius Bruch · Power Apps Freelancer Leipzig" {lang} description={t('hero.subtitle')}>
 
   <!-- Hero -->
   <Hero {lang} />
@@ -86,7 +86,7 @@ const faq = isDE
       <div class="about-layout">
         <div class="about-text">
           <p class="about-intro">{t('about.intro')}</p>
-          <p class="about-body">{t('about.body')}</p>
+          {t('about.body') && <p class="about-body">{t('about.body')}</p>}
         </div>
         <aside class="about-aside">
           <div class="about-links-card">
@@ -97,11 +97,11 @@ const faq = isDE
               ]} />
               <div class="profiles">
                 <span class="profiles-label">{isDE ? 'Zertifikate' : 'Certifications'}</span>
-                <a href="#" rel="noopener noreferrer" target="_blank" class="profile-link">
+                <a href="https://learn.microsoft.com/credentials/certifications/power-platform-app-maker/" rel="noopener noreferrer" target="_blank" class="profile-link">
                   PL-100
                   <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" />
                 </a>
-                <a href="#" rel="noopener noreferrer" target="_blank" class="profile-link">
+                <a href="https://learn.microsoft.com/credentials/certifications/power-platform-functional-consultant/" rel="noopener noreferrer" target="_blank" class="profile-link">
                   PL-200
                   <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" />
                 </a>
@@ -127,8 +127,8 @@ const faq = isDE
     <div class="container">
       <SectionHeader icon="lucide:briefcase" title={t('services.title')} />
       <div class="svc-gallery">
-        {services.map(({ slug, icon, name, desc, cardFeatures }, i) => (
-          <a href={localizePath(`/${lang}/services/${slug}`)} class={`svc-tile${i === 0 ? ' svc-tile--featured' : ''}`}>
+        {services.map(({ slug, icon, name, desc, cardFeatures }) => (
+          <a href={localizePath(`/${lang}/services/${slug}`)} class="svc-tile">
             <div class="svc-tile-icon">
               <Icon name={icon} width="22" height="22" aria-hidden="true" />
             </div>
@@ -179,7 +179,7 @@ const faq = isDE
         </div>
       </div>
 
-      <form class="contact-form" name="contact" method="POST" data-netlify="true" novalidate>
+      <form class="contact-form" name="contact" method="POST" data-netlify="true">
         <div class="form-row">
           <div class="field">
             <label for="name">{t('contact.form.name')}</label>
@@ -199,7 +199,7 @@ const faq = isDE
             <input type="checkbox" name="privacy" required />
             <span>
               {t('contact.form.privacy')}{' '}
-              <a href={`/${lang}/datenschutz`}>{t('contact.form.privacy.link')}</a>{' '}
+              <a href={localizePath(`/${lang}/datenschutz`)}>{t('contact.form.privacy.link')}</a>{' '}
               {t('contact.form.privacy.suffix')}
             </span>
           </label>
@@ -222,8 +222,7 @@ const faq = isDE
 
 <style>
   .section {
-    padding-top: var(--space-2xl);
-    padding-bottom: var(--space-3xl);
+    padding-block: var(--space-2xl);
     scroll-margin-top: 70px;
     position: relative;
   }
@@ -247,7 +246,7 @@ const faq = isDE
     display: grid;
     grid-template-columns: minmax(0, 560px) 1fr;
     gap: var(--space-2xl);
-    align-items: start;
+    align-items: stretch;
   }
 
   @media (max-width: 760px) {
@@ -292,43 +291,9 @@ const faq = isDE
     margin-bottom: 0;
   }
 
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-2xl);
-    align-items: start;
-  }
-
-  @media (max-width: 760px) {
-    .about-grid { grid-template-columns: 1fr; }
-  }
-
-  .about-photo-row {
+  .about-text {
     display: flex;
-    align-items: center;
-    gap: var(--space-lg);
-    margin-bottom: var(--space-md);
-  }
-
-  .about-photo-placeholder {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    border: 2px dashed var(--color-border);
-    background-color: var(--color-surface);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-border);
-    flex-shrink: 0;
-  }
-
-  .about-role {
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-accent);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    flex-direction: column;
   }
 
   .about-intro {
@@ -340,112 +305,12 @@ const faq = isDE
   .about-body {
     color: var(--color-muted);
     line-height: 1.8;
-    margin-bottom: var(--space-lg);
-  }
-
-  .about-bottom {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-lg);
-  }
-
-  .about-bottom :global(.profiles) {
-    flex-direction: row;
-    align-items: center;
-    gap: var(--space-md);
-  }
-
-  .about-bottom :global(.profiles-label) {
-    margin-bottom: 0;
-    white-space: nowrap;
-  }
-
-  @media (max-width: 600px) {
-    .about-bottom {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-md);
-    }
-    .about-bottom :global(.profiles) {
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--space-md);
-    }
-  }
-
-
-  .tl-group { margin-bottom: var(--space-xl); }
-  .tl-group:last-child { margin-bottom: 0; }
-
-  .tl-group-label {
-    font-size: var(--text-sm);
-    font-weight: 700;
-    color: var(--color-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: var(--space-md);
-  }
-
-  .tl-detail {
-    font-size: var(--text-sm);
-    color: var(--color-accent);
-  }
-
-  /* Services two-col */
-  .services-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 560px) 1fr;
-    gap: var(--space-2xl);
-    align-items: start;
-  }
-
-  @media (max-width: 760px) {
-    .services-layout { grid-template-columns: 1fr; }
-  }
-
-  .process-panel {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: var(--space-lg);
-  }
-
-  .process-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  .process-step {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    font-size: var(--text-sm);
-    color: var(--color-text);
-  }
-
-  .step-num {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background-color: var(--color-accent-dim);
-    color: var(--color-accent);
-    font-size: var(--text-sm);
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
   }
 
   /* Services gallery */
   .svc-gallery {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
     gap: var(--space-md);
   }
 
@@ -540,21 +405,6 @@ const faq = isDE
     margin: var(--space-2xl) 0;
   }
 
-  /* Projects two-col */
-  .projects-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 560px) 1fr;
-    gap: var(--space-2xl);
-    align-items: start;
-  }
-
-  .skills-panel {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: var(--space-lg);
-  }
-
   .panel-label {
     font-size: var(--text-sm);
     font-weight: 700;
@@ -578,12 +428,6 @@ const faq = isDE
     padding: 4px 10px;
   }
 
-  @media (max-width: 760px) {
-    .projects-layout {
-      grid-template-columns: 1fr;
-    }
-  }
-
   /* Contact meta strip */
   .contact-meta {
     display: flex;
@@ -591,16 +435,6 @@ const faq = isDE
     gap: var(--space-lg);
     flex-wrap: wrap;
     margin-bottom: var(--space-xl);
-  }
-
-  .reach-me {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: var(--space-lg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
   }
 
   .avail-badge {
@@ -639,116 +473,5 @@ const faq = isDE
     text-decoration: none;
   }
   .reach-item a:hover { color: var(--color-accent); }
-
-
-  .contact-layout {
-    display: grid;
-    grid-template-columns: 1fr 1.3fr;
-    gap: var(--space-2xl);
-    align-items: start;
-  }
-
-  @media (max-width: 760px) {
-    .contact-layout { grid-template-columns: 1fr; }
-  }
-
-  .contact-info {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xl);
-  }
-
-  .contact-lead {
-    font-size: var(--text-lg);
-    color: var(--color-muted);
-    line-height: 1.65;
-  }
-
-  /* Newsletter */
-  .newsletter-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-2xl);
-    align-items: center;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 16px;
-    padding: var(--space-2xl);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .newsletter-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at top left, var(--color-accent-dim) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  @media (max-width: 760px) {
-    .newsletter-card { grid-template-columns: 1fr; }
-  }
-
-  .newsletter-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-xs);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-accent);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: var(--space-md);
-  }
-
-  .newsletter-title {
-    font-size: var(--text-3xl);
-    margin-bottom: var(--space-sm);
-  }
-
-  .newsletter-sub {
-    font-size: var(--text-base);
-    color: var(--color-muted);
-    line-height: 1.65;
-  }
-
-  .newsletter-form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
-
-  .newsletter-input-row {
-    display: flex;
-    gap: var(--space-sm);
-    flex-wrap: wrap;
-  }
-
-  .newsletter-input {
-    flex: 1;
-    min-width: 0;
-    font-family: var(--font-sans);
-    font-size: var(--text-base);
-    color: var(--color-text);
-    background-color: var(--color-bg);
-    border: 1.5px solid var(--color-border);
-    border-radius: 8px;
-    padding: var(--space-sm) var(--space-md);
-    outline: none;
-    transition: border-color var(--transition-base), box-shadow var(--transition-base);
-  }
-
-  .newsletter-input::placeholder { color: var(--color-muted); }
-
-  .newsletter-input:focus {
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px var(--color-accent-dim);
-  }
-
-  .newsletter-note {
-    font-size: var(--text-sm);
-    color: var(--color-muted);
-  }
 
 </style>
