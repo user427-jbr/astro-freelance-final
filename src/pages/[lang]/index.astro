@@ -28,8 +28,10 @@ const projects = allProjects.sort((a, b) => {
 
 const services = allServices.map((s) => ({
   slug: s.slug,
+  icon: s.icon,
   name: isDE ? s.nameDE : s.nameEN,
   desc: isDE ? s.descDE : s.descEN,
+  cardFeatures: isDE ? s.cardFeaturesDE : s.cardFeaturesEN,
   features: isDE ? s.featuresDE : s.featuresEN,
 }));
 
@@ -55,6 +57,7 @@ const education = isDE
 
 const faq = isDE
   ? [
+      { q: 'Wie läuft ein Projekt ab?', a: '1. Anforderungsanalyse – gemeinsames Erfassen aller Anforderungen. 2. Konzept & Planung – Lösungsarchitektur und Zeitplan. 3. Entwicklung & Test – iterative Umsetzung mit Ihrem Feedback. 4. Übergabe & Support – Dokumentation, Schulung und laufender Support.' },
       { q: 'Wie lange dauert ein typisches Projekt?', a: 'Je nach Komplexität kann ein typisches Projekt von wenigen Tagen für einfache automatisierte Workflows bis hin zu mehreren Wochen für umfassende Geschäftsanwendungen dauern.' },
       { q: 'Benötige ich spezielle Lizenzen?', a: 'Wenn Sie Standard-Konnektoren von Microsoft 365 (wie SharePoint und Outlook) verwenden, ist die Nutzung normalerweise in Ihrem bestehenden Plan enthalten. Premium-Konnektoren erfordern eigenständige Power Apps-Lizenzen.' },
       { q: 'Bieten Sie Unterstützung nach Projektabschluss an?', a: 'Ja! Ich biete fortlaufende Wartung, Fehlerbehebung und das Hinzufügen von Funktionen an, um sicherzustellen, dass Ihre Lösung weiterhin reibungslos läuft.' },
@@ -62,6 +65,7 @@ const faq = isDE
       { q: 'Wird ein Dienstkonto (Service Account) benötigt?', a: 'Ja, ein dediziertes Dienstkonto wird dringend empfohlen. Es fungiert als neutrales Konto für automatisierte Workflows und System-E-Mails.' },
     ]
   : [
+      { q: 'How does a project work?', a: '1. Requirements analysis – capturing all requirements together. 2. Concept & planning – solution architecture and timeline. 3. Development & testing – iterative implementation with your feedback. 4. Handover & support – documentation, training, and ongoing support.' },
       { q: 'How long does a typical project take?', a: 'Depending on complexity, a project can take from a few days for simple automated workflows to several weeks for comprehensive business applications.' },
       { q: 'Do I need special licenses?', a: 'Standard Microsoft 365 connectors (like SharePoint and Outlook) are typically included in your existing plan. Premium connectors require standalone Power Apps licenses.' },
       { q: 'Do you offer post-project support?', a: 'Yes! I provide ongoing maintenance, troubleshooting, and feature additions to ensure your solution continues to run smoothly.' },
@@ -78,27 +82,42 @@ const faq = isDE
   <!-- About -->
   <section id="about" class="section">
     <div class="container">
-      <SectionHeader icon="lucide:user-round" title={t('about.title')} subtitle={isDE ? 'Digital Transformation Consultant · Leipzig, DE' : 'Digital Transformation Consultant · Leipzig, DE'} />
-      <div class="about-text">
-        <p class="about-intro">{t('about.intro')}</p>
-        <p class="about-body">{t('about.body')}</p>
-        <div class="about-bottom">
-          <ProfileLinks label={t('about.profiles')} links={[
-            { label: 'LinkedIn',     href: 'https://www.linkedin.com/in/julius-bruch' },
-            { label: 'freelance.de', href: 'https://www.freelance.de' },
-          ]} />
-          <div class="profiles">
-            <span class="profiles-label">{isDE ? 'Zertifikate' : 'Certifications'}</span>
-            <a href="#" rel="noopener noreferrer" target="_blank" class="profile-link">
-              PL-100
-              <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" />
-            </a>
-            <a href="#" rel="noopener noreferrer" target="_blank" class="profile-link">
-              PL-200
-              <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" />
-            </a>
-          </div>
+      <SectionHeader icon="lucide:user-round" title={t('about.title')} />
+      <div class="about-layout">
+        <div class="about-text">
+          <p class="about-intro">{t('about.intro')}</p>
+          <p class="about-body">{t('about.body')}</p>
         </div>
+        <aside class="about-aside">
+          <div class="about-links-card">
+            <div class="links-cols">
+              <ProfileLinks label={t('about.profiles')} links={[
+                { label: 'LinkedIn',     href: 'https://www.linkedin.com/in/julius-bruch' },
+                { label: 'freelance.de', href: 'https://www.freelance.de' },
+              ]} />
+              <div class="profiles">
+                <span class="profiles-label">{isDE ? 'Zertifikate' : 'Certifications'}</span>
+                <a href="#" rel="noopener noreferrer" target="_blank" class="profile-link">
+                  PL-100
+                  <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" />
+                </a>
+                <a href="#" rel="noopener noreferrer" target="_blank" class="profile-link">
+                  PL-200
+                  <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+            <hr class="card-divider" />
+            <div>
+              <p class="panel-label">{t('projects.skills.title')}</p>
+              <div class="skill-tags">
+                {['Power Apps', 'Power Automate', 'SharePoint', 'Astro', 'HTML / CSS'].map(s => (
+                  <span class="skill-tag">{s}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   </section>
@@ -106,20 +125,19 @@ const faq = isDE
   <!-- Services -->
   <section id="services" class="section">
     <div class="container">
-      <SectionHeader icon="lucide:briefcase" title={t('services.title')} subtitle={t('services.subtitle')} />
-      <div class="service-grid">
-        {services.map(({ slug, name, desc, features }) => (
-          <a href={localizePath(`/${lang}/services/${slug}`)} class="service-card">
-            <Icon name="lucide:arrow-up-right" class="svc-arrow" width="16" height="16" aria-hidden="true" />
-            <p class="service-name">{name}</p>
-            <ul class="svc-features">
-              {features.map((f) => (
-                <li>
-                  <Icon name="lucide:check" width="12" height="12" aria-hidden="true" />
-                  {f}
-                </li>
-              ))}
-            </ul>
+      <SectionHeader icon="lucide:briefcase" title={t('services.title')} />
+      <div class="svc-gallery">
+        {services.map(({ slug, icon, name, desc, cardFeatures }, i) => (
+          <a href={localizePath(`/${lang}/services/${slug}`)} class={`svc-tile${i === 0 ? ' svc-tile--featured' : ''}`}>
+            <div class="svc-tile-icon">
+              <Icon name={icon} width="22" height="22" aria-hidden="true" />
+            </div>
+            <p class="svc-tile-name">{name}</p>
+            <p class="svc-tile-desc">{desc}</p>
+            <div class="svc-tile-chips">
+              {cardFeatures.map(f => <span class="svc-chip">{f}</span>)}
+            </div>
+            <Icon name="lucide:arrow-up-right" class="svc-tile-arrow" width="16" height="16" aria-hidden="true" />
           </a>
         ))}
       </div>
@@ -129,7 +147,7 @@ const faq = isDE
   <!-- Projects -->
   <section id="projects" class="section">
     <div class="container">
-      <SectionHeader icon="lucide:folder-open" title={t('projects.title')} subtitle={t('projects.subtitle')} />
+      <SectionHeader icon="lucide:folder-open" title={t('projects.title')} />
       <div class="project-list">
         {projects.map((project, i) => (
           <ProjectCard
@@ -148,7 +166,18 @@ const faq = isDE
   <!-- Contact -->
   <section id="contact" class="section">
     <div class="container">
-      <SectionHeader icon="lucide:mail" title={t('contact.title')} subtitle={t('contact.intro')} />
+      <SectionHeader icon="lucide:mail" title={t('contact.title')} />
+
+      <div class="contact-meta">
+        <div class="avail-badge">
+          <span class="avail-dot"></span>
+          {t('contact.available')}
+        </div>
+        <div class="reach-item">
+          <Icon name="lucide:clock" width="14" height="14" aria-hidden="true" />
+          <span>{t('contact.response')}</span>
+        </div>
+      </div>
 
       <form class="contact-form" name="contact" method="POST" data-netlify="true" novalidate>
         <div class="form-row">
@@ -184,7 +213,7 @@ const faq = isDE
     </div>
     <hr class="full-divider" />
     <div class="container" id="faq">
-      <FaqSection title={t('contact.faq.title')} subtitle={t('contact.faq.subtitle')} items={faq} idPrefix="home-faq" />
+      <FaqSection title={t('contact.faq.title')} items={faq} idPrefix="home-faq" />
     </div>
   </section>
 
@@ -214,6 +243,55 @@ const faq = isDE
   }
 
   /* About */
+  .about-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 560px) 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  @media (max-width: 760px) {
+    .about-layout { grid-template-columns: 1fr; }
+  }
+
+  .about-aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .about-links-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .links-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .card-divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 0;
+  }
+
+  .about-links-card :global(.profiles) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .about-links-card :global(.profiles-label) {
+    margin-bottom: 0;
+  }
+
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -288,14 +366,13 @@ const faq = isDE
     .about-bottom {
       flex-direction: column;
       align-items: flex-start;
+      gap: var(--space-md);
     }
     .about-bottom :global(.profiles) {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-sm);
-    }
-    .about-bottom :global(.profiles-label) {
-      margin-bottom: var(--space-xs);
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-md);
     }
   }
 
@@ -317,32 +394,144 @@ const faq = isDE
     color: var(--color-accent);
   }
 
-  /* Services */
-  .svc-features {
+  /* Services two-col */
+  .services-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 560px) 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  @media (max-width: 760px) {
+    .services-layout { grid-template-columns: 1fr; }
+  }
+
+  .process-panel {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--space-lg);
+  }
+
+  .process-list {
     list-style: none;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 6px 12px;
-    margin-top: var(--space-sm);
+    flex-direction: column;
+    gap: var(--space-md);
   }
 
-  .svc-features li {
+  .process-step {
     display: flex;
     align-items: center;
-    gap: var(--space-xs);
+    gap: var(--space-md);
+    font-size: var(--text-sm);
+    color: var(--color-text);
+  }
+
+  .step-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--color-accent-dim);
+    color: var(--color-accent);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Services gallery */
+  .svc-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .svc-tile {
+    position: relative;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    transition: border-color var(--transition-base), transform var(--transition-base);
+  }
+
+  .svc-tile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top left, var(--color-accent-dim) 0%, transparent 60%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  .svc-tile:hover { border-color: var(--color-accent); transform: translateY(-2px); text-decoration: none; }
+  .svc-tile:hover::before { opacity: 1; }
+
+
+  .svc-tile-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background-color: var(--color-accent-dim);
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .svc-tile-name {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-heading);
+  }
+
+  .svc-tile-desc {
     font-size: var(--text-sm);
     color: var(--color-muted);
+    line-height: 1.65;
+    flex: 1;
   }
 
-  .svc-features svg { color: var(--color-accent); flex-shrink: 0; }
-
-  @media (max-width: 640px) {
-    .svc-features {
-      flex-direction: column;
-      gap: var(--space-xs);
-    }
+  .svc-tile-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-top: auto;
   }
+
+  .svc-chip {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 2px 8px;
+  }
+
+  .svc-tile-arrow {
+    position: absolute;
+    top: var(--space-xl);
+    right: var(--space-xl);
+    color: var(--color-muted);
+    transition: color var(--transition-base), transform var(--transition-base);
+  }
+
+  .svc-tile:hover .svc-tile-arrow {
+    color: var(--color-accent);
+    transform: translate(2px, -2px);
+  }
+
 
   /* Full-width divider */
   .full-divider {
@@ -351,7 +540,107 @@ const faq = isDE
     margin: var(--space-2xl) 0;
   }
 
-  /* Contact */
+  /* Projects two-col */
+  .projects-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 560px) 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .skills-panel {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--space-lg);
+  }
+
+  .panel-label {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-md);
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .skill-tag {
+    font-size: var(--text-sm);
+    background-color: var(--color-accent-dim);
+    color: var(--color-accent);
+    border-radius: 6px;
+    padding: 4px 10px;
+  }
+
+  @media (max-width: 760px) {
+    .projects-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Contact meta strip */
+  .contact-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xl);
+  }
+
+  .reach-me {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .avail-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-accent);
+    background-color: var(--color-accent-dim);
+    border-radius: 999px;
+    padding: 6px 14px;
+    align-self: flex-start;
+  }
+
+  .avail-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .reach-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+
+  .reach-item svg { flex-shrink: 0; color: var(--color-muted); }
+
+  .reach-item a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .reach-item a:hover { color: var(--color-accent); }
+
+
   .contact-layout {
     display: grid;
     grid-template-columns: 1fr 1.3fr;

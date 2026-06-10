@@ -9,6 +9,7 @@ const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
 export default defineConfig({
   site: isGitHubPages ? 'https://user427-jbr.github.io' : 'http://localhost:4321',
   base: isGitHubPages ? '/astro-freelance-final' : '/',
+  server: process.env.PORT ? { port: Number(process.env.PORT) } : undefined,
   integrations: [sitemap(), icon()],
   markdown: {
     shikiConfig: {

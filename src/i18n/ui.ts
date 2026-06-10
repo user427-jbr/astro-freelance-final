@@ -20,7 +20,7 @@ export const ui = {
     'hero.tagline':    'Power Apps Maker · Web Developer · Vibe Coder',
     'hero.headline':   'Hi, ich bin Julius.',
     'hero.subtitle':   'Freiberuflicher IT-Berater aus Leipzig.',
-    'hero.cta.more':   'Mehr erfahren',
+    'hero.cta.more':   'Meine Leistungen',
     'hero.cta.contact': 'Kontakt aufnehmen',
 
     'services.title':         'Meine Leistungen',
@@ -87,6 +87,18 @@ export const ui = {
     'contact.form.privacy.suffix': 'gelesen und bin mit der Verarbeitung meiner Daten einverstanden.',
 
     'cta.contact': 'Projekt anfragen',
+
+    'contact.available':  'Verfügbar für Projekte',
+    'contact.response':   'Antwortet meist innerhalb von 24 Stunden',
+    'contact.email':      'E-Mail schreiben',
+
+    'projects.skills.title': 'Tech Stack',
+
+    'services.process.title': 'Mein Prozess',
+    'services.process.1': 'Anforderungsanalyse',
+    'services.process.2': 'Konzept & Planung',
+    'services.process.3': 'Entwicklung & Test',
+    'services.process.4': 'Übergabe & Support',
   },
   en: {
     'nav.home':        'Home',
@@ -100,7 +112,7 @@ export const ui = {
     'hero.tagline':    'Power Apps Maker · Web Developer · Vibe Coder',
     'hero.headline':   "Hi, I'm Julius.",
     'hero.subtitle':   'Freelance IT consultant from Leipzig.',
-    'hero.cta.more':   'Learn more',
+    'hero.cta.more':   'My Services',
     'hero.cta.contact': 'Get in touch',
 
     'services.title':         'My Services',
@@ -125,7 +137,7 @@ export const ui = {
     'about.intro':     "Master's student in Business Informatics at the University of Leipzig. Freelance IT consultant. I build scalable, enterprise-ready solutions that streamline operations, automate workflows, and unlock the full potential of Microsoft 365.",
     'about.body':      '',
     'about.availability': 'Semester break: Jun 13, 2026 – Sep 30, 2026 · Available 20 hrs/week',
-    'about.profiles':  'Profiles & Links',
+    'about.profiles':  'Profiles',
     'about.exp':       'Experience',
     'about.edu':       'Education',
     'about.cta':       'View my services',
@@ -167,5 +179,17 @@ export const ui = {
     'contact.form.privacy.suffix': 'and consent to the processing of my data.',
 
     'cta.contact': 'Request project',
+
+    'contact.available':  'Available for projects',
+    'contact.response':   'Usually responds within 24 hours',
+    'contact.email':      'Send an email',
+
+    'projects.skills.title': 'Tech Stack',
+
+    'services.process.title': 'My Process',
+    'services.process.1': 'Requirements analysis',
+    'services.process.2': 'Concept & planning',
+    'services.process.3': 'Development & testing',
+    'services.process.4': 'Handover & support',
   },
 } satisfies Record<Lang, Record<string, string>>;
