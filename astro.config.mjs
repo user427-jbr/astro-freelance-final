@@ -20,4 +20,7 @@ export default defineConfig({
       defaultColor: 'dark',
     },
   },
+  build: {
+    inlineStylesheets: 'always',
+  },
 });
