@@ -86,7 +86,7 @@ const faq = isDE
       <div class="about-layout">
         <div class="about-text">
           <p class="about-intro">{t('about.intro')}</p>
-          {t('about.body') && <p class="about-body">{t('about.body')}</p>}
+          {t('about.body') && <blockquote class="about-mission">{t('about.body')}</blockquote>}
         </div>
         <aside class="about-aside">
           <div class="about-links-card">
@@ -302,9 +302,17 @@ const faq = isDE
     margin-bottom: var(--space-lg);
   }
 
-  .about-body {
-    color: var(--color-muted);
-    line-height: 1.8;
+  .about-mission {
+    margin: 0;
+    margin-top: auto;
+    padding: var(--space-md) var(--space-lg);
+    border-left: 3px solid var(--color-accent);
+    background-color: var(--color-accent-dim);
+    border-radius: 0 8px 8px 0;
+    font-size: var(--text-base);
+    font-style: italic;
+    color: var(--color-text);
+    line-height: 1.75;
   }
 
   /* Services gallery */

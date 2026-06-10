@@ -25,6 +25,7 @@ const t = useTranslations(lang as Lang);
           <Icon name="lucide:arrow-right" width="14" height="14" aria-hidden="true" />
         </a>
         <a href="#contact" class="btn btn-ghost">
+          <Icon name="lucide:mail" width="14" height="14" aria-hidden="true" />
           {t('hero.cta.contact')}
         </a>
       </div>
@@ -51,6 +52,12 @@ const t = useTranslations(lang as Lang);
       radial-gradient(ellipse 55% 90% at 75% 55%, rgba(255,255,255,0.05) 0%, transparent 65%),
       radial-gradient(ellipse 35% 50% at 10% 20%, rgba(0,196,154,0.07) 0%, transparent 60%);
     pointer-events: none;
+  }
+
+  :global([data-theme="light"]) .hero::before {
+    background:
+      radial-gradient(ellipse 55% 90% at 75% 55%, rgba(0,0,0,0.04) 0%, transparent 65%),
+      radial-gradient(ellipse 35% 50% at 10% 20%, rgba(0,122,97,0.08) 0%, transparent 60%);
   }
 
   .hero-inner {
@@ -120,10 +127,8 @@ const t = useTranslations(lang as Lang);
   }
   .btn:hover { text-decoration: none; transform: translateY(-1px); }
 
-  .btn-primary { color: #0a0a0a; background-color: var(--color-accent); }
+  .btn-primary { color: var(--color-bg); background-color: var(--color-accent); }
   .btn-primary:hover { opacity: 0.88; }
-
-  :global([data-theme="light"]) .btn-primary { color: #fff; }
 
   .btn-ghost {
     color: var(--color-text);
@@ -137,6 +142,11 @@ const t = useTranslations(lang as Lang);
       width: 160px;
       height: 160px;
     }
+  }
+
+  @media (max-width: 760px) {
+    .cta-group { flex-direction: column; }
+    .btn { width: 100%; justify-content: center; }
   }
 
   @media (max-width: 600px) {
@@ -153,7 +163,5 @@ const t = useTranslations(lang as Lang);
       height: 120px;
     }
     .hero-tagline { letter-spacing: 0.02em; }
-    .cta-group { flex-direction: column; }
-    .btn { width: 100%; justify-content: center; }
   }
 </style>
