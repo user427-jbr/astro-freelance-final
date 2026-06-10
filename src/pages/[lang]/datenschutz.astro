@@ -1,6 +1,6 @@
 ---
 import { languages, type Lang } from '../../i18n/ui';
-import { useTranslations } from '../../i18n/utils';
+import { useTranslations, localizePath } from '../../i18n/utils';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { Icon } from 'astro-icon/components';
 
@@ -14,7 +14,7 @@ const t = useTranslations(lang);
 
 <BaseLayout title={t('privacy.title')} {lang} description={t('privacy.title')}>
   <div class="container page">
-    <a href={`/${lang}/`} class="back-link">
+    <a href={localizePath(`/${lang}/`)} class="back-link">
       <Icon name="lucide:arrow-left" width="16" height="16" aria-hidden="true" />
       {lang === 'de' ? 'Zurück zur Startseite' : 'Back to Home'}
     </a>

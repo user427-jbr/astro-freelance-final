@@ -87,6 +87,9 @@ img,
 video {
   display: block;
   max-width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 a {
@@ -807,7 +810,7 @@ html[lang="en"] h3 > span[lang="de"] { display: none; }
   gap: 8px;
   font-size: var(--text-base);
   font-weight: 600;
-  color: #fff;
+  color: var(--color-bg);
   background-color: var(--color-accent);
   border: none;
   border-radius: 8px;
@@ -820,11 +823,6 @@ html[lang="en"] h3 > span[lang="de"] { display: none; }
 .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); text-decoration: none; }
 
 /* ─── FAQ ────────────────────────────────────────────────────────────────── */
-
-.faq-section {
-  margin-bottom: var(--space-2xl);
-}
-
 
 .faq-list {
   display: flex;

@@ -10,6 +10,8 @@ import '@fontsource/jetbrains-mono/700.css';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { languages } from '../i18n/ui';
+import { BASE } from '../i18n/utils';
 
 interface Props {
   title: string;
@@ -20,7 +22,16 @@ interface Props {
 
 const { title, lang, description, ogImage } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImageURL = ogImage ? new URL(ogImage, Astro.site) : new URL('/og-default.png', Astro.site);
+const ogImageURL = ogImage ? new URL(ogImage, Astro.site) : undefined;
+
+// hreflang alternates: same path with the language segment swapped.
+const pathNoBase = BASE && Astro.url.pathname.startsWith(BASE)
+  ? Astro.url.pathname.slice(BASE.length)
+  : Astro.url.pathname;
+const alternates = Object.keys(languages).map((code) => ({
+  code,
+  href: new URL(BASE + pathNoBase.replace(/^\/[^/]+/, '/' + code), Astro.site),
+}));
 ---
 
 <!doctype html>
@@ -33,21 +44,27 @@ const ogImageURL = ogImage ? new URL(ogImage, Astro.site) : new URL('/og-default
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    {alternates.map(({ code, href }) => (
+      <link rel="alternate" hreflang={code} href={href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={alternates.find(a => a.code === 'de')?.href} />
+
+    <link rel="icon" href={`${BASE}/favicon.svg`} type="image/svg+xml" />
+    <link rel="icon" href={`${BASE}/favicon.ico`} sizes="32x32" />
 
     <!-- Open Graph -->
     <meta property="og:type"        content="website" />
     <meta property="og:url"         content={canonicalURL} />
     <meta property="og:title"       content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image"       content={ogImageURL} />
+    {ogImageURL && <meta property="og:image" content={ogImageURL} />}
 
     <!-- Twitter / X -->
-    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:card"        content={ogImageURL ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title"       content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image"       content={ogImageURL} />
+    {ogImageURL && <meta name="twitter:image" content={ogImageURL} />}
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plh7eqjn08oSYqefKQ7VQZsYVNkfg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <ClientRouter />
 
     <!-- Apply stored theme before first paint, and re-apply after each
