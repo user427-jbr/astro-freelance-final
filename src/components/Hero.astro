@@ -144,11 +144,6 @@ const t = useTranslations(lang as Lang);
     }
   }
 
-  @media (max-width: 760px) {
-    .cta-group { flex-direction: column; }
-    .btn { width: 100%; justify-content: center; }
-  }
-
   @media (max-width: 600px) {
     .hero {
       padding-block: var(--space-xl) var(--space-2xl);
@@ -158,10 +153,15 @@ const t = useTranslations(lang as Lang);
       align-items: flex-start;
       gap: var(--space-lg);
     }
+    .hero-content {
+      width: 100%;
+    }
     .hero-photo {
       width: 120px;
       height: 120px;
     }
     .hero-tagline { letter-spacing: 0.02em; }
+    .cta-group { flex-wrap: nowrap; }
+    .btn { flex: 1; justify-content: center; }
   }
 </style>
