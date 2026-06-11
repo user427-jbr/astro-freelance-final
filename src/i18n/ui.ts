@@ -84,9 +84,9 @@ export const ui = {
     'contact.form.placeholder.name':    'Ihr Name',
     'contact.form.placeholder.email':   'ihre@email.de',
     'contact.form.placeholder.message': 'Ihre Nachricht ...',
-    'contact.form.privacy': 'Ich habe die',
+    'contact.form.privacy': 'Ich stimme der',
     'contact.form.privacy.link': 'Datenschutzerklärung',
-    'contact.form.privacy.suffix': 'gelesen und bin mit der Verarbeitung meiner Daten einverstanden.',
+    'contact.form.privacy.suffix': 'zu.',
 
     'cta.contact': 'Projekt anfragen',
 
@@ -178,9 +178,9 @@ export const ui = {
     'contact.form.placeholder.name':    'Your name',
     'contact.form.placeholder.email':   'you@example.com',
     'contact.form.placeholder.message': 'Your message ...',
-    'contact.form.privacy': 'I have read the',
+    'contact.form.privacy': 'I agree to the',
     'contact.form.privacy.link': 'Privacy Policy',
-    'contact.form.privacy.suffix': 'and consent to the processing of my data.',
+    'contact.form.privacy.suffix': '.',
 
     'cta.contact': 'Request project',
 

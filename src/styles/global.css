@@ -549,9 +549,11 @@ button:not([class]),
 
 .form-footer {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   gap: var(--space-lg);
+  flex-wrap: wrap;
   margin-top: var(--space-sm);
 }
 
@@ -559,6 +561,10 @@ button:not([class]),
   .form-row {
     grid-template-columns: 1fr;
     gap: var(--space-lg);
+  }
+  .form-footer {
+    flex-direction: column;
+    align-items: stretch;
   }
   .form-footer .submit-btn {
     width: 100%;

@@ -148,20 +148,20 @@ const faq = isDE
   <section id="projects" class="section">
     <div class="container">
       <SectionHeader icon="lucide:folder-open" title={t('projects.title')} />
-      <div class="project-list">
-        {projects.map((project, i) => (
-          <ProjectCard
-            title={isDE ? (project.data.titleDe ?? project.data.title) : (project.data.titleEn ?? project.data.title)}
-            description={isDE ? (project.data.descDe ?? project.data.description) : (project.data.descEn ?? project.data.description)}
-            techs={project.data.techs}
-            slug={project.id}
-            isLatest={i === 0}
-            {lang}
-          />
-        ))}
-      </div>
+      <div class="projects-layout">
+        <div class="project-list">
+          {projects.map((project, i) => (
+            <ProjectCard
+              title={isDE ? (project.data.titleDe ?? project.data.title) : (project.data.titleEn ?? project.data.title)}
+              description={isDE ? (project.data.descDe ?? project.data.description) : (project.data.descEn ?? project.data.description)}
+              techs={project.data.techs}
+              slug={project.id}
+              isLatest={i === 0}
+              {lang}
+            />
+          ))}
+        </div>
 
-      <div class="newsletter-grid">
         <div class="newsletter-card">
           <div class="newsletter-body">
             <p class="newsletter-title">{t('newsletter.title')}</p>
@@ -338,14 +338,21 @@ const faq = isDE
     line-height: 1.75;
   }
 
-  /* Newsletter */
-  .newsletter-grid {
+  /* Projects + Newsletter side-by-side layout */
+  .projects-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr));
-    gap: var(--space-md);
-    margin-top: var(--space-xl);
+    grid-template-columns: 1fr 280px;
+    gap: var(--space-2xl);
+    align-items: start;
   }
 
+  @media (max-width: 860px) {
+    .projects-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Newsletter */
   .newsletter-card {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
