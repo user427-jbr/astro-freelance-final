@@ -6,7 +6,6 @@ import PageCta from '../../../components/PageCta.astro';
 import PageHeader from '../../../components/PageHeader.astro';
 import { Icon } from 'astro-icon/components';
 import { services } from '../../../data/services';
-
 export function getStaticPaths() {
   return Object.keys(languages).flatMap((lang) =>
     services.map((service) => ({
@@ -27,9 +26,6 @@ const detail   = isDE ? service.detailDE   : service.detailEN;
 const features = isDE ? service.featuresDE : service.featuresEN;
 const useCases = isDE ? service.useCasesDE : service.useCasesEN;
 
-const processSteps = isDE
-  ? [t('services.process.1'), t('services.process.2'), t('services.process.3'), t('services.process.4')]
-  : [t('services.process.1'), t('services.process.2'), t('services.process.3'), t('services.process.4')];
 ---
 
 <BaseLayout title={name} {lang} description={desc}>
@@ -76,19 +72,6 @@ const processSteps = isDE
         </ul>
       </aside>
     </div>
-
-    <!-- Process steps -->
-    <section class="svc-process">
-      <p class="block-label">{t('services.process.title')}</p>
-      <ol class="process-steps">
-        {processSteps.map((step, i) => (
-          <li class="process-step">
-            <span class="step-num">{i + 1}</span>
-            <span class="step-label">{step}</span>
-          </li>
-        ))}
-      </ol>
-    </section>
 
     <PageCta
       heading={isDE ? 'Bereit für Ihr Projekt?' : 'Ready for your project?'}
@@ -155,8 +138,6 @@ const processSteps = isDE
     border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: var(--space-xl);
-    position: sticky;
-    top: 90px;
   }
 
   .feature-list {
@@ -189,61 +170,4 @@ const processSteps = isDE
     margin-top: 1px;
   }
 
-  /* Block label */
-  .block-label {
-    font-size: var(--text-sm);
-    font-weight: 700;
-    color: var(--color-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  /* Process steps */
-  .svc-process {
-    margin-bottom: var(--space-2xl);
-    padding: var(--space-xl);
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-  }
-
-  .process-steps {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-md);
-    margin-top: var(--space-lg);
-    counter-reset: steps;
-  }
-
-  @media (max-width: 640px) {
-    .process-steps { grid-template-columns: 1fr 1fr; }
-  }
-
-  .process-step {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
-
-  .step-num {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: var(--color-accent-dim);
-    color: var(--color-accent);
-    font-size: var(--text-sm);
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .step-label {
-    font-size: var(--text-sm);
-    color: var(--color-text);
-    font-weight: 500;
-    line-height: 1.4;
-  }
 </style>

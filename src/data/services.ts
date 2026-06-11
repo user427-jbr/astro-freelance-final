@@ -22,11 +22,11 @@ export const services: ServiceData[] = [
     nameDE: 'Prozessautomatisierung',
     nameEN: 'Process Automation',
     descDE:
-      'Apps und Workflows auf Basis von Microsoft Power Platform – von Canvas Apps über Genehmigungsflows bis hin zur automatisierten PDF-Erstellung.',
+      'Apps und Workflows auf Basis von Microsoft Power Platform.',
     descEN:
-      'Apps and workflows built on Microsoft Power Platform – from Canvas Apps to approval flows and automated PDF generation.',
-    cardFeaturesDE: ['Power Apps', 'Power Automate', 'Genehmigungsworkflows', 'PDF-Generierung'],
-    cardFeaturesEN: ['Power Apps', 'Power Automate', 'Approval workflows', 'PDF generation'],
+      'Apps and workflows built on Microsoft Power Platform.',
+    cardFeaturesDE: ['Power Apps', 'Power Automate', 'SharePoint', 'Genehmigungsworkflows', 'PDF-Generierung', 'Dataverse'],
+    cardFeaturesEN: ['Power Apps', 'Power Automate', 'SharePoint', 'Approval workflows', 'PDF generation', 'Dataverse'],
     featuresDE: [
       'Canvas Apps für Tablet, Mobil und Desktop',
       'Modellgetriebene Apps mit Dataverse-Backend',
@@ -72,11 +72,11 @@ export const services: ServiceData[] = [
     nameDE: 'Web Entwicklung',
     nameEN: 'Web Development',
     descDE:
-      'Professionelle Websites und Landing Pages für Unternehmen. Schnell, barrierefrei und modern.',
+      'Professionelle Websites und Landing Pages für Unternehmen.',
     descEN:
-      'Professional websites and landing pages for businesses. Fast, accessible, and modern.',
-    cardFeaturesDE: ['Astro / React', 'SEO-Optimierung', 'DSGVO-konform'],
-    cardFeaturesEN: ['Astro / React', 'SEO optimization', 'GDPR-compliant'],
+      'Professional websites and landing pages for businesses.',
+    cardFeaturesDE: ['Astro / React', 'SEO-Optimierung', 'DSGVO-konform', 'Mehrsprachig', 'Barrierefrei'],
+    cardFeaturesEN: ['Astro / React', 'SEO optimization', 'GDPR-compliant', 'Multilingual', 'Accessible'],
     featuresDE: [
       'Statische Websites mit Astro (maximale Performance)',
       'Responsives Design für alle Geräte',

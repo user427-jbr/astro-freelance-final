@@ -40,9 +40,7 @@ const detailHref = localizePath(`/${lang}/projects/${slug}`);
     position: relative;
     border-bottom: 1px solid var(--color-border);
   }
-  .project-entry:first-child {
-    border-top: 1px solid var(--color-border);
-  }
+
 
   .entry-link {
     display: flex;
@@ -68,8 +66,8 @@ const detailHref = localizePath(`/${lang}/projects/${slug}`);
   }
 
   .badge {
-    font-size: 0.7rem;
-    font-weight: 500;
+    font-size: var(--text-sm);
+    font-weight: 600;
     color: var(--color-accent);
     letter-spacing: 0.03em;
   }

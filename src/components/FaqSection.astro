@@ -3,7 +3,7 @@ import { Icon } from 'astro-icon/components';
 
 interface FaqItem {
   q: string;
-  a: string;
+  a: string | string[];
 }
 
 interface Props {
@@ -29,7 +29,13 @@ const { title, subtitle, items, idPrefix = 'faq' } = Astro.props;
           {q}
           <Icon name="lucide:plus" width="18" height="18" aria-hidden="true" />
         </button>
-        <div class="faq-answer" id={`${idPrefix}-ans-${i}`}>{a}</div>
+        <div class="faq-answer" id={`${idPrefix}-ans-${i}`}>
+          {Array.isArray(a) ? (
+            <ol class="faq-steps">
+              {a.map((step) => <li>{step}</li>)}
+            </ol>
+          ) : a}
+        </div>
       </li>
     ))}
   </ul>

@@ -2,10 +2,15 @@
 import { languages, type Lang } from '../../../i18n/ui';
 import { useTranslations, localizePath } from '../../../i18n/utils';
 import { getCollection, render } from 'astro:content';
-import PostLayout from '../../../layouts/PostLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PageCta from '../../../components/PageCta.astro';
 import PageHeader from '../../../components/PageHeader.astro';
 import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+
+const projectImages = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/images/*.{png,jpg,jpeg,webp,avif}'
+);
 
 export async function getStaticPaths() {
   const allProjects = await getCollection('projects');
@@ -24,9 +29,17 @@ const { Content } = await render(project);
 
 const title = lang === 'de' ? (project.data.titleDe ?? project.data.title) : (project.data.titleEn ?? project.data.title);
 const description = lang === 'de' ? (project.data.descDe ?? project.data.description) : (project.data.descEn ?? project.data.description);
+
+const imageKey = project.data.image
+  ? `/src/assets/images/${project.data.image}`
+  : null;
+const resolvedImage = imageKey && projectImages[imageKey]
+  ? await projectImages[imageKey]()
+  : null;
 ---
 
-<PostLayout title={title} {lang} description={description}>
+<BaseLayout title={title} {lang} description={description}>
+  <div class="container">
   <article>
     <PageHeader
       title={title}
@@ -45,6 +58,22 @@ const description = lang === 'de' ? (project.data.descDe ?? project.data.descrip
       <Content />
     </div>
 
+    <div class="project-hero-image">
+      {resolvedImage ? (
+        <Image
+          src={resolvedImage.default}
+          alt={title}
+          class="project-img"
+          loading="eager"
+        />
+      ) : (
+        <div class="project-img-placeholder" aria-hidden="true">
+          <Icon name={project.data.icon ?? 'lucide:image'} width="48" height="48" />
+          <span>{lang === 'de' ? 'Screenshot folgt' : 'Screenshot coming soon'}</span>
+        </div>
+      )}
+    </div>
+
     <PageCta
       heading={lang === 'de' ? 'Interesse an einer ähnlichen Lösung?' : 'Interested in a similar solution?'}
       body={lang === 'de' ? 'Lassen Sie uns über Ihr Projekt sprechen.' : "Let's talk about your project."}
@@ -52,30 +81,67 @@ const description = lang === 'de' ? (project.data.descDe ?? project.data.descrip
       ctaText={lang === 'de' ? 'Kontakt aufnehmen' : 'Get in touch'}
     />
   </article>
-</PostLayout>
+  </div>
+</BaseLayout>
 
 <style>
-  /* Scale down the h1 on detail pages — text-5xl is too tall on mobile */
-  article :global(h1),
-  article h1 {
-    font-size: var(--text-4xl);
+  .container {
+    padding-block: var(--space-2xl);
   }
 
-  /* ── Sections stack vertically with dividers ── */
+  /* ── Hero image / placeholder ── */
+  .project-hero-image {
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+  }
+
+  .project-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .project-img-placeholder {
+    background-color: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-2xl);
+    min-height: 320px;
+    color: var(--color-muted);
+  }
+
+  .project-img-placeholder span {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Prose content ── */
   .project-content :global(h2) {
     font-size: var(--text-xl);
     font-weight: 700;
     color: var(--color-heading);
-    margin-top: var(--space-2xl);
+    margin-top: var(--space-xl);
     margin-bottom: var(--space-md);
     padding-bottom: var(--space-sm);
     border-bottom: 1px solid var(--color-border);
   }
 
+  .project-content :global(h2:first-child) {
+    margin-top: 0;
+  }
+
   .project-content :global(p) {
+    font-size: var(--text-base);
     color: var(--color-muted);
-    line-height: 1.75;
-    margin-bottom: var(--space-md);
+    line-height: 1.8;
+    margin-bottom: var(--space-lg);
   }
 
   /* ── Features gallery grid ── */
@@ -84,7 +150,7 @@ const description = lang === 'de' ? (project.data.descDe ?? project.data.descrip
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: var(--space-md);
-    margin: 0;
+    margin: 0 0 var(--space-lg);
     padding: 0;
   }
 
@@ -119,7 +185,7 @@ const description = lang === 'de' ? (project.data.descDe ?? project.data.descrip
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-sm);
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-lg);
   }
 
   .project-content :global(.tech-tag) {

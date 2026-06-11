@@ -19,6 +19,14 @@ const { lang } = Astro.params as { lang: Lang };
 const t = useTranslations(lang);
 const isDE = lang === 'de';
 
+const processIcons = ['lucide:search', 'lucide:layout', 'lucide:code-2', 'lucide:rocket'];
+const processSteps = [1, 2, 3, 4].map((n, i) => ({
+  label: t(`services.process.${n}` as any),
+  desc:  t(`services.process.${n}.desc` as any),
+  tags:  t(`services.process.${n}.tags` as any),
+  icon:  processIcons[i],
+}));
+
 const allProjects = await getCollection('projects');
 const projects = allProjects.sort((a, b) => {
   const da = a.data.date?.getTime() ?? 0;
@@ -57,7 +65,7 @@ const education = isDE
 
 const faq = isDE
   ? [
-      { q: 'Wie läuft ein Projekt ab?', a: '1. Anforderungsanalyse – gemeinsames Erfassen aller Anforderungen. 2. Konzept & Planung – Lösungsarchitektur und Zeitplan. 3. Entwicklung & Test – iterative Umsetzung mit Ihrem Feedback. 4. Übergabe & Support – Dokumentation, Schulung und laufender Support.' },
+      { q: 'Wie läuft ein Projekt ab?', a: 'Zunächst erfassen wir gemeinsam alle Anforderungen. Darauf aufbauend erstelle ich Lösungsarchitektur und Zeitplan. In der Entwicklungsphase setze ich iterativ um und halte Sie regelmäßig auf dem Laufenden. Zum Abschluss übergebe ich die Lösung mit Dokumentation und Schulung und stehe für laufenden Support bereit.' },
       { q: 'Wie lange dauert ein typisches Projekt?', a: 'Je nach Komplexität kann ein typisches Projekt von wenigen Tagen für einfache automatisierte Workflows bis hin zu mehreren Wochen für umfassende Geschäftsanwendungen dauern.' },
       { q: 'Benötige ich spezielle Lizenzen?', a: 'Wenn Sie Standard-Konnektoren von Microsoft 365 (wie SharePoint und Outlook) verwenden, ist die Nutzung normalerweise in Ihrem bestehenden Plan enthalten. Premium-Konnektoren erfordern eigenständige Power Apps-Lizenzen.' },
       { q: 'Bieten Sie Unterstützung nach Projektabschluss an?', a: 'Ja! Ich biete fortlaufende Wartung, Fehlerbehebung und das Hinzufügen von Funktionen an, um sicherzustellen, dass Ihre Lösung weiterhin reibungslos läuft.' },
@@ -65,7 +73,7 @@ const faq = isDE
       { q: 'Wird ein Dienstkonto (Service Account) benötigt?', a: 'Ja, ein dediziertes Dienstkonto wird dringend empfohlen. Es fungiert als neutrales Konto für automatisierte Workflows und System-E-Mails.' },
     ]
   : [
-      { q: 'How does a project work?', a: '1. Requirements analysis – capturing all requirements together. 2. Concept & planning – solution architecture and timeline. 3. Development & testing – iterative implementation with your feedback. 4. Handover & support – documentation, training, and ongoing support.' },
+      { q: 'How does a project work?', a: 'We start by capturing all requirements together. From there I create the solution architecture and a realistic timeline. During development I work iteratively and keep you regularly updated. At the end I hand over the solution with documentation and training, and remain available for ongoing support.' },
       { q: 'How long does a typical project take?', a: 'Depending on complexity, a project can take from a few days for simple automated workflows to several weeks for comprehensive business applications.' },
       { q: 'Do I need special licenses?', a: 'Standard Microsoft 365 connectors (like SharePoint and Outlook) are typically included in your existing plan. Premium connectors require standalone Power Apps licenses.' },
       { q: 'Do you offer post-project support?', a: 'Yes! I provide ongoing maintenance, troubleshooting, and feature additions to ensure your solution continues to run smoothly.' },
@@ -74,7 +82,7 @@ const faq = isDE
     ];
 ---
 
-<BaseLayout title="Julius Bruch · Power Apps Freelancer Leipzig" {lang} description={t('hero.subtitle')}>
+<BaseLayout title="Power Apps Freelancer Leipzig" {lang} description={t('hero.subtitle')}>
 
   <!-- Hero -->
   <Hero {lang} />
@@ -141,6 +149,23 @@ const faq = isDE
           </a>
         ))}
       </div>
+
+      <!-- Process -->
+      <div class="svc-process">
+        <p class="block-label">{t('services.process.title')}</p>
+        <ol class="process-steps">
+          {processSteps.map((step) => (
+            <li class="process-step">
+              <div class="step-icon">
+                <Icon name={step.icon} width="18" height="18" aria-hidden="true" />
+              </div>
+              <span class="step-label">{step.label}</span>
+              <span class="step-desc">{step.desc}</span>
+              <span class="step-tags">{step.tags}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
   </section>
 
@@ -148,41 +173,16 @@ const faq = isDE
   <section id="projects" class="section">
     <div class="container">
       <SectionHeader icon="lucide:folder-open" title={t('projects.title')} />
-      <div class="projects-layout">
-        <div class="project-list">
-          {projects.map((project, i) => (
-            <ProjectCard
-              title={isDE ? (project.data.titleDe ?? project.data.title) : (project.data.titleEn ?? project.data.title)}
-              description={isDE ? (project.data.descDe ?? project.data.description) : (project.data.descEn ?? project.data.description)}
-              techs={project.data.techs}
-              slug={project.id}
-              isLatest={i === 0}
-              {lang}
-            />
-          ))}
-        </div>
-
-        <div class="newsletter-card">
-          <div class="newsletter-body">
-            <p class="newsletter-title">{t('newsletter.title')}</p>
-            <p class="newsletter-sub">{t('newsletter.subtitle')}</p>
-          </div>
-          <form class="newsletter-form" name="newsletter" method="POST" data-netlify="true">
-            <input
-              type="email"
-              name="email"
-              placeholder={t('newsletter.placeholder')}
-              required
-              class="newsletter-input"
-              autocomplete="email"
-            />
-            <button type="submit" class="newsletter-btn">
-              {t('newsletter.cta')}
-              <Icon name="lucide:arrow-right" width="14" height="14" aria-hidden="true" />
-            </button>
-          </form>
-          <p class="newsletter-note">{t('newsletter.note')}</p>
-        </div>
+      <div class="project-list">
+        {projects.map((project) => (
+          <ProjectCard
+            title={isDE ? (project.data.titleDe ?? project.data.title) : (project.data.titleEn ?? project.data.title)}
+            description={isDE ? (project.data.descDe ?? project.data.description) : (project.data.descEn ?? project.data.description)}
+            techs={project.data.techs}
+            slug={project.id}
+            {lang}
+          />
+        ))}
       </div>
     </div>
   </section>
@@ -193,35 +193,35 @@ const faq = isDE
       <SectionHeader icon="lucide:mail" title={t('contact.title')} />
 
       <form class="contact-form" name="contact" method="POST" data-netlify="true">
-        <div class="form-row">
-          <div class="field">
-            <label for="name">{t('contact.form.name')}</label>
-            <input type="text" id="name" name="name" placeholder={t('contact.form.placeholder.name')} autocomplete="name" required />
+          <div class="form-row">
+            <div class="field">
+              <label for="name">{t('contact.form.name')}</label>
+              <input type="text" id="name" name="name" placeholder={t('contact.form.placeholder.name')} autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="email">{t('contact.form.email')}</label>
+              <input type="email" id="email" name="email" placeholder={t('contact.form.placeholder.email')} autocomplete="email" required />
+            </div>
           </div>
           <div class="field">
-            <label for="email">{t('contact.form.email')}</label>
-            <input type="email" id="email" name="email" placeholder={t('contact.form.placeholder.email')} autocomplete="email" required />
+            <label for="message">{t('contact.form.message')}</label>
+            <textarea id="message" name="message" rows="5" placeholder={t('contact.form.placeholder.message')} required></textarea>
           </div>
-        </div>
-        <div class="field">
-          <label for="message">{t('contact.form.message')}</label>
-          <textarea id="message" name="message" rows="5" placeholder={t('contact.form.placeholder.message')} required></textarea>
-        </div>
-        <div class="form-footer">
-          <label class="privacy-label">
-            <input type="checkbox" name="privacy" required />
-            <span>
-              {t('contact.form.privacy')}{' '}
-              <a href={localizePath(`/${lang}/datenschutz`)}>{t('contact.form.privacy.link')}</a>{' '}
-              {t('contact.form.privacy.suffix')}
-            </span>
-          </label>
-          <button type="submit" class="submit-btn">
-            {t('contact.form.send')}
-            <Icon name="lucide:send" width="16" height="16" aria-hidden="true" />
-          </button>
-        </div>
-      </form>
+          <div class="form-footer">
+            <label class="privacy-label">
+              <input type="checkbox" name="privacy" required />
+              <span>
+                {t('contact.form.privacy')}{' '}
+                <a href={localizePath(`/${lang}/datenschutz`)}>{t('contact.form.privacy.link')}</a>{' '}
+                {t('contact.form.privacy.suffix')}
+              </span>
+            </label>
+            <button type="submit" class="submit-btn">
+              {t('contact.form.send')}
+              <Icon name="lucide:send" width="16" height="16" aria-hidden="true" />
+            </button>
+          </div>
+        </form>
 
     </div>
     <hr class="full-divider" />
@@ -253,6 +253,54 @@ const faq = isDE
   #faq {
     scroll-margin-top: 70px;
   }
+
+  .faq-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  @media (max-width: 720px) {
+    .faq-layout { grid-template-columns: 1fr; }
+    .faq-aside { display: none; }
+  }
+
+  .faq-aside {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .faq-aside-title {
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-heading);
+  }
+
+  .faq-aside-body {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .faq-aside-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+    margin-top: var(--space-xs);
+    transition: opacity var(--transition-base);
+  }
+
+  .faq-aside-btn:hover { opacity: 0.8; text-decoration: none; }
 
   /* About */
   .about-layout {
@@ -420,14 +468,84 @@ const faq = isDE
     color: var(--color-muted);
   }
 
+  /* Process */
+  .svc-process {
+    margin-top: var(--space-2xl);
+    padding: var(--space-xl);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+  }
+
+  .block-label {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .process-steps {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+  }
+
+  @media (max-width: 640px) {
+    .process-steps { grid-template-columns: 1fr 1fr; }
+  }
+
+  .process-step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .step-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: var(--color-accent-dim);
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-bottom: var(--space-xs);
+  }
+
+  .step-label {
+    font-size: var(--text-base);
+    color: var(--color-heading);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .step-desc {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  .step-tags {
+    font-size: var(--text-sm);
+    color: var(--color-accent);
+    font-weight: 500;
+    opacity: 0.8;
+    margin-top: auto;
+  }
+
   /* Services gallery */
   .svc-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: var(--space-md);
   }
 
   .svc-tile {
+    flex: 1 1 320px;
     position: relative;
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
