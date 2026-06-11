@@ -160,6 +160,33 @@ const faq = isDE
           />
         ))}
       </div>
+
+      <div class="newsletter-grid">
+        <div class="newsletter-card">
+          <div class="newsletter-icon">
+            <Icon name="lucide:mail" width="20" height="20" aria-hidden="true" />
+          </div>
+          <div class="newsletter-body">
+            <p class="newsletter-title">{t('newsletter.title')}</p>
+            <p class="newsletter-sub">{t('newsletter.subtitle')}</p>
+          </div>
+          <form class="newsletter-form" name="newsletter" method="POST" data-netlify="true">
+            <input
+              type="email"
+              name="email"
+              placeholder={t('newsletter.placeholder')}
+              required
+              class="newsletter-input"
+              autocomplete="email"
+            />
+            <button type="submit" class="newsletter-btn">
+              {t('newsletter.cta')}
+              <Icon name="lucide:arrow-right" width="14" height="14" aria-hidden="true" />
+            </button>
+          </form>
+          <p class="newsletter-note">{t('newsletter.note')}</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -312,6 +339,92 @@ const faq = isDE
     font-size: var(--text-base);
     color: var(--color-text);
     line-height: 1.75;
+  }
+
+  /* Newsletter */
+  .newsletter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+  }
+
+  .newsletter-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .newsletter-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: var(--color-accent-dim);
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .newsletter-title {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-heading);
+  }
+
+  .newsletter-sub {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin-top: var(--space-xs);
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .newsletter-input {
+    flex: 1;
+    min-width: 180px;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 10px var(--space-md);
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    outline: none;
+    transition: border-color var(--transition-base);
+  }
+  .newsletter-input::placeholder { color: var(--color-muted); }
+  .newsletter-input:focus { border-color: var(--color-accent); }
+
+  .newsletter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    border: none;
+    border-radius: 8px;
+    padding: 10px var(--space-lg);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity var(--transition-base);
+  }
+  .newsletter-btn:hover { opacity: 0.85; }
+
+  .newsletter-note {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
   }
 
   /* Services gallery */
