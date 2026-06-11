@@ -90,6 +90,15 @@ const faq = isDE
         </div>
         <aside class="about-aside">
           <div class="about-links-card">
+            <div>
+              <p class="panel-label">{t('projects.skills.title')}</p>
+              <div class="skill-tags">
+                {['Power Apps', 'Power Automate', 'SharePoint', 'Astro', 'HTML / CSS'].map(s => (
+                  <span class="skill-tag">{s}</span>
+                ))}
+              </div>
+            </div>
+            <hr class="card-divider" />
             <div class="links-cols">
               <ProfileLinks label={t('about.profiles')} links={[
                 { label: 'LinkedIn',     href: 'https://www.linkedin.com/in/julius-bruch' },
@@ -105,15 +114,6 @@ const faq = isDE
                   PL-200
                   <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" />
                 </a>
-              </div>
-            </div>
-            <hr class="card-divider" />
-            <div>
-              <p class="panel-label">{t('projects.skills.title')}</p>
-              <div class="skill-tags">
-                {['Power Apps', 'Power Automate', 'SharePoint', 'Astro', 'HTML / CSS'].map(s => (
-                  <span class="skill-tag">{s}</span>
-                ))}
               </div>
             </div>
           </div>
@@ -310,7 +310,6 @@ const faq = isDE
     background-color: var(--color-accent-dim);
     border-radius: 0 8px 8px 0;
     font-size: var(--text-base);
-    font-style: italic;
     color: var(--color-text);
     line-height: 1.75;
   }
