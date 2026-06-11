@@ -11,6 +11,8 @@ export interface ServiceData {
   featuresEN: string[];
   detailDE: string;
   detailEN: string;
+  useCasesDE: string[];
+  useCasesEN: string[];
 }
 
 export const services: ServiceData[] = [
@@ -26,21 +28,43 @@ export const services: ServiceData[] = [
     cardFeaturesDE: ['Power Apps', 'Power Automate', 'Genehmigungsworkflows', 'PDF-Generierung'],
     cardFeaturesEN: ['Power Apps', 'Power Automate', 'Approval workflows', 'PDF generation'],
     featuresDE: [
-      'Power Apps (Canvas & Modellgetrieben)',
-      'Genehmigungsworkflows',
-      'Automatisierte E-Mails',
-      'PDF-Generierung',
+      'Canvas Apps für Tablet, Mobil und Desktop',
+      'Modellgetriebene Apps mit Dataverse-Backend',
+      'Mehrstufige Genehmigungsworkflows',
+      'Automatisierte E-Mail- und Teams-Benachrichtigungen',
+      'PDF-Generierung und Dokumentenversand',
+      'SharePoint- und Excel-Integration',
+      'Datensynchronisation zwischen Systemen',
+      'Fehlerbehandlung und Monitoring',
     ],
     featuresEN: [
-      'Power Apps (Canvas & Model-Driven)',
-      'Approval workflows',
-      'Automated emails',
-      'PDF generation',
+      'Canvas Apps for tablet, mobile, and desktop',
+      'Model-driven apps with Dataverse backend',
+      'Multi-step approval workflows',
+      'Automated email and Teams notifications',
+      'PDF generation and document dispatch',
+      'SharePoint and Excel integration',
+      'Data synchronization between systems',
+      'Error handling and monitoring',
     ],
     detailDE:
-      'Ich entwickle maßgeschneiderte Power Apps und automatisiere Ihre Geschäftsprozesse mit Power Automate – von der App-Entwicklung über Genehmigungsworkflows bis zur automatisierten PDF-Erstellung und Datensynchronisation. Ob Canvas App für Tablet und Mobil, modellgetriebene App oder komplexer Multi-Step-Workflow: Gemeinsam finden wir die passende Lösung für Ihr Unternehmen.',
+      'Viele Unternehmen verlieren täglich wertvolle Zeit durch manuelle Prozesse: Formulare per E-Mail, Excel-Listen, die manuell befüllt werden, oder Genehmigungen, die im Postfach verschwinden. Genau hier setzt Microsoft Power Platform an. Ich entwickle maßgeschneiderte Canvas Apps und modellgetriebene Anwendungen, die sich nahtlos in Ihr bestehendes Microsoft 365-Umfeld einfügen. Genehmigungsworkflows laufen automatisch ab, Benachrichtigungen werden in Echtzeit versendet, und Berichte werden auf Knopfdruck als PDF erzeugt. Das Ergebnis: weniger Fehler, mehr Transparenz und ein Team, das sich auf das Wesentliche konzentrieren kann.',
     detailEN:
-      'I build custom Power Apps and automate your business processes with Power Automate – from app development to approval workflows, automated PDF generation, and data synchronization. Whether a Canvas App for tablet and mobile, a model-driven app, or a complex multi-step workflow: together we find the right solution for your organization.',
+      'Many organizations lose valuable time every day to manual processes: forms sent by email, Excel sheets filled in by hand, or approvals that get lost in inboxes. That is exactly where Microsoft Power Platform comes in. I build custom Canvas Apps and model-driven applications that integrate seamlessly into your existing Microsoft 365 environment. Approval workflows run automatically, notifications are sent in real time, and reports are generated as PDFs at the click of a button. The result: fewer errors, more transparency, and a team that can focus on what matters.',
+    useCasesDE: [
+      'Urlaubsanträge und HR-Workflows',
+      'Reisekostenabrechnung mit PDF-Export',
+      'Bestellanforderungen und Freigabeprozesse',
+      'Qualitätssicherung und Checklisten-Apps',
+      'Lager- und Inventarverwaltung',
+    ],
+    useCasesEN: [
+      'Leave requests and HR workflows',
+      'Travel expense reports with PDF export',
+      'Purchase requests and approval processes',
+      'Quality assurance and checklist apps',
+      'Inventory and stock management',
+    ],
   },
   {
     slug: 'web-development',
@@ -54,22 +78,42 @@ export const services: ServiceData[] = [
     cardFeaturesDE: ['Astro / React', 'SEO-Optimierung', 'DSGVO-konform'],
     cardFeaturesEN: ['Astro / React', 'SEO optimization', 'GDPR-compliant'],
     featuresDE: [
-      'Statische Websites (Astro)',
-      'Responsive Design',
-      'SEO-Optimierung',
-      'DSGVO-konform',
-      'Schnelle Ladezeiten',
+      'Statische Websites mit Astro (maximale Performance)',
+      'Responsives Design für alle Geräte',
+      'SEO-Optimierung und strukturierte Daten',
+      'DSGVO-konform ohne externe Tracker',
+      'Dark/Light-Mode und Barrierefreiheit',
+      'Mehrsprachigkeit (i18n)',
+      'Kontaktformulare mit Netlify oder eigener API',
+      'Schnelle Ladezeiten und Core Web Vitals',
     ],
     featuresEN: [
-      'Static websites (Astro)',
-      'Responsive design',
-      'SEO optimization',
-      'GDPR-compliant',
-      'Fast load times',
+      'Static websites with Astro (maximum performance)',
+      'Responsive design for all devices',
+      'SEO optimization and structured data',
+      'GDPR-compliant without external trackers',
+      'Dark/light mode and accessibility',
+      'Multilingual support (i18n)',
+      'Contact forms via Netlify or custom API',
+      'Fast load times and Core Web Vitals',
     ],
     detailDE:
-      'Neben der Microsoft Power Platform entwickle ich auch professionelle Websites und Landing Pages für Unternehmen. Mit dem modernen Static-Site-Framework Astro entstehen blitzschnelle, barrierefreie Websites, die als perfekte digitale Visitenkarte für Ihr Unternehmen dienen – DSGVO-konform und für Suchmaschinen optimiert.',
+      'Ihre Website ist oft der erste Eindruck, den potenzielle Kunden von Ihrem Unternehmen haben. Ein langsamer Ladezeit, schlechte Darstellung auf dem Smartphone oder fehlende Suchmaschinenoptimierung kosten Besucher – und damit Umsatz. Mit dem modernen Static-Site-Framework Astro entstehen Websites, die in allen Bereichen überzeugen: blitzschnell, barrierefrei, DSGVO-konform und suchmaschinenoptimiert. Ich begleite Sie vom ersten Konzept bis zum Go-live und stelle sicher, dass Ihre digitale Präsenz langfristig funktioniert.',
     detailEN:
-      'In addition to the Microsoft Power Platform, I develop professional websites and landing pages for businesses. Using the modern static-site framework Astro, blazing-fast, accessible websites are created that serve as the perfect digital business card – GDPR-compliant and optimized for search engines.',
+      'Your website is often the first impression potential clients have of your business. Slow load times, poor mobile display, or missing SEO cost you visitors – and revenue. Using the modern static-site framework Astro, I create websites that excel in every area: blazing fast, accessible, GDPR-compliant, and search-engine optimized. I guide you from the initial concept to go-live and ensure your digital presence works for the long term.',
+    useCasesDE: [
+      'Unternehmenswebsite und digitale Visitenkarte',
+      'Landing Pages für Produkte oder Kampagnen',
+      'Portfolio- und Präsentationsseiten',
+      'Blogs und Content-Websites',
+      'Mehrsprachige internationale Auftritte',
+    ],
+    useCasesEN: [
+      'Company website and digital business card',
+      'Landing pages for products or campaigns',
+      'Portfolio and presentation sites',
+      'Blogs and content websites',
+      'Multilingual international presences',
+    ],
   },
 ];
