@@ -4,6 +4,7 @@ import { useTranslations, localizePath } from '../../../i18n/utils';
 import { getCollection, render } from 'astro:content';
 import PostLayout from '../../../layouts/PostLayout.astro';
 import PageCta from '../../../components/PageCta.astro';
+import PageHeader from '../../../components/PageHeader.astro';
 import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
@@ -27,21 +28,18 @@ const description = lang === 'de' ? (project.data.descDe ?? project.data.descrip
 
 <PostLayout title={title} {lang} description={description}>
   <article>
-    <a href={localizePath(`/${lang}/#projects`)} class="back-link">
-      <Icon name="lucide:arrow-left" width="14" height="14" aria-hidden="true" />
-      {t('back.projects')}
-    </a>
-
-    <header class="detail-header">
-      <h1>{title}</h1>
-      <p class="detail-lead">{description}</p>
-
+    <PageHeader
+      title={title}
+      lead={description}
+      backHref={localizePath(`/${lang}/#projects`)}
+      backLabel={t('back.projects')}
+    >
       {project.data.techs.length > 0 && (
         <ul class="tag-list" role="list">
           {project.data.techs.map((tech: string) => <li class="tag">{tech}</li>)}
         </ul>
       )}
-    </header>
+    </PageHeader>
 
     <div class="project-content">
       <Content />

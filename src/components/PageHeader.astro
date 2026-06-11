@@ -1,0 +1,78 @@
+---
+interface Props {
+  title: string;
+  lead?: string;
+  backHref: string;
+  backLabel: string;
+}
+import { Icon } from 'astro-icon/components';
+const { title, lead, backHref, backLabel } = Astro.props;
+---
+
+<div class="page-header">
+  <a href={backHref} class="back-link">
+    <Icon name="lucide:arrow-left" width="14" height="14" aria-hidden="true" />
+    {backLabel}
+  </a>
+  <h1 class="page-header-title">{title}</h1>
+  {lead && <p class="page-header-lead">{lead}</p>}
+  {Astro.slots.has('default') && (
+    <div class="page-header-slot">
+      <slot />
+    </div>
+  )}
+</div>
+
+<style>
+  .page-header {
+    padding-bottom: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--color-border);
+    position: relative;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 48px;
+    height: 3px;
+    background-color: var(--color-accent);
+    border-radius: 0 0 3px 3px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-muted);
+    text-decoration: none;
+    margin-bottom: var(--space-xl);
+    transition: color var(--transition-base);
+  }
+  .back-link:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .page-header-title {
+    font-size: var(--text-4xl);
+    color: var(--color-heading);
+    line-height: 1.15;
+    margin-bottom: var(--space-md);
+  }
+
+  .page-header-lead {
+    font-size: var(--text-lg);
+    color: var(--color-muted);
+    line-height: 1.7;
+    max-width: 58ch;
+  }
+
+  .page-header-slot {
+    margin-top: var(--space-lg);
+  }
+</style>

@@ -2,7 +2,7 @@
 import { languages, type Lang } from '../../i18n/ui';
 import { useTranslations, localizePath } from '../../i18n/utils';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { Icon } from 'astro-icon/components';
+import PageHeader from '../../components/PageHeader.astro';
 
 export function getStaticPaths() {
   return Object.keys(languages).map((lang) => ({ params: { lang } }));
@@ -14,11 +14,11 @@ const t = useTranslations(lang);
 
 <BaseLayout title={t('impressum.title')} {lang} description={t('impressum.title')}>
   <div class="container page">
-    <a href={localizePath(`/${lang}/`)} class="back-link">
-      <Icon name="lucide:arrow-left" width="16" height="16" aria-hidden="true" />
-      {lang === 'de' ? 'Zurück zur Startseite' : 'Back to Home'}
-    </a>
-    <h1 class="page-title">{t('impressum.title')}</h1>
+    <PageHeader
+      title={t('impressum.title')}
+      backHref={localizePath(`/${lang}/`)}
+      backLabel={lang === 'de' ? 'Zurück zur Startseite' : 'Back to Home'}
+    />
 
     <div class="prose">
       {lang === 'de' ? (
