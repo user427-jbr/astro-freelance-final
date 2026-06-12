@@ -3,6 +3,10 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
+// Set up error logging for debugging on Hetzner
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/mail_error.log');
+
 // Allow only POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -13,9 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Basic Origin Check (Only allow requests from your website)
 $allowedOrigins = ['https://jb-solutions.digital', 'https://www.jb-solutions.digital', 'http://localhost:4321', 'http://127.0.0.1:4321'];
 if (isset($_SERVER['HTTP_ORIGIN']) && !in_array(rtrim($_SERVER['HTTP_ORIGIN'], '/'), $allowedOrigins)) {
+    error_log("Blocked by Origin Check. Received Origin: " . $_SERVER['HTTP_ORIGIN']);
     http_response_code(403);
     echo json_encode(["error" => "Forbidden: Invalid Origin"]);
     exit;
+}
+
+// Allow JSON POST requests (often sent by fetch API in modern frameworks like Astro)
+if (empty($_POST)) {
+    $input = json_decode(file_get_contents('php://input'), true);
+    if (is_array($input)) {
+        $_POST = $input;
+    }
 }
 
 // Retrieve form data securely
@@ -26,6 +39,7 @@ $lang = isset($_POST['lang']) ? $_POST['lang'] : 'de';
 
 // Validate inputs
 if (empty($name) || empty($email) || empty($message) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    error_log("Validation failed. Name: '$name', Email: '$email', Message length: " . strlen($message));
     http_response_code(400);
     echo json_encode(["error" => "Invalid input data"]);
     exit;
@@ -80,6 +94,7 @@ function sendEmailViaSMTP($to, $toName, $subject, $bodyText, $replyToEmail = nul
         $mail->send();
         return ['success' => true, 'error' => ''];
     } catch (Exception $e) {
+        error_log("PHPMailer Exception: " . $mail->ErrorInfo);
         return ['success' => false, 'error' => $mail->ErrorInfo];
     }
 }
@@ -108,6 +123,7 @@ if ($resultOwner['success']) {
     http_response_code(200);
     echo json_encode(["success" => true, "message" => "Email sent successfully"]);
 } else {
+    error_log("Failed to send email to owner. Details: " . $resultOwner['error']);
     http_response_code(500);
     echo json_encode(["error" => "Failed to send email", "details" => $resultOwner['error']]);
 }
