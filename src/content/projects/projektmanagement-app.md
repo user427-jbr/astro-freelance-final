@@ -1,22 +1,19 @@
 ---
-title: "Projektmanagement App"
+title: "Projektmanagement"
 description: "Mit SharePoint verbundenes Dashboard für effiziente Projektverfolgung."
 icon: "lucide:layout-dashboard"
 date: "2024-11-01"
-titleEn: "Project Management App"
-titleDe: "Projektmanagement App"
+titleEn: "Project Management"
+titleDe: "Projektmanagement"
 descEn: "SharePoint-connected dashboard for efficient project tracking."
 descDe: "Mit SharePoint verbundenes Dashboard für effiziente Projektverfolgung."
 order: 2
-image: "project-management-app.png"
 techs: ["Power Apps", "SharePoint Online", "SharePoint Lists"]
 ---
 
 ## <span lang="de">Projektübersicht</span><span lang="en">Project Overview</span>
 
 <span lang="de">Zentrales Dashboard, verbunden mit SharePoint, für effiziente Projektverfolgung, Meilensteinverwaltung und Teamzusammenarbeit.</span><span lang="en">Central dashboard connected to SharePoint for efficient project tracking, milestone management, and team collaboration.</span>
-
-![Projektmanagement App](../../assets/images/project-management-app.png)
 
 ## <span lang="de">Hauptfunktionen</span><span lang="en">Key Features</span>
 

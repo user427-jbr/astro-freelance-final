@@ -1,10 +1,10 @@
 ---
-title: "Reisekosten App"
+title: "Reisekosten"
 description: "Automatisierter Genehmigungs-Workflow mit PDF-Berichterstellung für die Buchhaltung."
 icon: "lucide:receipt"
 date: "2025-05-01"
-titleEn: "Travel Expenses App"
-titleDe: "Reisekosten App"
+titleEn: "Travel Expenses"
+titleDe: "Reisekosten"
 descEn: "Automated approval workflow with PDF generation for fast accounting."
 descDe: "Automatisierter Genehmigungs-Workflow mit PDF-Berichterstellung für die Buchhaltung."
 order: 1

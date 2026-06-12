@@ -11,10 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Basic Origin Check (Only allow requests from your website)
-$allowedOrigin = 'https://jb-solutions.digital';
-if (isset($_SERVER['HTTP_ORIGIN']) && rtrim($_SERVER['HTTP_ORIGIN'], '/') !== $allowedOrigin) {
+$allowedOrigins = ['https://jb-solutions.digital', 'https://www.jb-solutions.digital', 'http://localhost:4321', 'http://127.0.0.1:4321'];
+if (isset($_SERVER['HTTP_ORIGIN']) && !in_array(rtrim($_SERVER['HTTP_ORIGIN'], '/'), $allowedOrigins)) {
     http_response_code(403);
-    echo json_encode(["error" => "Forbidden"]);
+    echo json_encode(["error" => "Forbidden: Invalid Origin"]);
     exit;
 }
 
@@ -42,7 +42,7 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 
-function sendEmailViaSMTP($to, $toName, $subject, $bodyText) {
+function sendEmailViaSMTP($to, $toName, $subject, $bodyText, $replyToEmail = null, $replyToName = '') {
     global $smtpHost, $smtpUsername, $smtpPassword, $siteOwnerEmail;
 
     $mail = new PHPMailer(true);
@@ -67,6 +67,9 @@ function sendEmailViaSMTP($to, $toName, $subject, $bodyText) {
 
         // Authenticated sender
         $mail->setFrom($siteOwnerEmail, 'Julius Bruch');
+    if ($replyToEmail) {
+        $mail->addReplyTo($replyToEmail, $replyToName);
+    }
         $mail->addAddress($to, $toName);
 
         $mail->isHTML(true); // Send as HTML
@@ -85,7 +88,8 @@ function sendEmailViaSMTP($to, $toName, $subject, $bodyText) {
 $subjectToOwner = "Neue Kontaktanfrage von $name";
 $bodyToOwner = "Name: $name\nE-Mail: $email\n\nNachricht:\n$message";
 
-$resultOwner = sendEmailViaSMTP($siteOwnerEmail, "Julius Bruch", $subjectToOwner, $bodyToOwner);
+// Add the user's email as the Reply-To address so you can just click "Reply" in your inbox!
+$resultOwner = sendEmailViaSMTP($siteOwnerEmail, "Julius Bruch", $subjectToOwner, $bodyToOwner, $email, $name);
 
 // 2. Send Auto-Reply to User
 if ($resultOwner['success']) {

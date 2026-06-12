@@ -1,22 +1,19 @@
 ---
-title: "Kalender Export App"
+title: "Kalender Export"
 description: "Power App zum Filtern und Exportieren von Outlook-Kalenderterminen via Graph API."
 icon: "lucide:calendar"
 date: "2025-06-01"
-titleEn: "Calendar Export App"
-titleDe: "Kalender Export App"
+titleEn: "Calendar Export"
+titleDe: "Kalender Export"
 descEn: "Power App to filter and export Outlook calendar events via Graph API."
 descDe: "Power App zum Filtern und Exportieren von Outlook-Kalenderterminen via Graph API."
 order: 3
-image: "calendar-app-screenshot.png"
 techs: ["Power Apps", "Microsoft Graph", "Power Automate"]
 ---
 
 ## <span lang="de">Projektübersicht</span><span lang="en">Project Overview</span>
 
 <span lang="de">Power App zum Abrufen, Filtern und Exportieren von Outlook-Kalenderterminen ins CSV-Format über die Microsoft Graph API-Integration.</span><span lang="en">Power App to retrieve, filter, and export Outlook calendar events to CSV format via Microsoft Graph API integration.</span>
-
-![Kalender Export App](../../assets/images/calendar-app-screenshot.png)
 
 ## <span lang="de">Hauptfunktionen</span><span lang="en">Key Features</span>
 
