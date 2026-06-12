@@ -210,41 +210,49 @@ const faq = isDE
         </form>
 
         <script>
-          document.getElementById('contact-form')?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const form = e.target as HTMLFormElement;
-            const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-            const status = document.getElementById('form-status') as HTMLElement;
-            const isDE = (form.querySelector('[name="lang"]') as HTMLInputElement)?.value === 'de';
+          function setupContactForm() {
+            const form = document.getElementById('contact-form') as HTMLFormElement | null;
+            if (!form || form.dataset.bound) return;
+            form.dataset.bound = '1';
 
-            btn.disabled = true;
-            status.textContent = '';
-            status.className = 'form-status';
+            form.addEventListener('submit', async (e) => {
+              e.preventDefault();
+              const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+              const status = document.getElementById('form-status') as HTMLElement;
+              const isDE = (form.querySelector('[name="lang"]') as HTMLInputElement)?.value === 'de';
 
-            try {
-              const res = await fetch('/contact.php', {
-                method: 'POST',
-                body: new FormData(form),
-              });
-              const data = await res.json();
-              if (res.ok && data.success) {
+              btn.disabled = true;
+              status.textContent = '';
+              status.className = 'form-status';
+
+              try {
+                const res = await fetch('/contact.php', {
+                  method: 'POST',
+                  body: new FormData(form),
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                  status.textContent = isDE
+                    ? 'Nachricht gesendet! Ich melde mich in Kürze.'
+                    : 'Message sent! I will get back to you shortly.';
+                  status.classList.add('form-status--ok');
+                  form.reset();
+                } else {
+                  throw new Error(data.error || 'Unknown error');
+                }
+              } catch {
                 status.textContent = isDE
-                  ? 'Nachricht gesendet! Ich melde mich in Kürze.'
-                  : 'Message sent! I will get back to you shortly.';
-                status.classList.add('form-status--ok');
-                form.reset();
-              } else {
-                throw new Error(data.error || 'Unknown error');
+                  ? 'Fehler beim Senden. Bitte versuchen Sie es erneut.'
+                  : 'Failed to send. Please try again.';
+                status.classList.add('form-status--err');
+              } finally {
+                btn.disabled = false;
               }
-            } catch {
-              status.textContent = isDE
-                ? 'Fehler beim Senden. Bitte versuchen Sie es erneut.'
-                : 'Failed to send. Please try again.';
-              status.classList.add('form-status--err');
-            } finally {
-              btn.disabled = false;
-            }
-          });
+            });
+          }
+
+          setupContactForm();
+          document.addEventListener('astro:after-swap', setupContactForm);
         </script>
 
     </div>
