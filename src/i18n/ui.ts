@@ -96,7 +96,7 @@ export const ui = {
 
     'projects.skills.title': 'Tech Stack',
 
-    'services.process.title': 'Mein Prozess',
+    'services.process.title': 'Ablauf eines Projektes',
     'services.process.1': 'Anforderungsanalyse',
     'services.process.1.desc': 'Ich lerne Ihr Unternehmen kennen, verstehe Ihre Ziele und definiere gemeinsam mit Ihnen den Scope des Projekts.',
     'services.process.1.tags': 'Kick-off · Zieldefinition · Scope',
@@ -198,7 +198,7 @@ export const ui = {
 
     'projects.skills.title': 'Tech Stack',
 
-    'services.process.title': 'My Process',
+    'services.process.title': 'How I work',
     'services.process.1': 'Requirements analysis',
     'services.process.1.desc': 'I get to know your business, understand your goals, and define the project scope together with you.',
     'services.process.1.tags': 'Kick-off · Goals · Scope',

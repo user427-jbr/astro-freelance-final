@@ -5,7 +5,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PageCta from '../../../components/PageCta.astro';
 import PageHeader from '../../../components/PageHeader.astro';
 import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
 import { services } from '../../../data/services';
+
+const serviceImages = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/images/*.{png,jpg,jpeg,webp,avif}'
+);
 export function getStaticPaths() {
   return Object.keys(languages).flatMap((lang) =>
     services.map((service) => ({
@@ -23,9 +28,10 @@ const isDE = lang === 'de';
 const name     = isDE ? service.nameDE     : service.nameEN;
 const desc     = isDE ? service.descDE     : service.descEN;
 const detail   = isDE ? service.detailDE   : service.detailEN;
+const imageKey = service.image ? `/src/assets/images/${service.image}` : null;
+const resolvedImage = imageKey && serviceImages[imageKey] ? await serviceImages[imageKey]() : null;
 const features = isDE ? service.featuresDE : service.featuresEN;
 const useCases = isDE ? service.useCasesDE : service.useCasesEN;
-
 ---
 
 <BaseLayout title={name} {lang} description={desc}>
@@ -33,45 +39,51 @@ const useCases = isDE ? service.useCasesDE : service.useCasesEN;
 
     <PageHeader
       title={name}
-      lead={desc}
+      icon={service.icon}
       backHref={localizePath(`/${lang}/#services`)}
       backLabel={isDE ? 'Zurück zu Leistungen' : 'Back to Services'}
     />
 
-    <!-- Body: detail text + feature card -->
-    <div class="svc-body">
-      <div class="svc-detail">
-        <p>{detail}</p>
-
-        <!-- Use cases -->
-        <div class="svc-usecases">
-          <p class="block-label">{isDE ? 'Typische Anwendungsfälle' : 'Typical use cases'}</p>
-          <ul class="usecase-list">
-            {useCases.map((uc) => (
-              <li>
-                <Icon name="lucide:chevron-right" width="14" height="14" aria-hidden="true" />
-                <span>{uc}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+    <div class="svc-intro-row">
+      <div class="svc-image-placeholder">
+        {resolvedImage
+          ? <Image src={resolvedImage.default} alt={name} class="svc-image" />
+          : <div class="svc-image-empty" aria-hidden="true">
+              <Icon name="lucide:image" width="32" height="32" />
+              <span>{isDE ? 'Bild folgt' : 'Image coming soon'}</span>
+            </div>
+        }
       </div>
-
-      <!-- Feature card -->
-      <aside class="svc-features-card">
-        <p class="block-label">{isDE ? 'Leistungsumfang' : 'What is included'}</p>
-        <ul class="feature-list">
-          {features.map((f) => (
-            <li>
-              <span class="feature-check" aria-hidden="true">
-                <Icon name="lucide:check" width="13" height="13" />
-              </span>
-              <span>{f}</span>
-            </li>
-          ))}
-        </ul>
-      </aside>
+      <p class="svc-intro">{detail}</p>
     </div>
+
+    <!-- Features grid -->
+    <section class="svc-section">
+      <p class="block-label">{isDE ? 'Leistungsumfang' : 'What is included'}</p>
+      <ul class="features-grid">
+        {features.map((f) => (
+          <li>
+            <span class="feat-check" aria-hidden="true">
+              <Icon name="lucide:check" width="13" height="13" />
+            </span>
+            <span>{f}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Use cases -->
+    <section class="svc-section">
+      <p class="block-label">{isDE ? 'Typische Anwendungsfälle' : 'Typical use cases'}</p>
+      <ul class="usecase-chips">
+        {useCases.map((uc) => (
+          <li class="usecase-chip">
+            <Icon name="lucide:chevron-right" width="13" height="13" aria-hidden="true" />
+            {uc}
+          </li>
+        ))}
+      </ul>
+    </section>
 
     <PageCta
       heading={isDE ? 'Bereit für Ihr Projekt?' : 'Ready for your project?'}
@@ -84,80 +96,115 @@ const useCases = isDE ? service.useCasesDE : service.useCasesEN;
 </BaseLayout>
 
 <style>
-  /* Body: two-column on desktop */
-  .svc-body {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: var(--space-2xl);
-    align-items: start;
-    margin-bottom: var(--space-2xl);
+  /* Tighten header spacing — no lead on this page */
+  .page :global(.page-header) {
+    padding-bottom: 0;
+    margin-bottom: var(--space-lg);
+  }
+  .page :global(.page-header-title) {
+    margin-bottom: 0;
+    word-break: break-word;
+    hyphens: auto;
   }
 
-  @media (max-width: 820px) {
-    .svc-body { grid-template-columns: 1fr; }
-    .svc-features-card { order: -1; }
-  }
-
-  /* Detail text */
-  .svc-detail p {
-    font-size: var(--text-base);
+  .svc-desc {
+    font-size: var(--text-lg);
     color: var(--color-muted);
-    line-height: 1.85;
+    line-height: 1.7;
+    margin-bottom: var(--space-lg);
+    max-width: 60ch;
+  }
+
+  .svc-intro-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
     margin-bottom: var(--space-xl);
   }
 
-  /* Use cases */
-  .svc-usecases { margin-top: var(--space-lg); }
-
-  .usecase-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    margin-top: var(--space-md);
+  @media (max-width: 640px) {
+    .svc-intro-row { grid-template-columns: 1fr; }
   }
 
-  .usecase-list li {
+  .svc-intro {
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .svc-image-placeholder {
+    align-self: flex-start;
+  }
+
+  .svc-image {
+    width: 260px;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    display: block;
+  }
+
+  .svc-image-empty {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    border: 2px dashed var(--color-border);
+    background-color: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  .svc-section {
+    margin-bottom: var(--space-xl);
+  }
+
+  .block-label {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-md);
+  }
+
+  /* Features 3-col grid */
+  .features-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  @media (max-width: 760px) {
+    .features-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .features-grid { grid-template-columns: 1fr; }
+  }
+
+  .features-grid li {
     display: flex;
     align-items: flex-start;
     gap: var(--space-sm);
-    font-size: var(--text-base);
-    color: var(--color-text);
-    line-height: 1.5;
-  }
-
-  .usecase-list li svg {
-    color: var(--color-accent);
-    flex-shrink: 0;
-    margin-top: 3px;
-  }
-
-  /* Feature card */
-  .svc-features-card {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: var(--space-xl);
-  }
-
-  .feature-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    margin-top: var(--space-md);
-  }
-
-  .feature-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-sm);
+    border-radius: 10px;
+    padding: var(--space-md) var(--space-lg);
     font-size: var(--text-sm);
     color: var(--color-text);
     line-height: 1.5;
   }
 
-  .feature-check {
+  .feat-check {
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -170,4 +217,28 @@ const useCases = isDE ? service.useCasesDE : service.useCasesEN;
     margin-top: 1px;
   }
 
+  /* Use case chips */
+  .usecase-chips {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .usecase-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: var(--space-xs) var(--space-md);
+  }
+
+  .usecase-chip svg {
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
 </style>

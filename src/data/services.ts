@@ -1,6 +1,7 @@
 export interface ServiceData {
   slug: string;
   icon: string;
+  image?: string;
   nameDE: string;
   nameEN: string;
   descDE: string;
@@ -19,6 +20,7 @@ export const services: ServiceData[] = [
   {
     slug: 'process-automation',
     icon: 'lucide:workflow',
+    image: 'process-automation-1.png',
     nameDE: 'Prozessautomatisierung',
     nameEN: 'Process Automation',
     descDE:
@@ -48,9 +50,9 @@ export const services: ServiceData[] = [
       'Error handling and monitoring',
     ],
     detailDE:
-      'Viele Unternehmen verlieren täglich wertvolle Zeit durch manuelle Prozesse: Formulare per E-Mail, Excel-Listen, die manuell befüllt werden, oder Genehmigungen, die im Postfach verschwinden. Genau hier setzt Microsoft Power Platform an. Ich entwickle maßgeschneiderte Canvas Apps und modellgetriebene Anwendungen, die sich nahtlos in Ihr bestehendes Microsoft 365-Umfeld einfügen. Genehmigungsworkflows laufen automatisch ab, Benachrichtigungen werden in Echtzeit versendet, und Berichte werden auf Knopfdruck als PDF erzeugt. Das Ergebnis: weniger Fehler, mehr Transparenz und ein Team, das sich auf das Wesentliche konzentrieren kann.',
+      'Manuelle Prozesse kosten Zeit und erzeugen Fehler. Mit Microsoft Power Platform entwickle ich maßgeschneiderte Apps und Workflows, die sich nahtlos in Ihr Microsoft 365-Umfeld einfügen.',
     detailEN:
-      'Many organizations lose valuable time every day to manual processes: forms sent by email, Excel sheets filled in by hand, or approvals that get lost in inboxes. That is exactly where Microsoft Power Platform comes in. I build custom Canvas Apps and model-driven applications that integrate seamlessly into your existing Microsoft 365 environment. Approval workflows run automatically, notifications are sent in real time, and reports are generated as PDFs at the click of a button. The result: fewer errors, more transparency, and a team that can focus on what matters.',
+      'Manual processes waste time and cause errors. With Microsoft Power Platform I build custom apps and workflows that fit seamlessly into your Microsoft 365 environment.',
     useCasesDE: [
       'Urlaubsanträge und HR-Workflows',
       'Reisekostenabrechnung mit PDF-Export',
@@ -69,6 +71,7 @@ export const services: ServiceData[] = [
   {
     slug: 'web-development',
     icon: 'lucide:monitor',
+    image: 'web-development-1.png',
     nameDE: 'Web Entwicklung',
     nameEN: 'Web Development',
     descDE:
@@ -98,9 +101,9 @@ export const services: ServiceData[] = [
       'Fast load times and Core Web Vitals',
     ],
     detailDE:
-      'Ihre Website ist oft der erste Eindruck, den potenzielle Kunden von Ihrem Unternehmen haben. Ein langsamer Ladezeit, schlechte Darstellung auf dem Smartphone oder fehlende Suchmaschinenoptimierung kosten Besucher – und damit Umsatz. Mit dem modernen Static-Site-Framework Astro entstehen Websites, die in allen Bereichen überzeugen: blitzschnell, barrierefrei, DSGVO-konform und suchmaschinenoptimiert. Ich begleite Sie vom ersten Konzept bis zum Go-live und stelle sicher, dass Ihre digitale Präsenz langfristig funktioniert.',
+      'Ihre Website ist der erste Eindruck und der muss sitzen. Ich entwickle schnelle, barrierefreie und DSGVO-konforme Websites mit Astro: vom ersten Konzept bis zum Go-live.',
     detailEN:
-      'Your website is often the first impression potential clients have of your business. Slow load times, poor mobile display, or missing SEO cost you visitors – and revenue. Using the modern static-site framework Astro, I create websites that excel in every area: blazing fast, accessible, GDPR-compliant, and search-engine optimized. I guide you from the initial concept to go-live and ensure your digital presence works for the long term.',
+      'Your website is the first impression and it needs to land. I build fast, accessible, and GDPR-compliant websites with Astro: from initial concept to go-live.',
     useCasesDE: [
       'Unternehmenswebsite und digitale Visitenkarte',
       'Landing Pages für Produkte oder Kampagnen',

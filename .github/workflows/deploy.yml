@@ -23,24 +23,17 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Install lftp
-        run: sudo apt-get install -y lftp
+      - name: Inject SMTP password
+        run: sed -i "s/YOUR_EMAIL_PASSWORD/${{ secrets.smtp_password }}/g" dist/contact.php
 
-      - name: Deploy via FTPS
-        env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-        run: |
-          lftp -c "
-            set ftps:initial-prot '';
-            set ftp:ssl-force true;
-            set ftp:ssl-protect-data true;
-            set ssl:verify-certificate false;
-            set ftp:passive-mode true;
-            set mirror:parallel-transfer-count 5;
-            set mirror:use-pget-n 5;
-            open -u '$FTP_USERNAME','$FTP_PASSWORD' ftps://$FTP_SERVER;
-            mirror --reverse --delete --only-newer --verbose=1 ./dist/ /public_html/;
-            bye
-          "
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./dist/
+          server-dir: /public_html/
+          dangerous-clean-slate: false

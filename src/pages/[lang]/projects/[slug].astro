@@ -6,11 +6,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PageCta from '../../../components/PageCta.astro';
 import PageHeader from '../../../components/PageHeader.astro';
 import { Icon } from 'astro-icon/components';
-import { Image } from 'astro:assets';
-
-const projectImages = import.meta.glob<{ default: ImageMetadata }>(
-  '/src/assets/images/*.{png,jpg,jpeg,webp,avif}'
-);
 
 export async function getStaticPaths() {
   const allProjects = await getCollection('projects');
@@ -29,50 +24,30 @@ const { Content } = await render(project);
 
 const title = lang === 'de' ? (project.data.titleDe ?? project.data.title) : (project.data.titleEn ?? project.data.title);
 const description = lang === 'de' ? (project.data.descDe ?? project.data.description) : (project.data.descEn ?? project.data.description);
-
-const imageKey = project.data.image
-  ? `/src/assets/images/${project.data.image}`
-  : null;
-const resolvedImage = imageKey && projectImages[imageKey]
-  ? await projectImages[imageKey]()
-  : null;
 ---
 
 <BaseLayout title={title} {lang} description={description}>
   <div class="container">
-  <article>
+  <article class="project-article">
     <PageHeader
       title={title}
-      lead={description}
+      icon={project.data.icon}
       backHref={localizePath(`/${lang}/#projects`)}
       backLabel={t('back.projects')}
-    >
-      {project.data.techs.length > 0 && (
-        <ul class="tag-list" role="list">
-          {project.data.techs.map((tech: string) => <li class="tag">{tech}</li>)}
-        </ul>
-      )}
-    </PageHeader>
+    />
 
     <div class="project-content">
       <Content />
     </div>
 
-    <div class="project-hero-image">
-      {resolvedImage ? (
-        <Image
-          src={resolvedImage.default}
-          alt={title}
-          class="project-img"
-          loading="eager"
-        />
-      ) : (
+    {!project.data.image && (
+      <div class="project-hero-image">
         <div class="project-img-placeholder" aria-hidden="true">
           <Icon name={project.data.icon ?? 'lucide:image'} width="48" height="48" />
           <span>{lang === 'de' ? 'Screenshot folgt' : 'Screenshot coming soon'}</span>
         </div>
-      )}
-    </div>
+      </div>
+    )}
 
     <PageCta
       heading={lang === 'de' ? 'Interesse an einer ähnlichen Lösung?' : 'Interested in a similar solution?'}
@@ -89,10 +64,20 @@ const resolvedImage = imageKey && projectImages[imageKey]
     padding-block: var(--space-2xl);
   }
 
+  /* Tighten header — no lead/tags on this page */
+  .project-article :global(.page-header) {
+    padding-bottom: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .project-article :global(.page-header-title) {
+    margin-bottom: 0;
+  }
+
   /* ── Hero image / placeholder ── */
   .project-hero-image {
-    margin-top: var(--space-2xl);
-    margin-bottom: var(--space-2xl);
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-xl);
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid var(--color-border);
@@ -102,6 +87,15 @@ const resolvedImage = imageKey && projectImages[imageKey]
     width: 100%;
     height: auto;
     display: block;
+  }
+
+  /* Screenshot embedded in the markdown content (rendered at build time,
+     so it never jumps into place after paint) */
+  .project-content :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin-block: var(--space-lg) var(--space-xl);
   }
 
   .project-img-placeholder {
@@ -148,10 +142,22 @@ const resolvedImage = imageKey && projectImages[imageKey]
   .project-content :global(.features-list) {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-md);
     margin: 0 0 var(--space-lg);
     padding: 0;
+  }
+
+  @media (max-width: 760px) {
+    .project-content :global(.features-list) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 480px) {
+    .project-content :global(.features-list) {
+      grid-template-columns: 1fr;
+    }
   }
 
   .project-content :global(.features-list li) {
