@@ -18,7 +18,7 @@ export const ui = {
     'nav.menu.open':   'Menü öffnen',
     'nav.menu.close':  'Menü schließen',
 
-    'seo.title':       'Julius Bruch | Partner für digitale Lösungen',
+    'seo.title':       'Julius Bruch | Power Platform & Web Developer Leipzig',
     'seo.description': 'Freiberuflicher Power Apps Entwickler und Web Developer aus Leipzig. Maßgeschneiderte Microsoft 365 Lösungen und professionelle Websites. Jetzt anfragen.',
 
     'hero.tagline':    'Power Apps Maker · Web Developer · Vibe Coder',

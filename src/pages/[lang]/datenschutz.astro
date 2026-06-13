@@ -12,7 +12,7 @@ const { lang } = Astro.params as { lang: Lang };
 const t = useTranslations(lang);
 ---
 
-<BaseLayout title={`${t('privacy.title')} | Julius Bruch`} {lang} description={t('privacy.title')}>
+<BaseLayout title={t('privacy.title')} {lang} description={t('privacy.title')}>
   <div class="container page">
     <PageHeader
       title={t('privacy.title')}

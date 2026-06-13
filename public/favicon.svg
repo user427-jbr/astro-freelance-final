@@ -1,8 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
-  <!-- < -->
-  <path d="M36 20 L10 60 L36 100" fill="none" stroke="#888888" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- JB -->
-  <text x="60" y="78" font-family="Arial,Helvetica,sans-serif" font-size="46" font-weight="700" fill="#00c49a" text-anchor="middle">JB</text>
-  <!-- > -->
-  <path d="M84 20 L110 60 L84 100" fill="none" stroke="#888888" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <!-- Lucide workflow icon -->
+  <rect width="8" height="8" x="3" y="3" rx="2" fill="none" stroke="#00c49a" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M7 11v4a2 2 0 0 0 2 2h4" fill="none" stroke="#00c49a" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect width="8" height="8" x="13" y="13" rx="2" fill="none" stroke="#00c49a" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
