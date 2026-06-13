@@ -9,8 +9,15 @@
   </defs>
   <rect width="1200" height="630" fill="url(#grid)"/>
 
-  <!-- Accent glow -->
-  <ellipse cx="1080" cy="100" rx="360" ry="240" fill="#00c49a" opacity="0.08"/>
+  <!-- Accent glow top-right -->
+  <ellipse cx="1100" cy="150" rx="380" ry="260" fill="#00c49a" opacity="0.07"/>
+
+  <!-- Workflow icon – right side, scale 13 (~312px), centered vertically -->
+  <g transform="translate(860, 90) scale(13)" stroke="#00c49a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.55">
+    <rect width="8" height="8" x="3" y="3" rx="2"/>
+    <path d="M7 11v4a2 2 0 0 0 2 2h4"/>
+    <rect width="8" height="8" x="13" y="13" rx="2"/>
+  </g>
 
   <!-- Left accent bar -->
   <rect x="80" y="180" width="5" height="220" rx="2.5" fill="#00c49a"/>
@@ -30,7 +37,4 @@
 
   <rect x="630" y="430" width="190" height="50" rx="25" fill="#00c49a22"/>
   <text x="725" y="462" text-anchor="middle" font-family="system-ui,-apple-system,Helvetica Neue,Arial,sans-serif" font-size="22" font-weight="600" fill="#00c49a">SharePoint</text>
-
-  <!-- Domain -->
-  <text x="1120" y="580" text-anchor="end" font-family="system-ui,-apple-system,Helvetica Neue,Arial,sans-serif" font-size="24" font-weight="500" fill="#444">jb-solutions.digital</text>
 </svg>
