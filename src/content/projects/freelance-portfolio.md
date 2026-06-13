@@ -2,7 +2,7 @@
 title: "Freelance Portfolio"
 description: "Mehrsprachiges Portfolio-Website mit Astro, modernem Design und automatisiertem Deployment."
 icon: "lucide:globe"
-date: "2025-06-01"
+date: "2026-06-01"
 titleEn: "Freelance Portfolio"
 titleDe: "Freelance Portfolio"
 descEn: "Multilingual portfolio website built with Astro, modern design system, and automated deployment."
@@ -10,6 +10,7 @@ descDe: "Mehrsprachiges Portfolio-Website mit Astro, modernem Design und automat
 order: 4
 techs: ["Astro", "HTML / CSS", "GitHub Actions", "FTP Deploy"]
 url: "https://jb-solutions.digital"
+isNew: true
 ---
 
 ## <span lang="de">Projektübersicht</span><span lang="en">Project Overview</span>

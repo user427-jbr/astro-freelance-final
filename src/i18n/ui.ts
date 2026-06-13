@@ -51,6 +51,7 @@ export const ui = {
     'back.services':   'Zurück zu Leistungen',
 
     'projects.card.cta':   'Mehr erfahren',
+    'projects.card.badge': 'Neu',
 
     'contact.form.name':        'Name',
     'contact.form.email':       'E-Mail',
@@ -124,6 +125,7 @@ export const ui = {
     'back.services':   'Back to Services',
 
     'projects.card.cta':   'View project',
+    'projects.card.badge': 'New',
 
     'contact.form.name':        'Name',
     'contact.form.email':       'Email',

@@ -7,14 +7,19 @@ interface Props {
   slug: string;
   lang: string;
   icon?: string;
+  date?: Date;
+  isNew?: boolean;
   fadeDelay?: number;
 }
 import { localizePath, useTranslations } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
 import { Icon } from 'astro-icon/components';
-const { title, description, url, slug, lang, icon, fadeDelay = 0 } = Astro.props;
+const { title, description, url, slug, lang, icon, date, isNew = false, fadeDelay = 0 } = Astro.props;
 const t = useTranslations(lang as Lang);
 const detailHref = localizePath(`/${lang}/projects/${slug}`);
+const dateLabel = date
+  ? date.toLocaleDateString(lang === 'de' ? 'de-DE' : 'en-GB', { month: 'long', year: 'numeric' })
+  : undefined;
 ---
 
 <article class="project-card fade-in" data-fade-delay={fadeDelay}>
@@ -25,10 +30,12 @@ const detailHref = localizePath(`/${lang}/projects/${slug}`);
           <Icon name={icon} width="20" height="20" aria-hidden="true" />
         </div>
       )}
+      {isNew && <span class="card-badge">{t('projects.card.badge')}</span>}
     </div>
     <h3 class="card-title">{title}</h3>
     <p class="card-desc">{description}</p>
     <div class="card-footer">
+      {dateLabel && <span class="card-date">{dateLabel}</span>}
       <span class="card-cta">{t('projects.card.cta')}</span>
       <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" class="card-arrow" />
     </div>
@@ -103,6 +110,18 @@ const detailHref = localizePath(`/${lang}/projects/${slug}`);
     flex: 1;
   }
 
+  .card-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    background-color: var(--color-accent-dim);
+    border-radius: 6px;
+    padding: 2px 8px;
+    line-height: 1.6;
+  }
+
   .card-footer {
     display: flex;
     align-items: center;
@@ -111,6 +130,13 @@ const detailHref = localizePath(`/${lang}/projects/${slug}`);
     color: var(--color-accent);
     font-size: var(--text-sm);
     font-weight: 600;
+  }
+
+  .card-date {
+    font-size: var(--text-sm);
+    font-weight: 400;
+    color: var(--color-muted);
+    margin-right: auto;
   }
 
   .card-external {

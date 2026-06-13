@@ -2,7 +2,7 @@
 title: "Reisekosten"
 description: "Automatisierter Genehmigungs-Workflow mit PDF-Berichterstellung für die Buchhaltung."
 icon: "lucide:receipt"
-date: "2025-05-01"
+date: "2024-12-01"
 titleEn: "Travel Expenses"
 titleDe: "Reisekosten"
 descEn: "Automated approval workflow with PDF generation for fast accounting."

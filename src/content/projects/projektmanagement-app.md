@@ -2,7 +2,7 @@
 title: "Projektmanagement"
 description: "Mit SharePoint verbundenes Dashboard für effiziente Projektverfolgung."
 icon: "lucide:layout-dashboard"
-date: "2024-11-01"
+date: "2025-01-01"
 titleEn: "Project Management"
 titleDe: "Projektmanagement"
 descEn: "SharePoint-connected dashboard for efficient project tracking."

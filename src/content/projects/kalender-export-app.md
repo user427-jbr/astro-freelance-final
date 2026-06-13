@@ -2,7 +2,7 @@
 title: "Kalender Export"
 description: "Power App zum Filtern und Exportieren von Outlook-Kalenderterminen via Graph API."
 icon: "lucide:calendar"
-date: "2025-06-01"
+date: "2026-04-01"
 titleEn: "Calendar Export"
 titleDe: "Kalender Export"
 descEn: "Power App to filter and export Outlook calendar events via Graph API."
