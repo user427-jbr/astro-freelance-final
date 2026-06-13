@@ -23,7 +23,7 @@ const { title, subtitle, items, idPrefix = 'faq' } = Astro.props;
   {subtitle && <p class="section-sub">{subtitle}</p>}
   <ul class="faq-list">
     {items.map(({ q, a }, i) => (
-      <li class="faq-item fade-in" id={`${idPrefix}-${i}`} data-fade-delay={i * 60}>
+      <li class="faq-item" id={`${idPrefix}-${i}`}>
         <button class="faq-question" aria-expanded="false" aria-controls={`${idPrefix}-ans-${i}`}>
           {q}
           <Icon name="lucide:plus" width="18" height="18" aria-hidden="true" />

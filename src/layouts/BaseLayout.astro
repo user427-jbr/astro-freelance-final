@@ -146,24 +146,5 @@ const alternates = Object.keys(languages).map((code) => ({
     </main>
     <Footer lang={lang} />
 
-    <script is:inline>
-      (function () {
-        function initScrollFade() {
-          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-          var obs = new IntersectionObserver(function (entries) {
-            entries.forEach(function (e) {
-              if (!e.isIntersecting) return;
-              var delay = e.target.getAttribute('data-fade-delay');
-              if (delay) e.target.style.transitionDelay = delay + 'ms';
-              e.target.classList.add('is-visible');
-              obs.unobserve(e.target);
-            });
-          }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-          document.querySelectorAll('.fade-in').forEach(function (el) { obs.observe(el); });
-        }
-        initScrollFade();
-        document.addEventListener('astro:after-swap', initScrollFade);
-      })();
-    </script>
   </body>
 </html>

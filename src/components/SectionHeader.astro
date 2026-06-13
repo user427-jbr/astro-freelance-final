@@ -9,7 +9,7 @@ const { title, subtitle, headingLevel = 'h2' } = Astro.props;
 const HeadingTag = headingLevel;
 ---
 
-<div class="section-header fade-in">
+<div class="section-header">
   <HeadingTag class="section-title">{title}</HeadingTag>
 </div>
 {subtitle && <p class="section-sub">{subtitle}</p>}

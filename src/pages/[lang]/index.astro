@@ -92,11 +92,11 @@ const faq = isDE
     <div class="container">
       <SectionHeader icon="lucide:user-round" title={t('about.title')} />
       <div class="about-layout">
-        <div class="about-text fade-in">
+        <div class="about-text">
           <p class="about-intro">{t('about.intro')}</p>
           {t('about.body') && <blockquote class="about-mission">{t('about.body')}</blockquote>}
         </div>
-        <aside class="about-aside fade-in" data-fade-delay="120">
+        <aside class="about-aside">
           <div class="about-links-card">
             <div>
               <p class="panel-label">{t('projects.skills.title')}</p>
@@ -136,7 +136,7 @@ const faq = isDE
       <SectionHeader icon="lucide:briefcase" title={t('services.title')} />
       <div class="svc-gallery">
         {services.map(({ slug, icon, name, desc, cardFeatures }, i) => (
-          <a href={localizePath(`/${lang}/services/${slug}`)} class="svc-tile fade-in" data-fade-delay={i * 80}>
+          <a href={localizePath(`/${lang}/services/${slug}`)} class="svc-tile">
             <div class="svc-tile-icon">
               <Icon name={icon} width="22" height="22" aria-hidden="true" />
             </div>
@@ -166,7 +166,6 @@ const faq = isDE
             icon={project.data.icon}
             date={project.data.date}
             isNew={project.data.isNew}
-            fadeDelay={i * 80}
             {lang}
           />
         ))}
