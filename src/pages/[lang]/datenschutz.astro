@@ -23,114 +23,252 @@ const t = useTranslations(lang);
     <div class="prose">
       {lang === 'de' ? (
         <>
-          <h2>1. Datenschutz auf einen Blick</h2>
+          <h2>1. Verantwortlicher</h2>
           <p>
-            Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit
-            deinen personenbezogenen Daten passiert, wenn du diese Website besuchst.
-            Personenbezogene Daten sind alle Daten, mit denen du persönlich
-            identifiziert werden kannst.
+            Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:<br />
+            Julius Bruch<br />
+            E-Mail: <a href="mailto:info@jb-solutions.de">info@jb-solutions.de</a>
           </p>
 
-          <h2>2. Hosting (Hetzner)</h2>
+          <h2>2. Erhebung und Verarbeitung personenbezogener Daten</h2>
+          <p>
+            Diese Website erhebt und verarbeitet personenbezogene Daten nur in dem Umfang,
+            der für den Betrieb der Website und die Bearbeitung von Anfragen erforderlich
+            ist. Im Einzelnen:
+          </p>
+
+          <h2>3. Server-Logfiles (Hosting bei Hetzner)</h2>
           <p>
             Diese Website wird bei der Hetzner Online GmbH, Industriestr. 25, 91710
-            Gunzenhausen, Deutschland, gehostet. Beim Aufruf der Seite werden durch
-            den Server technisch notwendige Zugriffsdaten (z. B. IP-Adresse, Datum
-            und Uhrzeit der Anfrage, abgerufene Datei) in Server-Logfiles
-            verarbeitet. Dies ist zur sicheren und stabilen Bereitstellung der
-            Website erforderlich (Art. 6 Abs. 1 lit. f DSGVO). Mit Hetzner besteht
-            ein Auftragsverarbeitungsvertrag (AVV).
+            Gunzenhausen, Deutschland gehostet. Bei jedem Aufruf der Website werden durch
+            den Webserver automatisch folgende Daten in Server-Logfiles gespeichert:
           </p>
-
-          <h2>3. Kontaktformular (PHPMailer)</h2>
+          <ul>
+            <li>IP-Adresse des anfragenden Geräts</li>
+            <li>Datum und Uhrzeit der Anfrage</li>
+            <li>Name und URL der abgerufenen Datei</li>
+            <li>Übertragene Datenmenge</li>
+            <li>Zugriffsstatus (HTTP-Statuscode)</li>
+            <li>Browser und Betriebssystem</li>
+            <li>Referrer-URL (zuvor besuchte Seite)</li>
+          </ul>
           <p>
-            Wenn du mir über das Kontaktformular eine Nachricht sendest, werden die
-            von dir eingegebenen Daten (Name, E-Mail-Adresse, Nachricht) per E-Mail
-            über die Bibliothek PHPMailer an mich übermittelt. Die Daten werden
-            ausschließlich zur Bearbeitung deiner Anfrage verwendet und nicht an
-            Dritte weitergegeben (Art. 6 Abs. 1 lit. a und b DSGVO). Es werden keine
-            Eingaben in einer Datenbank gespeichert.
+            Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO
+            (berechtigtes Interesse an der sicheren und stabilen Bereitstellung der Website).
+            Die Logfiles werden nach spätestens 30 Tagen automatisch gelöscht. Mit Hetzner
+            besteht ein Auftragsverarbeitungsvertrag (AVV) gemäß Art. 28 DSGVO. Die
+            Datenschutzerklärung von Hetzner ist unter{' '}
+            <a href="https://www.hetzner.com/de/rechtliches/datenschutz" target="_blank" rel="noopener noreferrer">
+              hetzner.com/de/rechtliches/datenschutz
+            </a>{' '}
+            abrufbar.
           </p>
 
-          <h2>4. Keine Analyse-Tools, keine Cookies</h2>
+          <h2>4. Kontaktformular</h2>
           <p>
-            Diese Website verwendet keine Analyse-, Tracking- oder Werbedienste und
-            setzt keine Cookies. Es werden keine Nutzungsprofile erstellt. Lediglich
-            deine gewählte Sprache und dein Farbschema (hell/dunkel) werden im
-            lokalen Speicher (localStorage) deines Browsers abgelegt; diese
-            Information verlässt dein Gerät nicht.
+            Wenn du das Kontaktformular auf dieser Website nutzt, werden die von dir
+            eingegebenen Daten (Name, E-Mail-Adresse, Nachricht) per E-Mail an mich
+            übermittelt. Die Übertragung erfolgt verschlüsselt über SMTP mit TLS/SSL
+            unter Verwendung der Open-Source-Bibliothek PHPMailer.
           </p>
-
-          <h2>5. Schriftarten (lokal gehostet)</h2>
           <p>
-            Die verwendeten Schriftarten werden lokal vom Server dieser Website
-            ausgeliefert. Es findet keine Verbindung zu externen Anbietern wie
-            Google Fonts statt; deine IP-Adresse wird dabei nicht an Dritte
-            übermittelt.
+            Die Daten werden ausschließlich zur Bearbeitung deiner Anfrage verwendet.
+            Eine Weitergabe an Dritte findet nicht statt. Es werden keine Eingaben in
+            einer Datenbank gespeichert; die Daten liegen ausschließlich in der an mich
+            zugestellten E-Mail vor und werden nach Abschluss der Korrespondenz gelöscht,
+            sofern keine gesetzliche Aufbewahrungspflicht besteht.
           </p>
-
-          <h2>6. Deine Rechte</h2>
           <p>
-            Du hast jederzeit das Recht auf Auskunft, Berichtigung, Löschung oder
-            Einschränkung der Verarbeitung deiner gespeicherten Daten, ein Recht auf
-            Widerspruch und Datenübertragbarkeit sowie ein Beschwerderecht bei der
-            zuständigen Aufsichtsbehörde.
+            Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung) sowie
+            Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung
+            von Anfragen).
           </p>
 
-          <p><em>Platzhalter — bitte vor Veröffentlichung durch eine rechtssichere Datenschutzerklärung ersetzen.</em></p>
+          <h2>5. Keine Cookies, kein Tracking</h2>
+          <p>
+            Diese Website setzt keine Cookies und verwendet keinerlei Analyse-, Tracking-
+            oder Werbedienste (z. B. Google Analytics, Meta Pixel o. Ä.). Es werden keine
+            Nutzungsprofile erstellt.
+          </p>
+          <p>
+            Im lokalen Speicher (localStorage) deines Browsers werden ausschließlich
+            technisch notwendige Einstellungen gespeichert:
+          </p>
+          <ul>
+            <li><strong>theme</strong> – dein gewähltes Farbschema (hell/dunkel)</li>
+            <li><strong>lang</strong> – deine bevorzugte Sprache (sofern gespeichert)</li>
+          </ul>
+          <p>
+            Diese Informationen verlassen dein Gerät nicht und werden nicht an Server
+            übertragen. Sie sind jederzeit über die Entwicklertools deines Browsers
+            löschbar.
+          </p>
+
+          <h2>6. Schriftarten (lokal gehostet)</h2>
+          <p>
+            Diese Website verwendet die Schriftarten <em>Inter</em> und{' '}
+            <em>JetBrains Mono</em>, die ausschließlich lokal vom eigenen Server
+            ausgeliefert werden. Es findet keine Verbindung zu externen Diensten wie
+            Google Fonts statt. Deine IP-Adresse wird im Zusammenhang mit der
+            Schriftauslieferung nicht an Dritte übermittelt.
+          </p>
+
+          <h2>7. Deine Rechte als betroffene Person</h2>
+          <p>Dir stehen gemäß DSGVO folgende Rechte zu:</p>
+          <ul>
+            <li><strong>Auskunft</strong> (Art. 15 DSGVO) – du kannst Auskunft über die zu deiner Person gespeicherten Daten verlangen.</li>
+            <li><strong>Berichtigung</strong> (Art. 16 DSGVO) – du kannst die Berichtigung unrichtiger Daten verlangen.</li>
+            <li><strong>Löschung</strong> (Art. 17 DSGVO) – du kannst die Löschung deiner Daten verlangen, sofern keine gesetzliche Aufbewahrungspflicht entgegensteht.</li>
+            <li><strong>Einschränkung der Verarbeitung</strong> (Art. 18 DSGVO)</li>
+            <li><strong>Datenübertragbarkeit</strong> (Art. 20 DSGVO)</li>
+            <li><strong>Widerspruch</strong> (Art. 21 DSGVO) – du kannst der Verarbeitung auf Grundlage berechtigter Interessen jederzeit widersprechen.</li>
+          </ul>
+          <p>
+            Zur Ausübung deiner Rechte wende dich bitte per E-Mail an:{' '}
+            <a href="mailto:info@jb-solutions.de">info@jb-solutions.de</a>
+          </p>
+
+          <h2>8. Beschwerderecht bei der Aufsichtsbehörde</h2>
+          <p>
+            Du hast das Recht, dich bei der zuständigen Datenschutzaufsichtsbehörde
+            zu beschweren. Zuständige Behörde für Sachsen ist der Sächsische
+            Datenschutz- und Transparenzbeauftragte:
+          </p>
+          <p>
+            Sächsischer Datenschutz- und Transparenzbeauftragter<br />
+            Devrientstraße 5<br />
+            01067 Dresden<br />
+            <a href="https://www.saechsdsb.de" target="_blank" rel="noopener noreferrer">www.saechsdsb.de</a>
+          </p>
+
+          <h2>9. Aktualität und Änderung dieser Datenschutzerklärung</h2>
+          <p>
+            Diese Datenschutzerklärung ist aktuell gültig (Stand: Juni 2025). Durch
+            Weiterentwicklung der Website oder aufgrund geänderter gesetzlicher bzw.
+            behördlicher Vorgaben kann es notwendig werden, diese Erklärung anzupassen.
+            Die jeweils aktuelle Version ist stets unter dieser URL abrufbar.
+          </p>
         </>
       ) : (
         <>
-          <h2>1. Privacy at a Glance</h2>
+          <h2>1. Controller</h2>
           <p>
-            The following information provides a simple overview of what happens to
-            your personal data when you visit this website. Personal data is any data
-            that can be used to personally identify you.
+            The controller within the meaning of the General Data Protection Regulation
+            (GDPR) is:<br />
+            Julius Bruch<br />
+            Email: <a href="mailto:info@jb-solutions.de">info@jb-solutions.de</a>
           </p>
 
-          <h2>2. Hosting (Hetzner)</h2>
+          <h2>2. Collection and processing of personal data</h2>
+          <p>
+            This website only collects and processes personal data to the extent
+            necessary for operating the site and handling enquiries, as detailed below.
+          </p>
+
+          <h2>3. Server log files (hosted by Hetzner)</h2>
           <p>
             This website is hosted by Hetzner Online GmbH, Industriestr. 25, 91710
-            Gunzenhausen, Germany. When you access the site, the server processes
-            technically necessary access data (e.g. IP address, date and time of the
-            request, file accessed) in server log files. This is required for the
-            secure and stable provision of the website (Art. 6(1)(f) GDPR). A data
-            processing agreement (DPA) is in place with Hetzner.
+            Gunzenhausen, Germany. Each time the website is accessed, the web server
+            automatically stores the following data in server log files:
           </p>
-
-          <h2>3. Contact Form (PHPMailer)</h2>
+          <ul>
+            <li>IP address of the requesting device</li>
+            <li>Date and time of the request</li>
+            <li>Name and URL of the file accessed</li>
+            <li>Volume of data transferred</li>
+            <li>Access status (HTTP status code)</li>
+            <li>Browser and operating system</li>
+            <li>Referrer URL (previously visited page)</li>
+          </ul>
           <p>
-            When you send a message via the contact form, the data you enter (name,
-            email address, message) is transmitted to me by email via the PHPMailer
-            library. The data is used solely to process your enquiry and is not
-            passed on to third parties (Art. 6(1)(a) and (b) GDPR). No input is
-            stored in a database.
+            Processing is based on Art. 6(1)(f) GDPR (legitimate interest in the
+            secure and stable provision of the website). Log files are automatically
+            deleted after a maximum of 30 days. A data processing agreement (DPA)
+            pursuant to Art. 28 GDPR is in place with Hetzner. Hetzner's privacy
+            policy is available at{' '}
+            <a href="https://www.hetzner.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
+              hetzner.com/legal/privacy-policy
+            </a>.
           </p>
 
-          <h2>4. No Analytics, No Cookies</h2>
+          <h2>4. Contact form</h2>
           <p>
-            This website does not use any analytics, tracking or advertising services
-            and does not set cookies. No usage profiles are created. Only your chosen
-            language and colour scheme (light/dark) are stored in your browser's
-            local storage; this information does not leave your device.
+            When you use the contact form on this website, the data you enter (name,
+            email address, message) is transmitted to me by email. The transmission is
+            encrypted via SMTP with TLS/SSL using the open-source library PHPMailer.
           </p>
-
-          <h2>5. Fonts (Locally Hosted)</h2>
           <p>
-            The fonts used are served locally from this website's server. No
-            connection is made to external providers such as Google Fonts; your IP
-            address is not transmitted to third parties.
+            Your data is used solely to process your enquiry and is not passed on to
+            third parties. No data is stored in a database; it exists only in the email
+            delivered to me and is deleted after the correspondence is concluded, unless
+            a statutory retention obligation applies.
           </p>
-
-          <h2>6. Your Rights</h2>
           <p>
-            You have the right at any time to request access to, rectification or
-            erasure of your stored personal data, restriction of processing,
-            objection and data portability, as well as the right to lodge a complaint
-            with the competent supervisory authority.
+            Legal basis: Art. 6(1)(b) GDPR (pre-contractual measures) and Art. 6(1)(f)
+            GDPR (legitimate interest in responding to enquiries).
           </p>
 
-          <p><em>Placeholder — please replace with a legally compliant privacy policy before publishing.</em></p>
+          <h2>5. No cookies, no tracking</h2>
+          <p>
+            This website does not set cookies and does not use any analytics, tracking
+            or advertising services (e.g. Google Analytics, Meta Pixel, etc.). No usage
+            profiles are created.
+          </p>
+          <p>
+            Only technically necessary settings are stored in your browser's local storage:
+          </p>
+          <ul>
+            <li><strong>theme</strong> – your chosen colour scheme (light/dark)</li>
+            <li><strong>lang</strong> – your preferred language (if saved)</li>
+          </ul>
+          <p>
+            This information does not leave your device and is not transmitted to any
+            server. It can be deleted at any time via your browser's developer tools.
+          </p>
+
+          <h2>6. Fonts (locally hosted)</h2>
+          <p>
+            This website uses the fonts <em>Inter</em> and <em>JetBrains Mono</em>,
+            which are served exclusively from the website's own server. No connection
+            is made to external services such as Google Fonts. Your IP address is not
+            transmitted to third parties in connection with font delivery.
+          </p>
+
+          <h2>7. Your rights as a data subject</h2>
+          <p>You have the following rights under the GDPR:</p>
+          <ul>
+            <li><strong>Access</strong> (Art. 15 GDPR) – you may request information about the data stored about you.</li>
+            <li><strong>Rectification</strong> (Art. 16 GDPR) – you may request the correction of inaccurate data.</li>
+            <li><strong>Erasure</strong> (Art. 17 GDPR) – you may request the deletion of your data, provided no statutory retention obligation applies.</li>
+            <li><strong>Restriction of processing</strong> (Art. 18 GDPR)</li>
+            <li><strong>Data portability</strong> (Art. 20 GDPR)</li>
+            <li><strong>Objection</strong> (Art. 21 GDPR) – you may object at any time to processing based on legitimate interests.</li>
+          </ul>
+          <p>
+            To exercise your rights, please contact:{' '}
+            <a href="mailto:info@jb-solutions.de">info@jb-solutions.de</a>
+          </p>
+
+          <h2>8. Right to lodge a complaint</h2>
+          <p>
+            You have the right to lodge a complaint with the competent data protection
+            supervisory authority. The authority responsible for Saxony is:
+          </p>
+          <p>
+            Sächsischer Datenschutz- und Transparenzbeauftragter<br />
+            (Saxon Commissioner for Data Protection and Freedom of Information)<br />
+            Devrientstraße 5<br />
+            01067 Dresden, Germany<br />
+            <a href="https://www.saechsdsb.de" target="_blank" rel="noopener noreferrer">www.saechsdsb.de</a>
+          </p>
+
+          <h2>9. Currency and amendments</h2>
+          <p>
+            This privacy policy is currently valid (as of June 2025). Further
+            development of the website or changes in statutory or regulatory
+            requirements may make it necessary to amend this policy. The current
+            version is always available at this URL.
+          </p>
         </>
       )}
     </div>

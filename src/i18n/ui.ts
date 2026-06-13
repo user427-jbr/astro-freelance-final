@@ -19,7 +19,7 @@ export const ui = {
     'nav.menu.close':  'Menü schließen',
 
     'seo.title':       'Julius Bruch | Power Platform & Web Developer Leipzig',
-    'seo.description': 'Freiberuflicher Power Apps Entwickler und Web Developer aus Leipzig. Maßgeschneiderte Microsoft 365 Lösungen und professionelle Websites. Jetzt anfragen.',
+    'seo.description': 'Freiberuflicher Low-Code Entwickler aus Leipzig. Power Apps, Power Automate und maßgeschneiderte Microsoft 365 Lösungen – plus professionelle Websites. Jetzt anfragen.',
 
     'hero.tagline':    'Power Apps Maker · Web Developer · Vibe Coder',
     'hero.headline':   'Hi, ich bin Julius.',
@@ -32,7 +32,7 @@ export const ui = {
     'projects.title':  'Projekte',
 
     'about.title':     'Über mich',
-    'about.intro':     'Masterstudent der Wirtschaftsinformatik an der Universität Leipzig. Freiberuflicher Power Apps Entwickler und Web Developer. Ich baue skalierbare Lösungen, die Abläufe optimieren und das volle Potenzial von Microsoft 365 ausschöpfen.',
+    'about.intro':     'Masterstudent der Wirtschaftsinformatik an der Universität Leipzig. Freiberuflicher Low-Code Entwickler und Web Developer. Ich baue skalierbare Power Apps und Automatisierungen, die Abläufe optimieren und das volle Potenzial von Microsoft 365 ausschöpfen.',
     'about.body':      'Mein Ziel: Menschen in ihrem Arbeitsalltag spürbar entlasten. Ich entwickle Lösungen, die Nutzer dort abholen, wo sie stehen. Intuitiv, verlässlich und direkt im vertrauten Microsoft-Umfeld.',
     'about.profiles':  'Profile',
 
@@ -93,7 +93,7 @@ export const ui = {
 
     'hero.tagline':    'Power Apps Maker · Web Developer · Vibe Coder',
     'seo.title':       'Julius Bruch | Digital Solutions',
-    'seo.description': 'Freelance Power Apps developer and web developer from Leipzig. Custom Microsoft 365 solutions and professional websites. Get in touch today.',
+    'seo.description': 'Freelance low-code developer from Leipzig. Power Apps, Power Automate and custom Microsoft 365 solutions – plus professional websites. Get in touch today.',
 
     'hero.headline':   "Hi, I'm Julius.",
     'hero.subtitle':   'Freelance IT consultant from Leipzig.',
@@ -105,7 +105,7 @@ export const ui = {
     'projects.title':  'Projects',
 
     'about.title':     'About Me',
-    'about.intro':     "Master's student in Business Informatics at the University of Leipzig. Freelance Power Apps developer and web developer. I build scalable solutions that streamline operations and unlock the full potential of Microsoft 365.",
+    'about.intro':     "Master's student in Business Informatics at the University of Leipzig. Freelance low-code developer and web developer. I build scalable Power Apps and automations that streamline operations and unlock the full potential of Microsoft 365.",
     'about.body':      "My goal: make people's daily work genuinely easier. I build solutions that meet users where they are. Intuitive, reliable, and right inside the Microsoft tools they already know.",
     'about.profiles':  'Profiles',
 
