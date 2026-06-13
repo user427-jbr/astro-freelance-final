@@ -1,14 +1,11 @@
 ---
-import { Icon } from 'astro-icon/components';
-
 interface Props {
-  icon: string;
   title: string;
   subtitle?: string;
   headingLevel?: 'h2' | 'h3';
 }
 
-const { icon, title, subtitle, headingLevel = 'h2' } = Astro.props;
+const { title, subtitle, headingLevel = 'h2' } = Astro.props;
 const HeadingTag = headingLevel;
 ---
 

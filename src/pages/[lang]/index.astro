@@ -82,7 +82,7 @@ const faq = isDE
     ];
 ---
 
-<BaseLayout title="Power Apps Freelancer Leipzig" {lang} description={t('hero.subtitle')}>
+<BaseLayout title={t('seo.title')} {lang} description={t('seo.description')}>
 
   <!-- Hero -->
   <Hero {lang} />
@@ -114,8 +114,8 @@ const faq = isDE
               ]} />
               <div class="profiles">
                 <span class="profiles-label">{isDE ? 'Zertifikate' : 'Certifications'}</span>
-                <a href="https://learn.microsoft.com/credentials/certifications/power-platform-app-maker/" rel="noopener noreferrer" target="_blank" class="profile-link">
-                  PL-100
+                <a href="https://learn.microsoft.com/credentials/certifications/power-platform-fundamentals/" rel="noopener noreferrer" target="_blank" class="profile-link">
+                  PL-900
                   <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" />
                 </a>
                 <a href="https://learn.microsoft.com/credentials/certifications/power-platform-functional-consultant/" rel="noopener noreferrer" target="_blank" class="profile-link">
@@ -286,55 +286,8 @@ const faq = isDE
 
   #faq {
     scroll-margin-top: 70px;
+    padding-block: var(--space-2xl);
   }
-
-  .faq-layout {
-    display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: var(--space-2xl);
-    align-items: start;
-  }
-
-  @media (max-width: 720px) {
-    .faq-layout { grid-template-columns: 1fr; }
-    .faq-aside { display: none; }
-  }
-
-  .faq-aside {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  .faq-aside-title {
-    font-size: var(--text-base);
-    font-weight: 700;
-    color: var(--color-heading);
-  }
-
-  .faq-aside-body {
-    font-size: var(--text-sm);
-    color: var(--color-muted);
-    line-height: 1.7;
-  }
-
-  .faq-aside-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-sm);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-accent);
-    text-decoration: none;
-    margin-top: var(--space-xs);
-    transition: opacity var(--transition-base);
-  }
-
-  .faq-aside-btn:hover { opacity: 0.8; text-decoration: none; }
 
   /* About */
   .about-layout {

@@ -112,10 +112,10 @@ $resultOwner = sendEmailViaSMTP($siteOwnerEmail, "Julius Bruch", $subjectToOwner
 // 2. Send Auto-Reply to User
 if ($resultOwner['success']) {
     if ($lang === 'en') {
-        $subjectToUser = "Confirmation: We received your message";
-        $bodyTextToUser = "Hello $name,\n\nThank you for reaching out. I have received your message and will get back to you shortly.\n\nYour message:\n$message\n\nBest regards,\nJulius Bruch";
+        $subjectToUser = "Confirmation: I received your message";
+        $bodyTextToUser = "Hello $name,\n\nThank you for reaching out. I received your message and will get back to you shortly.\n\nYour message:\n$message\n\nBest regards,\nJulius Bruch";
     } else {
-        $subjectToUser = "Bestätigung: Wir haben Ihre Nachricht erhalten";
+        $subjectToUser = "Bestätigung: Ich habe Ihre Nachricht erhalten";
         $bodyTextToUser = "Hallo $name,\n\nvielen Dank für Ihre Anfrage. Ich habe Ihre Nachricht erhalten und werde mich in Kürze bei Ihnen melden.\n\nIhre Nachricht:\n$message\n\nMit freundlichen Grüßen,\nJulius Bruch";
     }
 

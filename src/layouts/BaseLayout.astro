@@ -59,9 +59,26 @@ const alternates = Object.keys(languages).map((code) => ({
     ))}
     <link rel="alternate" hreflang="x-default" href={alternates.find(a => a.code === 'de')?.href} />
 
-    <link rel="icon" href={`${BASE}/favicon.svg`} type="image/svg+xml" />
     <link rel="icon" href={`${BASE}/favicon.ico`} sizes="32x32" />
-    <link rel="apple-touch-icon" href={`${BASE}/favicon-512.png`} />
+    <link rel="icon" href={`${BASE}/favicon-32.png`} type="image/png" sizes="32x32" />
+    <link rel="icon" href={`${BASE}/favicon.svg`} type="image/svg+xml" />
+    <link rel="apple-touch-icon" sizes="512x512" href={`${BASE}/favicon-512.png`} />
+
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Julius Bruch",
+      "url": "https://jb-solutions.digital",
+      "image": "https://jb-solutions.digital/og-image.png",
+      "jobTitle": "Freelance Power Apps Developer & Web Developer",
+      "worksFor": { "@type": "Organization", "name": "Self-employed" },
+      "address": { "@type": "PostalAddress", "addressLocality": "Leipzig", "addressCountry": "DE" },
+      "sameAs": [
+        "https://www.linkedin.com/in/julius-bruch"
+      ],
+      "knowsAbout": ["Microsoft Power Apps", "Power Automate", "SharePoint", "Web Development", "Microsoft 365"]
+    })} />
 
     <!-- Open Graph -->
     <meta property="og:type"        content="website" />

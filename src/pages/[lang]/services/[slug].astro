@@ -34,7 +34,7 @@ const features = isDE ? service.featuresDE : service.featuresEN;
 const useCases = isDE ? service.useCasesDE : service.useCasesEN;
 ---
 
-<BaseLayout title={name} {lang} description={desc}>
+<BaseLayout title={`${name} | Julius Bruch`} {lang} description={desc}>
   <div class="container page">
 
     <PageHeader
@@ -104,25 +104,6 @@ const useCases = isDE ? service.useCasesDE : service.useCasesEN;
     margin-bottom: 0;
     word-break: break-word;
     hyphens: auto;
-  }
-
-  .svc-desc {
-    font-size: var(--text-lg);
-    color: var(--color-muted);
-    line-height: 1.7;
-    margin-bottom: var(--space-lg);
-    max-width: 60ch;
-  }
-
-  .svc-intro-row {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-xl);
-  }
-
-  @media (max-width: 640px) {
-    .svc-intro-row { grid-template-columns: 1fr; }
   }
 
   .svc-intro {
