@@ -9,6 +9,7 @@ descEn: "SharePoint-connected dashboard for efficient project tracking."
 descDe: "Mit SharePoint verbundenes Dashboard für effiziente Projektverfolgung."
 order: 2
 techs: ["Power Apps", "SharePoint Online", "SharePoint Lists"]
+image: "project-management-app.png"
 ---
 
 ## <span lang="de">Projektübersicht</span><span lang="en">Project Overview</span>

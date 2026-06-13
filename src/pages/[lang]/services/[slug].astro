@@ -41,20 +41,19 @@ const useCases = isDE ? service.useCasesDE : service.useCasesEN;
       title={name}
       icon={service.icon}
       backHref={localizePath(`/${lang}/#services`)}
-      backLabel={isDE ? 'Zurück zu Leistungen' : 'Back to Services'}
+      backLabel={t('back.services')}
     />
 
-    <div class="svc-intro-row">
-      <div class="svc-image-placeholder">
-        {resolvedImage
-          ? <Image src={resolvedImage.default} alt={name} class="svc-image" />
-          : <div class="svc-image-empty" aria-hidden="true">
-              <Icon name="lucide:image" width="32" height="32" />
-              <span>{isDE ? 'Bild folgt' : 'Image coming soon'}</span>
-            </div>
-        }
-      </div>
-      <p class="svc-intro">{detail}</p>
+    <p class="svc-intro">{detail}</p>
+
+    <div class="svc-image-placeholder">
+      {resolvedImage
+        ? <Image src={resolvedImage.default} alt={name} class="svc-image" />
+        : <div class="svc-image-empty" aria-hidden="true">
+            <Icon name="lucide:image" width="32" height="32" />
+            <span>{isDE ? 'Bild folgt' : 'Image coming soon'}</span>
+          </div>
+      }
     </div>
 
     <!-- Features grid -->
@@ -130,17 +129,18 @@ const useCases = isDE ? service.useCasesDE : service.useCasesEN;
     font-size: var(--text-lg);
     color: var(--color-text);
     line-height: 1.75;
-    margin: 0;
+    margin: 0 0 var(--space-xl);
   }
 
   .svc-image-placeholder {
     align-self: flex-start;
+    margin-bottom: var(--space-xl);
   }
 
   .svc-image {
-    width: 260px;
+    width: 380px;
     height: auto;
-    max-height: 200px;
+    max-height: 300px;
     object-fit: cover;
     border-radius: 12px;
     border: 1px solid var(--color-border);

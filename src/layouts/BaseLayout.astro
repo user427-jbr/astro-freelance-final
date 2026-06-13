@@ -27,7 +27,7 @@ interface Props {
 
 const { title, lang, description, ogImage } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImageURL = ogImage ? new URL(ogImage, Astro.site) : undefined;
+const ogImageURL = new URL(ogImage ?? '/og-image.svg', Astro.site);
 
 // hreflang alternates: same path with the language segment swapped.
 const pathNoBase = BASE && Astro.url.pathname.startsWith(BASE)
@@ -44,7 +44,10 @@ const alternates = Object.keys(languages).map((code) => ({
   <head>
     <meta charset="utf-8" />
     <link rel="preload" href={inter400} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={inter500} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={inter600} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={inter700} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={jbMono700} as="font" type="font/woff2" crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
 
@@ -64,13 +67,13 @@ const alternates = Object.keys(languages).map((code) => ({
     <meta property="og:url"         content={canonicalURL} />
     <meta property="og:title"       content={title} />
     <meta property="og:description" content={description} />
-    {ogImageURL && <meta property="og:image" content={ogImageURL} />}
+    <meta property="og:image"       content={ogImageURL} />
 
     <!-- Twitter / X -->
-    <meta name="twitter:card"        content={ogImageURL ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:card"        content="summary_large_image" />
     <meta name="twitter:title"       content={title} />
     <meta name="twitter:description" content={description} />
-    {ogImageURL && <meta name="twitter:image" content={ogImageURL} />}
+    <meta name="twitter:image"       content={ogImageURL} />
 
     <ClientRouter />
 

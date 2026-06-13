@@ -7,15 +7,16 @@ interface Props {
   slug: string;
   lang: string;
   icon?: string;
-  isLatest?: boolean;
 }
-import { localizePath } from '../i18n/utils';
+import { localizePath, useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
 import { Icon } from 'astro-icon/components';
-const { title, description, url, slug, lang, icon, isLatest } = Astro.props;
+const { title, description, url, slug, lang, icon } = Astro.props;
+const t = useTranslations(lang as Lang);
 const detailHref = localizePath(`/${lang}/projects/${slug}`);
 ---
 
-<article class:list={['project-card', { 'is-latest': isLatest }]}>
+<article class="project-card">
   <a href={detailHref} class="card-link">
     <div class="card-top">
       {icon && (
@@ -23,12 +24,11 @@ const detailHref = localizePath(`/${lang}/projects/${slug}`);
           <Icon name={icon} width="20" height="20" aria-hidden="true" />
         </div>
       )}
-      {isLatest && <span class="badge">{lang === 'de' ? 'Neu' : 'New'}</span>}
     </div>
     <h3 class="card-title">{title}</h3>
     <p class="card-desc">{description}</p>
     <div class="card-footer">
-      <span class="card-cta">{lang === 'de' ? 'Mehr erfahren' : 'View project'}</span>
+      <span class="card-cta">{t('projects.card.cta')}</span>
       <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" class="card-arrow" />
     </div>
   </a>
@@ -82,13 +82,6 @@ const detailHref = localizePath(`/${lang}/projects/${slug}`);
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-  }
-
-  .badge {
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-accent);
-    letter-spacing: 0.03em;
   }
 
   .card-title {

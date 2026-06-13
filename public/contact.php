@@ -31,15 +31,28 @@ if (empty($_POST)) {
     }
 }
 
-// Retrieve form data securely
-$name = isset($_POST['name']) ? trim($_POST['name']) : '';
-$email = isset($_POST['email']) ? trim($_POST['email']) : '';
-$message = isset($_POST['message']) ? trim($_POST['message']) : '';
-$lang = isset($_POST['lang']) ? $_POST['lang'] : 'de';
+// Honeypot: bots fill the hidden "website" field; humans leave it blank
+if (!empty($_POST['website'])) {
+    http_response_code(200);
+    echo json_encode(["success" => true]);
+    exit;
+}
 
-// Validate inputs
-if (empty($name) || empty($email) || empty($message) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    error_log("Validation failed. Name: '$name', Email: '$email', Message length: " . strlen($message));
+// Retrieve form data securely
+$name    = isset($_POST['name'])    ? trim($_POST['name'])    : '';
+$email   = isset($_POST['email'])   ? trim($_POST['email'])   : '';
+$message = isset($_POST['message']) ? trim($_POST['message']) : '';
+$lang    = isset($_POST['lang'])    ? $_POST['lang']          : 'de';
+
+// Validate inputs + length limits
+if (
+    empty($name) || empty($email) || empty($message)
+    || !filter_var($email, FILTER_VALIDATE_EMAIL)
+    || mb_strlen($name)    > 100
+    || mb_strlen($email)   > 254
+    || mb_strlen($message) > 5000
+) {
+    error_log("Validation failed. Name: '$name', Email: '$email', Message length: " . mb_strlen($message));
     http_response_code(400);
     echo json_encode(["error" => "Invalid input data"]);
     exit;
@@ -70,15 +83,6 @@ function sendEmailViaSMTP($to, $toName, $subject, $bodyText, $replyToEmail = nul
         $mail->Port       = 587;                            // Alternative secure SMTP port
         $mail->CharSet    = 'UTF-8';                     // Automatically fixes "ä" and other special characters!
 
-        // Bypass strict SSL/TLS verification if Hetzner's internal certificate doesn't match the domain exactly
-        $mail->SMTPOptions = array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
-            )
-        );
-
         // Authenticated sender
         $mail->setFrom($siteOwnerEmail, 'Julius Bruch');
     if ($replyToEmail) {
@@ -103,8 +107,7 @@ function sendEmailViaSMTP($to, $toName, $subject, $bodyText, $replyToEmail = nul
 $subjectToOwner = "Neue Kontaktanfrage von $name";
 $bodyToOwner = "Name: $name\nE-Mail: $email\n\nNachricht:\n$message";
 
-// Add the user's email as the Reply-To address so you can just click "Reply" in your inbox!
-$resultOwner = sendEmailViaSMTP($siteOwnerEmail, "Julius Bruch", $subjectToOwner, $bodyToOwner, $email, $name);
+$resultOwner = sendEmailViaSMTP($siteOwnerEmail, "Julius Bruch", $subjectToOwner, $bodyToOwner);
 
 // 2. Send Auto-Reply to User
 if ($resultOwner['success']) {

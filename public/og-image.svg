@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+
+  <!-- Subtle grid pattern -->
+  <defs>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Accent glow blob top-right -->
+  <ellipse cx="1050" cy="120" rx="320" ry="200" fill="#00c49a" opacity="0.07"/>
+
+  <!-- Workflow icon top-right (lucide:workflow, scaled to ~110px) -->
+  <g transform="translate(940, 30) scale(8)" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.35">
+    <rect width="8" height="8" x="3" y="3" rx="2"/>
+    <path d="M7 11v4a2 2 0 0 0 2 2h4"/>
+    <rect width="8" height="8" x="13" y="13" rx="2"/>
+  </g>
+
+  <!-- Left accent bar -->
+  <rect x="80" y="200" width="4" height="180" rx="2" fill="#00c49a"/>
+
+  <!-- Name -->
+  <text x="112" y="272" font-family="system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="72" font-weight="700" fill="#ffffff" letter-spacing="-1">Julius Bruch</text>
+
+  <!-- Divider dot -->
+  <text x="112" y="318" font-family="system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="28" font-weight="400" fill="#00c49a" letter-spacing="1">Digital Solutions</text>
+
+  <!-- Subtitle -->
+  <text x="112" y="370" font-family="system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="28" font-weight="400" fill="#888888">Freiberuflicher IT-Berater aus Leipzig</text>
+
+  <!-- Bottom tag row -->
+  <!-- Tag 1 -->
+  <rect x="112" y="430" width="160" height="36" rx="18" fill="#00c49a26"/>
+  <text x="192" y="453" text-anchor="middle" font-family="system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#00c49a">Power Apps</text>
+
+  <!-- Tag 2 -->
+  <rect x="284" y="430" width="188" height="36" rx="18" fill="#00c49a26"/>
+  <text x="378" y="453" text-anchor="middle" font-family="system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#00c49a">Power Automate</text>
+
+  <!-- Tag 3 -->
+  <rect x="484" y="430" width="136" height="36" rx="18" fill="#00c49a26"/>
+  <text x="552" y="453" text-anchor="middle" font-family="system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#00c49a">SharePoint</text>
+
+  <!-- Tag 4 -->
+  <rect x="632" y="430" width="152" height="36" rx="18" fill="#00c49a26"/>
+  <text x="708" y="453" text-anchor="middle" font-family="system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="14" font-weight="600" fill="#00c49a">Web Development</text>
+
+  <!-- Domain bottom-right -->
+  <text x="1120" y="570" text-anchor="end" font-family="system-ui, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="20" font-weight="500" fill="#444444">jb-solutions.digital</text>
+</svg>

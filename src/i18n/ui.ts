@@ -52,13 +52,7 @@ export const ui = {
     'about.edu':       'Bildungsweg',
     'about.cta':       'Meine Leistungen ansehen',
 
-    'newsletter.title':    'Neue Projekte',
-    'newsletter.subtitle': 'Erhalte eine Benachrichtigung, wenn ein neues Projekt veröffentlicht wird.',
-    'newsletter.placeholder': 'ihre@email.de',
-    'newsletter.cta':     'Jetzt anmelden',
-    'newsletter.note':    'Kein Spam. Abmeldung jederzeit möglich.',
-
-    'contact.title':   'Kontakt',
+'contact.title':   'Kontakt',
     'contact.intro':   'Lassen Sie uns über Ihr Projekt sprechen. Ich antworte in der Regel innerhalb von 24 Stunden.',
     'contact.connect': 'Weitere Kontaktmöglichkeiten',
     'contact.linkedin':    'LinkedIn',
@@ -76,6 +70,10 @@ export const ui = {
     'theme.toggle':    'Design wechseln',
 
     'back.projects':   'Zurück zu Projekten',
+    'back.services':   'Zurück zu Leistungen',
+
+    'projects.card.cta':   'Mehr erfahren',
+    'projects.card.badge': 'Neu',
 
     'contact.form.name':        'Name',
     'contact.form.email':       'E-Mail',
@@ -154,13 +152,7 @@ export const ui = {
     'about.edu':       'Education',
     'about.cta':       'View my services',
 
-    'newsletter.title':    'New Projects',
-    'newsletter.subtitle': 'Get notified whenever a new project is published.',
-    'newsletter.placeholder': 'you@example.com',
-    'newsletter.cta':     'Subscribe',
-    'newsletter.note':    'No spam. Unsubscribe anytime.',
-
-    'contact.title':   'Contact',
+'contact.title':   'Contact',
     'contact.intro':   "Let's talk about your project. I usually respond within 24 hours.",
     'contact.connect': 'More ways to connect',
     'contact.linkedin':    'LinkedIn',
@@ -178,6 +170,10 @@ export const ui = {
     'theme.toggle':    'Toggle theme',
 
     'back.projects':   'Back to Projects',
+    'back.services':   'Back to Services',
+
+    'projects.card.cta':   'View project',
+    'projects.card.badge': 'New',
 
     'contact.form.name':        'Name',
     'contact.form.email':       'Email',

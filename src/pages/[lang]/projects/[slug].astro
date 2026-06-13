@@ -4,8 +4,8 @@ import { useTranslations, localizePath } from '../../../i18n/utils';
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PageCta from '../../../components/PageCta.astro';
-import PageHeader from '../../../components/PageHeader.astro';
 import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
 
 export async function getStaticPaths() {
   const allProjects = await getCollection('projects');
@@ -24,30 +24,76 @@ const { Content } = await render(project);
 
 const title = lang === 'de' ? (project.data.titleDe ?? project.data.title) : (project.data.titleEn ?? project.data.title);
 const description = lang === 'de' ? (project.data.descDe ?? project.data.description) : (project.data.descEn ?? project.data.description);
+
+const projectImages = import.meta.glob<{ default: ImageMetadata }>(
+  '../../../assets/images/*.{png,jpg,jpeg,webp}',
+  { eager: true }
+);
+const imageKey = project.data.image
+  ? Object.keys(projectImages).find((k) => k.endsWith('/' + project.data.image))
+  : undefined;
+const imageSrc = imageKey ? projectImages[imageKey]?.default : undefined;
 ---
 
 <BaseLayout title={title} {lang} description={description}>
   <div class="container">
   <article class="project-article">
-    <PageHeader
-      title={title}
-      icon={project.data.icon}
-      backHref={localizePath(`/${lang}/#projects`)}
-      backLabel={t('back.projects')}
-    />
 
+    <a href={localizePath(`/${lang}/#projects`)} class="back-link">
+      <Icon name="lucide:arrow-left" width="14" height="14" aria-hidden="true" />
+      {t('back.projects')}
+    </a>
+
+    <!-- Header card -->
+    <header class="project-header">
+      <div class="project-header-top">
+        {project.data.icon && (
+          <div class="project-icon">
+            <Icon name={project.data.icon} width="26" height="26" aria-hidden="true" />
+          </div>
+        )}
+        <div class="project-title-block">
+          <h1 class="project-title">{title}</h1>
+          {project.data.url && (
+            <a href={project.data.url} target="_blank" rel="noopener noreferrer" class="live-btn">
+              <Icon name="lucide:external-link" width="14" height="14" aria-hidden="true" />
+              {lang === 'de' ? 'Live ansehen' : 'View live'}
+            </a>
+          )}
+        </div>
+      </div>
+      <p class="project-description">{description}</p>
+      {project.data.techs.length > 0 && (
+        <div class="project-techs">
+          {project.data.techs.map((tech: string) => (
+            <span class="tech-chip">{tech}</span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Main content -->
     <div class="project-content">
       <Content />
     </div>
 
-    {!project.data.image && (
-      <div class="project-hero-image">
+    <!-- Screenshot -->
+    <div class="project-hero-image">
+      {imageSrc ? (
+        <Image
+          src={imageSrc}
+          alt={title}
+          class="project-img"
+          widths={[800, 1200]}
+          sizes="(max-width: 800px) 100vw, 800px"
+        />
+      ) : (
         <div class="project-img-placeholder" aria-hidden="true">
           <Icon name={project.data.icon ?? 'lucide:image'} width="48" height="48" />
           <span>{lang === 'de' ? 'Screenshot folgt' : 'Screenshot coming soon'}</span>
         </div>
-      </div>
-    )}
+      )}
+    </div>
 
     <PageCta
       heading={lang === 'de' ? 'Interesse an einer ähnlichen Lösung?' : 'Interested in a similar solution?'}
@@ -64,19 +110,100 @@ const description = lang === 'de' ? (project.data.descDe ?? project.data.descrip
     padding-block: var(--space-2xl);
   }
 
-  /* Tighten header — no lead/tags on this page */
-  .project-article :global(.page-header) {
-    padding-bottom: var(--space-sm);
-    margin-bottom: var(--space-md);
+  /* ── Back link ── */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-muted);
+    text-decoration: none;
+    margin-bottom: var(--space-xl);
+    transition: color var(--transition-base);
+  }
+  .back-link:hover { color: var(--color-accent); text-decoration: none; }
+
+  /* ── Header card ── */
+  .project-header {
+    border-left: 3px solid var(--color-accent);
+    padding-left: var(--space-xl);
+    margin-bottom: var(--space-2xl);
   }
 
-  .project-article :global(.page-header-title) {
-    margin-bottom: 0;
+  .project-header-top {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
   }
 
-  /* ── Hero image / placeholder ── */
+  .project-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background-color: var(--color-accent-dim);
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .project-title-block {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .project-title {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--color-heading);
+    line-height: 1.15;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .live-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-accent);
+    background-color: var(--color-accent-dim);
+    border-radius: 8px;
+    padding: 5px var(--space-md);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity var(--transition-base);
+  }
+  .live-btn:hover { opacity: 0.8; text-decoration: none; }
+
+  .project-description {
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    line-height: 1.75;
+    margin: 0 0 var(--space-lg);
+  }
+
+  .project-techs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .tech-chip {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-accent);
+    background-color: var(--color-accent-dim);
+    border-radius: 6px;
+    padding: 3px var(--space-sm);
+  }
+
+  /* ── Screenshot ── */
   .project-hero-image {
-    margin-top: var(--space-lg);
     margin-bottom: var(--space-xl);
     border-radius: 12px;
     overflow: hidden;
@@ -87,15 +214,6 @@ const description = lang === 'de' ? (project.data.descDe ?? project.data.descrip
     width: 100%;
     height: auto;
     display: block;
-  }
-
-  /* Screenshot embedded in the markdown content (rendered at build time,
-     so it never jumps into place after paint) */
-  .project-content :global(img) {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    margin-block: var(--space-lg) var(--space-xl);
   }
 
   .project-img-placeholder {
@@ -117,11 +235,15 @@ const description = lang === 'de' ? (project.data.descDe ?? project.data.descrip
   }
 
   /* ── Prose content ── */
+  .project-content {
+    margin-bottom: var(--space-xl);
+  }
+
   .project-content :global(h2) {
     font-size: var(--text-xl);
     font-weight: 700;
     color: var(--color-heading);
-    margin-top: var(--space-xl);
+    margin-top: var(--space-2xl);
     margin-bottom: var(--space-md);
     padding-bottom: var(--space-sm);
     border-bottom: 1px solid var(--color-border);
@@ -138,7 +260,7 @@ const description = lang === 'de' ? (project.data.descDe ?? project.data.descrip
     margin-bottom: var(--space-lg);
   }
 
-  /* ── Features gallery grid ── */
+  /* ── Features grid ── */
   .project-content :global(.features-list) {
     list-style: none;
     display: grid;
@@ -186,20 +308,12 @@ const description = lang === 'de' ? (project.data.descDe ?? project.data.descrip
     flex-shrink: 0;
   }
 
-  /* ── Tech tags ── */
+  /* ── Tech tags in markdown (hide — shown in header already) ── */
   .project-content :global(.tech-tags) {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-lg);
+    display: none;
   }
 
-  .project-content :global(.tech-tag) {
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-accent);
-    background-color: var(--color-accent-dim);
-    border-radius: 6px;
-    padding: 4px var(--space-sm);
+  .project-content :global(h2:has(+ .tech-tags)) {
+    display: none;
   }
 </style>
