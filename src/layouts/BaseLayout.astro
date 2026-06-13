@@ -27,7 +27,7 @@ interface Props {
 
 const { title, lang, description, ogImage } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImageURL = new URL(ogImage ?? '/og-image.svg', Astro.site);
+const ogImageURL = new URL(ogImage ?? '/og-image.png', Astro.site);
 
 // hreflang alternates: same path with the language segment swapped.
 const pathNoBase = BASE && Astro.url.pathname.startsWith(BASE)
@@ -61,6 +61,7 @@ const alternates = Object.keys(languages).map((code) => ({
 
     <link rel="icon" href={`${BASE}/favicon.svg`} type="image/svg+xml" />
     <link rel="icon" href={`${BASE}/favicon.ico`} sizes="32x32" />
+    <link rel="apple-touch-icon" href={`${BASE}/favicon-512.png`} />
 
     <!-- Open Graph -->
     <meta property="og:type"        content="website" />
