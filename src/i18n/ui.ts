@@ -92,8 +92,8 @@ export const ui = {
     'nav.menu.close':  'Close menu',
 
     'hero.tagline':    'Power Apps Maker · Web Developer · Vibe Coder',
-    'seo.title':       'Julius Bruch | Digital Solutions',
-    'seo.description': 'Freelance low-code developer from Leipzig. Power Apps, Power Automate and custom Microsoft 365 solutions – plus professional websites. Get in touch today.',
+    'seo.title':       'Julius Bruch | Power Platform & Web Developer Leipzig',
+    'seo.description': 'Freelance low-code developer from Leipzig. Power Apps, Power Automate and tailored Microsoft 365 solutions – plus professional websites. Get in touch today.',
 
     'hero.headline':   "Hi, I'm Julius.",
     'hero.subtitle':   'Freelance IT consultant from Leipzig.',
@@ -140,7 +140,7 @@ export const ui = {
 
     'projects.skills.title': 'Tech Stack',
 
-    'services.process.title': 'How I work',
+    'services.process.title': 'How a project works',
     'services.process.1': 'Requirements analysis',
     'services.process.1.desc': 'I get to know your business, understand your goals, and define the project scope together with you.',
     'services.process.1.tags': 'Kick-off · Goals · Scope',
