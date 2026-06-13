@@ -92,11 +92,11 @@ const faq = isDE
     <div class="container">
       <SectionHeader icon="lucide:user-round" title={t('about.title')} />
       <div class="about-layout">
-        <div class="about-text">
+        <div class="about-text fade-in">
           <p class="about-intro">{t('about.intro')}</p>
           {t('about.body') && <blockquote class="about-mission">{t('about.body')}</blockquote>}
         </div>
-        <aside class="about-aside">
+        <aside class="about-aside fade-in" data-fade-delay="120">
           <div class="about-links-card">
             <div>
               <p class="panel-label">{t('projects.skills.title')}</p>
@@ -135,8 +135,8 @@ const faq = isDE
     <div class="container">
       <SectionHeader icon="lucide:briefcase" title={t('services.title')} />
       <div class="svc-gallery">
-        {services.map(({ slug, icon, name, desc, cardFeatures }) => (
-          <a href={localizePath(`/${lang}/services/${slug}`)} class="svc-tile">
+        {services.map(({ slug, icon, name, desc, cardFeatures }, i) => (
+          <a href={localizePath(`/${lang}/services/${slug}`)} class="svc-tile fade-in" data-fade-delay={i * 80}>
             <div class="svc-tile-icon">
               <Icon name={icon} width="22" height="22" aria-hidden="true" />
             </div>
@@ -157,13 +157,14 @@ const faq = isDE
     <div class="container">
       <SectionHeader icon="lucide:folder-open" title={t('projects.title')} />
       <div class="project-list">
-        {projects.map((project) => (
+        {projects.map((project, i) => (
           <ProjectCard
             title={isDE ? (project.data.titleDe ?? project.data.title) : (project.data.titleEn ?? project.data.title)}
             description={isDE ? (project.data.descDe ?? project.data.description) : (project.data.descEn ?? project.data.description)}
             techs={project.data.techs}
             slug={project.id}
             icon={project.data.icon}
+            fadeDelay={i * 80}
             {lang}
           />
         ))}

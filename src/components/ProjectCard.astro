@@ -7,16 +7,17 @@ interface Props {
   slug: string;
   lang: string;
   icon?: string;
+  fadeDelay?: number;
 }
 import { localizePath, useTranslations } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
 import { Icon } from 'astro-icon/components';
-const { title, description, url, slug, lang, icon } = Astro.props;
+const { title, description, url, slug, lang, icon, fadeDelay = 0 } = Astro.props;
 const t = useTranslations(lang as Lang);
 const detailHref = localizePath(`/${lang}/projects/${slug}`);
 ---
 
-<article class="project-card">
+<article class="project-card fade-in" data-fade-delay={fadeDelay}>
   <a href={detailHref} class="card-link">
     <div class="card-top">
       {icon && (
