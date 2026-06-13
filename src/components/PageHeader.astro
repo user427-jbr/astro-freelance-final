@@ -61,9 +61,14 @@ const { title, lead, backHref, backLabel, icon } = Astro.props;
   }
 
   .title-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background-color: var(--color-accent-dim);
+    color: var(--color-accent);
     display: flex;
     align-items: center;
-    color: var(--color-accent);
+    justify-content: center;
     flex-shrink: 0;
   }
 
