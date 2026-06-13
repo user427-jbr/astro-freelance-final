@@ -26,7 +26,7 @@ const t = useTranslations(lang as Lang);
     </div>
 
     <div class="hero-visual">
-      <Image src={profileImage} alt="Julius Bruch" class="hero-photo" width={600} height={600} loading="eager" fetchpriority="high" />
+      <Image src={profileImage} alt="Julius Bruch" class="hero-photo" width={600} height={600} widths={[280, 400, 600]} sizes="(max-width: 640px) 280px, (max-width: 900px) 400px, 600px" format="webp" loading="eager" fetchpriority="high" />
     </div>
   </div>
 </section>
