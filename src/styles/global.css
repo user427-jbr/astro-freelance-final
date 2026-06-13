@@ -1,7 +1,6 @@
 /* ─── Font fallbacks ────────────────────────────────────────────────────── */
-/* Metric-matched local fallbacks: glyph widths are adjusted to match the
-   webfonts, so text does NOT rewrap/shift when Inter / JetBrains Mono
-   finish loading (eliminates the load-time flicker & resize on mobile). */
+/* Metric-matched local fallback for Inter: glyph widths are adjusted to match
+   the webfont so text does NOT rewrap/shift when Inter finishes loading. */
 
 @font-face {
   font-family: 'Inter Fallback';
@@ -12,14 +11,6 @@
   line-gap-override: 0%;
 }
 
-@font-face {
-  font-family: 'JetBrains Mono Fallback';
-  src: local('Courier New'), local('Courier');
-  size-adjust: 99.88%;
-  ascent-override: 102%;
-  descent-override: 30%;
-  line-gap-override: 0%;
-}
 
 /* ─── Design Tokens ─────────────────────────────────────────────────────── */
 
@@ -39,7 +30,7 @@
 
   /* Typography */
   --font-sans: 'Inter', 'Inter Fallback', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', monospace;
+  --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
 
   /* Fluid type scale — clamp(min, viewport-relative, max) */
   --text-sm:   clamp(0.8125rem, 1.8vw,  0.875rem);
