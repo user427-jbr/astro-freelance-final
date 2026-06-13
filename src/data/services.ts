@@ -20,7 +20,7 @@ export const services: ServiceData[] = [
   {
     slug: 'process-automation',
     icon: 'lucide:workflow',
-    image: 'process-automation-1.png',
+    image: 'process-automation-1.webp',
     nameDE: 'Prozessautomatisierung',
     nameEN: 'Process Automation',
     descDE:
@@ -71,7 +71,7 @@ export const services: ServiceData[] = [
   {
     slug: 'web-development',
     icon: 'lucide:monitor',
-    image: 'web-development-1.png',
+    image: 'web-development-1.webp',
     nameDE: 'Web Entwicklung',
     nameEN: 'Web Development',
     descDE:

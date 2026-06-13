@@ -9,7 +9,7 @@ descEn: "Power App to filter and export Outlook calendar events via Graph API."
 descDe: "Power App zum Filtern und Exportieren von Outlook-Kalenderterminen via Graph API."
 order: 3
 techs: ["Power Apps", "Microsoft Graph", "Power Automate"]
-image: "calendar-app-screenshot.png"
+image: "calendar-app-screenshot.webp"
 ---
 
 ## <span lang="de">Projektübersicht</span><span lang="en">Project Overview</span>
