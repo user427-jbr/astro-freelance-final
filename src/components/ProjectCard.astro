@@ -34,11 +34,7 @@ const dateLabel = date
     </div>
     <h3 class="card-title">{title}</h3>
     <p class="card-desc">{description}</p>
-    <div class="card-footer">
-      {dateLabel && <span class="card-date">{dateLabel}</span>}
-      <span class="card-cta">{t('projects.card.cta')}</span>
-      <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" class="card-arrow" />
-    </div>
+    {dateLabel && <div class="card-footer"><span class="card-date">{dateLabel}</span></div>}
   </a>
 
   {url && (

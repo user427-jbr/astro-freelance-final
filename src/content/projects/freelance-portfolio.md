@@ -9,7 +9,6 @@ descEn: "Multilingual portfolio website built with Astro, modern design system, 
 descDe: "Mehrsprachiges Portfolio-Website mit Astro, modernem Design und automatisiertem Deployment."
 order: 4
 techs: ["Astro", "HTML / CSS", "GitHub Actions", "FTP Deploy"]
-url: "https://jb-solutions.digital"
 isNew: true
 ---
 
