@@ -20,7 +20,7 @@
   --color-surface:   #242424;
   --color-border:    #444444;
   --color-text:      #ededed;
-  --color-muted:     #888;
+  --color-muted:     #9a9a9a;
   --color-accent:    #00c49a; /* teal-green */
   --color-accent-dim: #00c49a26;
 
@@ -153,9 +153,6 @@ pre {
 
 /* ─── Code blocks (Shiki dual theme) ─────────────────────────────────────── */
 
-/* Default is the dark theme. In light mode, swap every token + the block
-   background to the --shiki-light variables Shiki emits, so code follows
-   the site theme instead of staying dark. */
 [data-theme="light"] .astro-code,
 [data-theme="light"] .astro-code span {
   color: var(--shiki-light) !important;
@@ -167,21 +164,17 @@ pre {
 
 /* ─── Mobile / touch improvements ───────────────────────────────────────── */
 
-/* Prevent iOS from zooming on input focus (min font-size 16px for inputs) */
 input,
 textarea,
 select {
   font-size: max(16px, var(--text-base));
 }
 
-/* Remove tap highlight on interactive elements */
 a,
 button {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Ensure interactive elements meet 44px touch target (form buttons / CTA only).
-   Nav icon buttons override this with explicit min-height/min-width: 36px. */
 button:not([class]),
 .submit-btn {
   min-height: 44px;
@@ -192,15 +185,6 @@ button:not([class]),
 
 .page {
   padding-block: var(--space-2xl);
-}
-
-.page-title {
-  margin-bottom: var(--space-2xl);
-}
-
-.section-heading {
-  font-size: var(--text-2xl);
-  margin-bottom: var(--space-xl);
 }
 
 /* ─── Section header (icon + title + subtitle) ───────────────────────────── */
@@ -225,13 +209,6 @@ button:not([class]),
 }
 
 /* ─── Tag pills ──────────────────────────────────────────────────────────── */
-
-.tag-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-  list-style: none;
-}
 
 .tag {
   font-size: var(--text-sm);
@@ -261,48 +238,7 @@ button:not([class]),
 .back-link:hover { color: var(--color-accent); text-decoration: none; }
 .back-link:hover svg { transform: translateX(-4px); }
 
-/* ─── Inline external link ───────────────────────────────────────────────── */
-
-.ext-link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-xs);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-accent);
-  text-decoration: none;
-  transition: opacity var(--transition-base);
-}
-.ext-link svg { flex-shrink: 0; }
-.ext-link:hover { opacity: 0.8; text-decoration: none; }
-
-/* ─── Detail page header ─────────────────────────────────────────────────── */
-
-.detail-header {
-  margin-bottom: var(--space-2xl);
-  padding-bottom: var(--space-xl);
-  border-bottom: 1px solid var(--color-border);
-}
-.detail-header h1 { margin-bottom: var(--space-sm); }
-.detail-header .tag-list { margin-top: var(--space-md); }
-.detail-header .ext-link { margin-top: var(--space-md); }
-
-.detail-meta {
-  display: flex;
-  gap: var(--space-xs);
-  font-size: var(--text-sm);
-  color: var(--color-muted);
-  margin-bottom: var(--space-md);
-}
-
-.detail-lead {
-  color: var(--color-muted);
-  font-size: var(--text-lg);
-  margin-bottom: var(--space-lg);
-}
-
 /* ─── Prose (rendered markdown) ──────────────────────────────────────────── */
-/* Scaled to the design tokens so markdown matches the rest of the site. */
 
 .prose {
   line-height: 1.75;
@@ -343,7 +279,6 @@ button:not([class]),
   color: var(--color-muted);
 }
 
-/* Inline code (not inside a code block) */
 .prose :not(pre) > code {
   font-family: var(--font-mono);
   font-size: 0.9em;
@@ -421,153 +356,6 @@ button:not([class]),
   }
 }
 
-/* ─── Blog post list ─────────────────────────────────────────────────────── */
-
-.post-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-}
-.post-item {
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: var(--space-lg);
-}
-.post-link {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-}
-.post-link:hover { text-decoration: none; }
-.post-link:hover .post-title { color: var(--color-accent); }
-.post-title {
-  display: block;
-  font-size: var(--text-xl);
-  font-weight: 600;
-  color: var(--color-heading);
-  margin-bottom: var(--space-xs);
-  transition: color var(--transition-base);
-}
-.post-meta {
-  display: flex;
-  gap: var(--space-xs);
-  font-size: var(--text-sm);
-  color: var(--color-muted);
-  margin-bottom: var(--space-sm);
-}
-.post-desc {
-  font-size: var(--text-base);
-  color: var(--color-muted);
-}
-
-/* ─── About page ─────────────────────────────────────────────────────────── */
-
-.bio {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  margin-bottom: var(--space-2xl);
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: var(--space-2xl);
-}
-.bio-intro {
-  font-size: var(--text-lg);
-  color: var(--color-text);
-  line-height: 1.65;
-}
-.availability {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-accent);
-  margin-top: var(--space-sm);
-}
-.availability-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--color-accent);
-  flex-shrink: 0;
-  animation: pulse 2s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.4; }
-}
-
-.timeline {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  border-left: 2px solid var(--color-border);
-  padding-left: var(--space-xl);
-}
-.timeline-item {
-  position: relative;
-  padding-bottom: var(--space-md);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2px var(--space-xl);
-  align-items: flex-start;
-}
-
-.tl-divider {
-  position: relative;
-  padding: var(--space-sm) 0;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-muted);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  list-style: none;
-}
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: calc(-1 * var(--space-xl) - 5px);
-  top: 6px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--color-accent);
-  border: 2px solid var(--color-bg);
-}
-.tl-year {
-  font-size: var(--text-sm);
-  color: var(--color-muted);
-  min-width: 10ch;
-  padding-top: 2px;
-  flex-shrink: 0;
-}
-.tl-body {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.tl-role {
-  font-size: var(--text-base);
-  color: var(--color-heading);
-  font-weight: 600;
-}
-.tl-place {
-  font-size: var(--text-sm);
-  color: var(--color-muted);
-}
-
-.certs-section {
-  margin-top: var(--space-2xl);
-  padding-top: var(--space-2xl);
-  border-top: 1px solid var(--color-border);
-}
-
-@media (max-width: 480px) {
-  .timeline { padding-left: var(--space-lg); }
-  .timeline-item { flex-direction: column; gap: 2px; }
-  .timeline-item::before { left: calc(-1 * var(--space-lg) - 5px); }
-}
-
 /* ─── Contact section ────────────────────────────────────────────────────── */
 
 .form-row {
@@ -598,96 +386,6 @@ button:not([class]),
     width: 100%;
     justify-content: center;
   }
-}
-
-.profiles-wrap { margin-top: var(--space-2xl); }
-
-/* ── Contact two-column layout ── */
-.contact-layout {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: var(--space-2xl);
-  align-items: start;
-}
-
-@media (max-width: 780px) {
-  .contact-layout { grid-template-columns: 1fr; }
-}
-
-.contact-info {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: var(--space-xl);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xl);
-}
-
-.contact-info-intro {
-  font-size: var(--text-sm);
-  color: var(--color-muted);
-  line-height: 1.75;
-}
-
-.contact-info-items {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-.contact-info-item {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-sm);
-  font-size: var(--text-sm);
-  color: var(--color-text);
-  line-height: 1.5;
-}
-
-.contact-info-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  background-color: var(--color-accent-dim);
-  color: var(--color-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.contact-info-label {
-  font-size: var(--text-sm);
-  font-weight: 700;
-  color: var(--color-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: var(--space-sm);
-}
-
-.contact-info-links {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  padding-top: var(--space-lg);
-  border-top: 1px solid var(--color-border);
-}
-
-.contact-link {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--color-muted);
-  text-decoration: none;
-  transition: color var(--transition-base);
-}
-
-.contact-link:hover {
-  color: var(--color-accent);
-  text-decoration: none;
 }
 
 .contact-form {
@@ -748,8 +446,6 @@ button:not([class]),
   min-height: 140px;
   line-height: 1.6;
 }
-
-.privacy-field { margin-top: calc(-1 * var(--space-xs)); }
 
 .privacy-label {
   display: flex;
@@ -830,15 +526,6 @@ button:not([class]),
 .form-status--ok  { color: var(--color-accent); }
 .form-status--err { color: #f87171; }
 
-
-/* ─── Section divider (reusable within a section) ────────────────────────── */
-
-.section-divider {
-  margin-top: var(--space-2xl);
-  padding-top: var(--space-2xl);
-  border-top: 1px solid var(--color-border);
-}
-
 /* ─── Bilingual span display (project content) ───────────────────────────── */
 
 html[lang="de"] span[lang="en"],
@@ -847,69 +534,6 @@ html[lang="de"] h3 > span[lang="en"] { display: none; }
 html[lang="en"] span[lang="de"],
 html[lang="en"] h2 > span[lang="de"],
 html[lang="en"] h3 > span[lang="de"] { display: none; }
-
-/* ─── Service cards ──────────────────────────────────────────────────────── */
-
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-lg);
-}
-
-.service-grid .service-card:last-child:nth-child(odd) {
-  grid-column: 1 / -1;
-}
-
-@media (max-width: 640px) {
-  .service-grid { grid-template-columns: 1fr; }
-  .service-grid .service-card:last-child:nth-child(odd) { grid-column: auto; }
-}
-
-.service-card {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: var(--space-xl);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  position: relative;
-  transition: border-color var(--transition-base), transform var(--transition-base);
-  text-decoration: none;
-  color: inherit;
-}
-
-.service-card:hover {
-  border-color: var(--color-accent);
-  transform: translateY(-2px);
-  text-decoration: none;
-}
-
-.svc-arrow {
-  position: absolute;
-  top: var(--space-xl);
-  right: var(--space-xl);
-  color: var(--color-muted);
-  flex-shrink: 0;
-  transition: color var(--transition-base), transform var(--transition-base);
-}
-
-.service-card:hover .svc-arrow {
-  color: var(--color-accent);
-  transform: translate(2px, -2px);
-}
-
-.service-name {
-  font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--color-heading);
-}
-
-.service-desc {
-  font-size: var(--text-sm);
-  color: var(--color-muted);
-  line-height: 1.6;
-}
 
 /* ─── Page CTA banner ─────────────────────────────────────────────────────── */
 
@@ -1016,18 +640,8 @@ html[lang="en"] h3 > span[lang="de"] { display: none; }
   line-height: 1.7;
 }
 
-
-
-
 /* ─── Page transition ────────────────────────────────────────────────────── */
 
-/* Simple cross-fade between pages.
-   Both halves MUST use the same duration + easing: the two opacities then
-   always sum to 1, so there is no brightness dip (flicker) mid-transition.
-
-   overflow:hidden on the group prevents the two stacked snapshots from
-   expanding the document height during the transition, which would briefly
-   trigger a scrollbar and cause a vw-based reflow on mobile. */
 ::view-transition-group(root) {
   overflow: hidden;
 }
@@ -1046,7 +660,6 @@ html[lang="en"] h3 > span[lang="de"] { display: none; }
   from { opacity: 0; }
   to   { opacity: 1; }
 }
-
 
 /* ─── Reduced motion ─────────────────────────────────────────────────────── */
 

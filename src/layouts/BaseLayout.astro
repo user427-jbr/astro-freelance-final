@@ -6,6 +6,8 @@ import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
 import inter400 from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
+import inter500 from '@fontsource/inter/files/inter-latin-500-normal.woff2?url';
+import inter600 from '@fontsource/inter/files/inter-latin-600-normal.woff2?url';
 import inter700 from '@fontsource/inter/files/inter-latin-700-normal.woff2?url';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
@@ -39,6 +41,8 @@ const alternates = Object.keys(languages).map((code) => ({
   <head>
     <meta charset="utf-8" />
     <link rel="preload" href={inter400} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={inter500} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={inter600} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={inter700} as="font" type="font/woff2" crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
