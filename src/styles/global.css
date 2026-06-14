@@ -17,8 +17,8 @@
 :root {
   /* Colors – dark theme (default) */
   --color-bg:        #0a0a0a;
-  --color-surface:   #141414;
-  --color-border:    #2a2a2a;
+  --color-surface:   #242424;
+  --color-border:    #444444;
   --color-text:      #ededed;
   --color-muted:     #888;
   --color-accent:    #00c49a; /* teal-green */
@@ -415,6 +415,12 @@ button:not([class]),
   gap: var(--space-lg);
 }
 
+@media (max-width: 640px) {
+  .project-list {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ─── Blog post list ─────────────────────────────────────────────────────── */
 
 .post-list {
@@ -577,7 +583,6 @@ button:not([class]),
   justify-content: space-between;
   gap: var(--space-lg);
   flex-wrap: wrap;
-  margin-top: var(--space-sm);
 }
 
 @media (max-width: 560px) {
@@ -748,7 +753,7 @@ button:not([class]),
 
 .privacy-label {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--space-sm);
   cursor: pointer;
   font-size: var(--text-sm);
@@ -762,11 +767,12 @@ button:not([class]),
   width: 18px;
   height: 18px;
   min-width: 18px;
+  flex-shrink: 0;
   border: 1.5px solid #3a3a3a;
   border-radius: 4px;
   background-color: #1c1c1c;
   cursor: pointer;
-  margin-top: 1px;
+  margin-top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
