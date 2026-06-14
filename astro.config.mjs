@@ -8,7 +8,7 @@ export default defineConfig({
   site: 'https://jb-solutions.digital',
   base: '/',
   server: process.env.PORT ? { port: Number(process.env.PORT) } : undefined,
-  integrations: [sitemap(), icon()],
+  integrations: [sitemap(), icon({ iconDir: 'src/icons' })],
   markdown: {
     shikiConfig: {
       themes: {

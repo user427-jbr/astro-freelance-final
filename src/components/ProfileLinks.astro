@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components';
 interface LinkItem {
   label: string;
   href: string;
+  icon?: string;
 }
 
 interface Props {
@@ -15,8 +16,9 @@ const { label, links } = Astro.props;
 
 <div class="profiles">
   <span class="profiles-label">{label}</span>
-  {links.map(({ label: linkLabel, href }) => (
+  {links.map(({ label: linkLabel, href, icon }) => (
     <a href={href} rel="noopener noreferrer" target="_blank" class="profile-link">
+      {icon && <Icon name={icon} width="16" height="16" aria-hidden="true" />}
       {linkLabel}
       <Icon name="lucide:arrow-up-right" width="14" height="14" aria-hidden="true" />
     </a>
