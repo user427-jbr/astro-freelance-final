@@ -32,8 +32,8 @@ export const ui = {
     'projects.title':  'Projekte',
 
     'about.title':     'Über mich',
-    'about.intro':     'Masterstudent der Wirtschaftsinformatik an der Universität Leipzig. Freiberuflicher Low-Code Entwickler und Web Developer. Ich baue skalierbare Power Apps und Automatisierungen, die Abläufe optimieren und das volle Potenzial von Microsoft 365 ausschöpfen.',
-    'about.body':      'Mein Ziel: Menschen in ihrem Arbeitsalltag spürbar entlasten. Ich entwickle Lösungen, die Nutzer dort abholen, wo sie stehen. Intuitiv, verlässlich und direkt im vertrauten Microsoft-Umfeld.',
+    'about.intro':     'Seit 2023 entwickle ich als Werksstudent Low-Code Lösungen und baue Automatisierungen, die Abläufe optimieren. Kürzlich habe ich außerdem meine Leidenschaft für Web-Entwicklung entdeckt.',
+    'about.body':      'Mein Ziel: Technologie, die wirklich genutzt wird. Lösungen, die ohne lange Einarbeitung funktionieren und echten Mehrwert im Arbeitsalltag schaffen.',
     'about.profiles':  'Profile',
 
     'contact.title':   'Kontakt',
@@ -106,8 +106,8 @@ export const ui = {
     'projects.title':  'Projects',
 
     'about.title':     'About Me',
-    'about.intro':     "Master's student in Business Informatics at the University of Leipzig. Freelance low-code developer and web developer. I build scalable Power Apps and automations that streamline operations and unlock the full potential of Microsoft 365.",
-    'about.body':      "My goal: make people's daily work genuinely easier. I build solutions that meet users where they are. Intuitive, reliable, and right inside the Microsoft tools they already know.",
+    'about.intro':     "Since 2023 I have been developing low-code solutions as a working student, building automations that streamline operations. Recently I also discovered my passion for web development.",
+    'about.body':      "My goal: technology that actually gets used. Solutions that work without a steep learning curve and create real value in everyday work.",
     'about.profiles':  'Profiles',
 
     'contact.title':   'Contact',
