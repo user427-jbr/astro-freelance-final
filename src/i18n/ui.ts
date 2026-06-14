@@ -18,8 +18,8 @@ export const ui = {
     'nav.menu.open':   'Menü öffnen',
     'nav.menu.close':  'Menü schließen',
 
-    'seo.title':       'Julius Bruch | Power Platform & Web Developer Leipzig',
-    'seo.description': 'Freiberuflicher Low-Code Entwickler aus Leipzig. Power Apps, Power Automate und maßgeschneiderte Microsoft 365 Lösungen – plus professionelle Websites. Jetzt anfragen.',
+    'seo.title':       'Power Platform & Web Developer Leipzig',
+    'seo.description': 'Freiberuflicher Low-Code Entwickler aus Leipzig. Power Apps, Power Automate und individuelle Automatisierungen. Jetzt anfragen.',
 
     'hero.tagline':    'Power Apps Maker · Web Developer',
     'hero.headline':   'Hi, ich bin Julius.',
@@ -93,8 +93,8 @@ export const ui = {
     'nav.menu.close':  'Close menu',
 
     'hero.tagline':    'Power Apps Maker · Web Developer',
-    'seo.title':       'Julius Bruch | Power Platform & Web Developer Leipzig',
-    'seo.description': 'Freelance low-code developer from Leipzig. Power Apps, Power Automate and tailored Microsoft 365 solutions – plus professional websites. Get in touch today.',
+    'seo.title':       'Power Platform & Web Developer Leipzig',
+    'seo.description': 'Freelance low-code developer from Leipzig. Power Apps, Power Automate and custom automations. Get in touch.',
 
     'hero.headline':   "Hi, I'm Julius.",
     'hero.subtitle':   'Freelance IT consultant from Leipzig.',
